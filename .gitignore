@@ -1,0 +1,6 @@
+.vscode/
+
+# Skip generated files
+*.opus
+*.mp3
+messages.txt
