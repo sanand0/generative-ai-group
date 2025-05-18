@@ -25,13 +25,14 @@ def load_messages(filepath: str) -> List[Dict[str, Any]]:
 
 
 def group_by_week(messages: List[Dict[str, Any]]) -> Dict[datetime.date, List[Dict[str, Any]]]:
-    "Group messages by ISO-week (Monday)"
+    "Group messages by ISO-week (Sunday to Saturday, UTC)"
     groups = defaultdict(list)
-    for m in messages:
-        dt = datetime.datetime.fromisoformat(m["time"].replace("Z", "+00:00"))
-        m["dt"] = dt
-        week = dt.date() - datetime.timedelta(days=dt.weekday())
-        groups[week].append(m)
+    for message in messages:
+        dt = datetime.datetime.fromisoformat(message["time"].replace("Z", "+00:00"))
+        days_since_sunday = dt.isoweekday() % 7
+        week_start = dt.date() - datetime.timedelta(days=days_since_sunday)
+        message["dt"] = dt
+        groups[week_start].append(message)
     return groups
 
 
@@ -39,14 +40,14 @@ def build_threads(
     items: List[Dict[str, Any]],
 ) -> Tuple[Dict[str, List[Dict[str, Any]]], List[Dict[str, Any]]]:
     "Build message threads from items"
-    by_id = {m["messageId"]: m for m in items}
+    by_id = {message["messageId"]: message for message in items}
     replies = defaultdict(list)
-    for m in items:
-        pid = m.get("quoteMessageId")
+    for message in items:
+        pid = message.get("quoteMessageId")
         if pid in by_id:
-            replies[pid].append(m)
-    roots = [m for m in items if m.get("quoteMessageId") not in by_id]
-    roots.sort(key=lambda m: m["dt"])
+            replies[pid].append(message)
+    roots = [message for message in items if message.get("quoteMessageId") not in by_id]
+    roots.sort(key=lambda message: message["dt"])
     return replies, roots
 
 
@@ -139,7 +140,7 @@ def generate_podcast_audio(script: str, target_dir: Path, config: Dict[str, Any]
     # Concatenate all audio files
     list_file = target_dir / "list.txt"
     list_file.write_text("\n".join(f"file '{f.name}'" for f in filenames))
-    concat = f"ffmpeg -y -f concat -i {list_file} -safe 0 -c:a libmp3lame -qscale:a 5 -ar 44100 -ac 1 -id3v2_version 3 {target_dir / 'podcast.mp3'}"
+    concat = f"ffmpeg -y -f concat -i {list_file} -safe 0 -c:a libmp3lame -qscale:a 5 -ar 44100 -ac 1 -id3v2_version 3 {target_dir / f'podcast-{target_dir.name}.mp3'}"
     os.system(concat)
     list_file.unlink()
 
@@ -150,8 +151,8 @@ def process_week(week: datetime.date, items: List[Dict[str, Any]], config: Dict[
     week_dir = script_dir / str(week)
     week_dir.mkdir(exist_ok=True)
 
-    podcast_script_file = week_dir / "podcast.md"
-    podcast_audio_file = week_dir / "podcast.mp3"
+    podcast_script_file = week_dir / f"podcast-{week}.md"
+    podcast_audio_file = week_dir / f"podcast-{week}.mp3"
 
     # Write messages file if it doesn't exist
     messages_file = write_messages_file(week, items, week_dir)
@@ -171,6 +172,45 @@ def process_week(week: datetime.date, items: List[Dict[str, Any]], config: Dict[
         print(f"Week {week}: Generated podcast audio at {podcast_audio_file}")
 
 
+def generate_podcast(weeks: List[datetime.date], output_path: Path) -> None:
+    """
+    Emit an RSS2.0 feed containing one <item> per week, pointing
+    at the GitHub release URL for podcast-YYYY-MM-DD.mp3.
+    """
+    base_url = "https://github.com/sanand0/generative-ai-group/releases/download/main"
+    title = "Generative AI Group Podcast"
+    link = "https://github.com/sanand0/generative-ai-group"
+    description = "Weekly audio summaries of the Generative AI Group discussions."
+    now = datetime.datetime.now(datetime.timezone.utc).strftime("%a, %d %b %Y %H:%M:%S GMT")
+
+    # build each <item>
+    items_xml = []
+    for week in sorted(weeks, reverse=True):
+        d = week.strftime("%Y-%m-%d")
+        url = f"{base_url}/podcast-{d}.mp3"
+        # RFC-822 pubDate at midnight UTC on the week start
+        pub = week.strftime("%a, %d %b %Y 00:00:00 GMT")
+        items_xml.append(f"""  <item>
+    <title>Episode for week of {d}</title>
+    <enclosure url="{url}" length="0" type="audio/mpeg"/>
+    <guid>{url}</guid>
+    <pubDate>{pub}</pubDate>
+  </item>""")
+
+    rss = f"""<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>{title}</title>
+  <link>{link}</link>
+  <description>{description}</description>
+  <lastBuildDate>{now}</lastBuildDate>
+{chr(10).join(items_xml)}
+</channel>
+</rss>"""
+
+    output_path.write_text(rss, encoding="utf-8")
+
+
 def main() -> None:
     "Main function to process messages and generate podcasts"
     script_dir = Path(__file__).parent
@@ -186,6 +226,9 @@ def main() -> None:
     # Process each week
     for week, items in groups.items():
         process_week(week, items, config)
+
+    # Generate RSS feed
+    generate_podcast(weeks=list(groups.keys()), output_path=script_dir / "podcast.xml")
 
 
 if __name__ == "__main__":
