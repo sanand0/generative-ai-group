@@ -172,11 +172,12 @@ def process_week(week: datetime.date, items: List[Dict[str, Any]], config: Dict[
         print(f"Week {week}: Generated podcast audio at {podcast_audio_file}")
 
 
-def generate_podcast(weeks: List[datetime.date], output_path: Path) -> None:
+def generate_podcast(weeks: List[datetime.date], script_dir: Path) -> None:
     """
     Emit an RSS2.0 feed containing one <item> per week, pointing
     at the GitHub release URL for podcast-YYYY-MM-DD.mp3.
     """
+    output_path = script_dir / "podcast.xml"
     base_url = "https://github.com/sanand0/generative-ai-group/releases/download/main"
     title = "Generative AI Group Podcast"
     link = "https://github.com/sanand0/generative-ai-group"
@@ -190,11 +191,16 @@ def generate_podcast(weeks: List[datetime.date], output_path: Path) -> None:
         url = f"{base_url}/podcast-{d}.mp3"
         # RFC-822 pubDate at midnight UTC on the week start
         pub = week.strftime("%a, %d %b %Y 00:00:00 GMT")
+        # Load script
+        md_path = script_dir / d / f"podcast-{d}.md"
+        description_cdata = f"<![CDATA[\n{md_path.read_text(encoding='utf-8')}\n]]>"
+
         items_xml.append(f"""  <item>
-    <title>Episode for week of {d}</title>
+    <title>Week of {d}</title>
     <enclosure url="{url}" length="0" type="audio/mpeg"/>
     <guid>{url}</guid>
     <pubDate>{pub}</pubDate>
+    <description>{description_cdata}</description>
   </item>""")
 
     rss = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -228,7 +234,7 @@ def main() -> None:
         process_week(week, items, config)
 
     # Generate RSS feed
-    generate_podcast(weeks=list(groups.keys()), output_path=script_dir / "podcast.xml")
+    generate_podcast(weeks=list(groups.keys()), script_dir=script_dir)
 
 
 if __name__ == "__main__":
