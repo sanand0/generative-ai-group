@@ -27,12 +27,15 @@ def load_messages(filepath: str) -> List[Dict[str, Any]]:
 def group_by_week(messages: List[Dict[str, Any]]) -> Dict[datetime.date, List[Dict[str, Any]]]:
     "Group messages by ISO-week (Sunday to Saturday, UTC)"
     groups = defaultdict(list)
+    today = datetime.datetime.now(datetime.timezone.utc).date()
     for message in messages:
         dt = datetime.datetime.fromisoformat(message["time"].replace("Z", "+00:00"))
-        days_since_sunday = dt.isoweekday() % 7
-        week_start = dt.date() - datetime.timedelta(days=days_since_sunday)
+        days_until_sunday = 7 - (dt.isoweekday() % 7)
+        week_end = dt.date() + datetime.timedelta(days=days_until_sunday)
+        if week_end > today:
+            continue
         message["dt"] = dt
-        groups[week_start].append(message)
+        groups[week_end].append(message)
     return groups
 
 
