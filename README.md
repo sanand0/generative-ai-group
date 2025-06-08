@@ -11,7 +11,7 @@ A CLI tool and Python library to transform threaded WhatsApp Gen AI group transc
 
 You need:
 
-- A [scraped WhatsApp JSON export](https://tools.s-anand.net/whatsappscraper/) of the Gen AI Group chat as [`gen-ai-messages.json`](gen-ai-messages.json):
+- A [scraped WhatsApp JSON export](https://tools.s-anand.net/whatsappscraper/) of the Gen AI Group chat as [`gen-ai-messages.json`](gen-ai-messages.json)
 - [`uv`](https://docs.astral.sh/uv/)
 - Environment variable `OPENAI_API_KEY` with a valid OpenAI API key.
 - `ffmpeg` installed and in `PATH` for audio concatenation.
@@ -61,7 +61,7 @@ gh release upload main --clobber podcast.xml
 Upload specific podcast:
 
 ```bash
-gh release upload main */podcast-$WEEK.mp3
+gh release upload main $WEEK/podcast-$WEEK.mp3
 gh release upload main --clobber podcast.xml
 ```
 
