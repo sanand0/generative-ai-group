@@ -19,7 +19,8 @@ You need:
 ```bash
 git clone https://github.com/sanand0/generative-ai-group.git
 cd generative-ai-group
-OPENAI_API_KEY="sk-..." uv run podcast.py
+export OPENAI_API_KEY="sk-..."
+uv run podcast.py
 ```
 
 Optionally, modify the voice style and podcast script prompts in [`config.toml`](config.toml)
@@ -67,4 +68,4 @@ gh release upload main --clobber podcast.xml
 
 ## License
 
-[MIT License](LICENSE)
+[MIT](LICENSE)
