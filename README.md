@@ -35,14 +35,26 @@ This will:
    - `{week}/{line}.opus` files which are concatenated into...
    - `{week}/podcast.mp3`.
 
+Files:
+
+├── podcast.py                   # Single-file application with pure functions and type hints
+├── config.toml                  # Voice configurations, podcast prompts, and TTS voice settings
+├── gen-ai-messages.json         # WhatsApp export input (not versioned)
+├── YYYY-MM-DD/                  # Per-week output directories
+│   ├── messages.txt             # Threaded transcript
+│   ├── podcast-YYYY-MM-DD.md    # Generated dialogue script
+│   ├── NNN.opus                 # Individual TTS segments
+│   └── podcast-YYYY-MM-DD.mp3   # Final concatenated audio
+└── podcast.xml                  # RSS feed
+
 How It Works:
 
 1. `load_messages()` filters out items with null `time`, `text`, or missing `author`.
 2. `group_by_week()` buckets by Sunday of each ISO week.
 3. `build_threads()` indexes by `messageId`, collects replies via `quoteMessageId`, sorts roots chronologically.
-4. `render_message()` writes indented “– Author: Text \[reactions]” lines.
-5. `get_podcast_script()` POSTs system + user prompts to OpenAI API, calculates cost.
-6. `generate_podcast_audio()` splits the script by speaker, sends TTS requests, writes `.opus`, and FFmpeg-concats into MP3.
+4. `render_message()` writes indented `– Author: Text [reactions]` lines.
+5. `get_podcast_script()` POSTs system + user prompts to OpenAI API `gpt-4.1-mini` via `/v1/responses` endpoint, calculates cost.
+6. `generate_podcast_audio()` splits the script by speaker, sends TTS requests via `gpt-4o-mini-tts` with speaker-specific voices and instructions, writes `.opus`, and FFmpeg-concats into MP3 (via temporary `list.txt`)
 
 ## Release
 
