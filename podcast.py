@@ -89,7 +89,7 @@ def get_podcast_script(
     prompt = config["podcast"].replace("$WEEK", week.strftime("%d %b %Y"))
 
     payload = {
-        "model": "gpt-4.1-mini",
+        "model": "gpt-5-mini",
         "input": [
             {"role": "system", "content": prompt},
             {"role": "user", "content": messages_text},
@@ -105,7 +105,8 @@ def get_podcast_script(
     response.raise_for_status()
     result = response.json()
     cost = result["usage"]["input_tokens"] * 0.4 + result["usage"]["output_tokens"] * 1.6
-    return cost, result["output"][0]["content"][0]["text"]
+    # Use last .output entry - first few have reasoning
+    return cost, result["output"][-1]["content"][0]["text"]
 
 
 def generate_podcast_audio(script: str, target_dir: Path, config: Dict[str, Any]) -> None:
