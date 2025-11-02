@@ -86,7 +86,7 @@ def get_podcast_script(
     messages_text: str, config: Dict[str, Any], week: datetime.date
 ) -> Tuple[float, str]:
     "Generate a podcast script using OpenAI API"
-    prompt = config["podcast"].replace("$WEEK", week.strftime("%d %b %Y"))
+    prompt = config["podcast"].replace("$WEEK", week.strftime("%d %B %Y"))
 
     payload = {
         "model": "gpt-5-mini",
@@ -130,7 +130,7 @@ def generate_podcast_audio(script: str, target_dir: Path, config: Dict[str, Any]
             continue
         text = line[len(speaker) + 1 :].strip()
         body = {
-            "model": "gpt-4o-mini-tts",
+            "model": "tts-1",
             "input": text,
             "voice": speakers[speaker]["voice"],
             "instructions": speakers[speaker]["instructions"],
