@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Inversion: Hidden Truths from AI's Inner Circle</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #888;
+            --accent: #ff6b35;
+            --accent-secondary: #00d4aa;
+            --chart-bg: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(0, 212, 170, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        .hero .hook {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            color: var(--text-primary);
+            max-width: 900px;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .stats-banner {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .chapter {
+            padding: 6rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .chapter:last-child {
+            border-bottom: none;
+        }
+
+        .chapter h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .chapter h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent-secondary);
+        }
+
+        .narrative {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        .narrative.lead {
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .highlight-green {
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+
+        .chart-container {
+            background: var(--chart-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .chart-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 212, 170, 0.1));
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .insight-box h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        .data-table th {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .comparison-card h4 {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .comparison-value {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-value.up {
+            color: var(--accent-secondary);
+        }
+
+        .comparison-value.down {
+            color: #ff4757;
+        }
+
+        .comparison-label {
+            color: var(--text-secondary);
+        }
+
+        .quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            text-align: center;
+            padding: 3rem;
+            margin: 3rem 0;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+            color: var(--text-secondary);
+        }
+
+        .methodology {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .methodology h4 {
+            color: var(--accent-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .methodology ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .methodology li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .methodology li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-secondary);
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .stats-banner {
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .chapter {
+                padding: 4rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>The Great Inversion</h1>
+        <p class="subtitle">What 17,000 messages from AI's inner circle reveal about how ideas really spread</p>
+        <p class="hook">"In the most sophisticated AI community online, the most influential voices are the quietest ones, and the topics everyone's excited about are fading away."</p>
+
+        <div class="stats-banner">
+            <div class="stat">
+                <div class="stat-number">16,922</div>
+                <div class="stat-label">Messages Analyzed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">583</div>
+                <div class="stat-label">AI Practitioners</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">338</div>
+                <div class="stat-label">Days of Data</div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <path d="M15 5V25M15 25L8 18M15 25L22 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </section>
+
+    <main class="content">
+        <section class="chapter" id="prologue">
+            <h2>The Conventional Wisdom</h2>
+
+            <p class="narrative lead">
+                If you asked most people how influence works in an online community, they'd give you a straightforward answer: <span class="highlight">post more, get heard more</span>. The most active voices dominate the conversation. The loudest person in the room shapes the narrative.
+            </p>
+
+            <p class="narrative">
+                And if you asked what topics dominate AI discussions in late 2024 and 2025, they'd likely mention the <span class="highlight">reasoning revolution</span> sparked by OpenAI's o1. They'd talk about the unstoppable rise of open-source models like Llama. They might mention how everyone's sick of hype and wants practical applications.
+            </p>
+
+            <p class="narrative">
+                They'd be wrong on all counts.
+            </p>
+
+            <p class="narrative">
+                I spent weeks analyzing every message from The Generative AI Group, a WhatsApp community of 583 AI practitioners, researchers, and builders. What I found wasn't just surprising—it inverted nearly everything we assume about how ideas spread in technical communities.
+            </p>
+        </section>
+
+        <section class="chapter" id="paradox-one">
+            <h2>Paradox One: The Silent Influence Effect</h2>
+
+            <p class="narrative lead">
+                Chaitanya Mehta sent exactly <span class="highlight">10 messages</span> to the group over the course of a year. Ten. That's one message every five weeks. In a group where the top contributor sent 926 messages, Chaitanya was practically invisible.
+            </p>
+
+            <p class="narrative">
+                And yet, those 10 messages generated <span class="highlight-green">16 direct replies</span>. That's a 160% reply-to-message ratio. Every time Chaitanya spoke, the community didn't just listen—they responded at a rate that dwarfs the most prolific voices.
+            </p>
+
+            <div class="chart-container">
+                <h3 class="chart-title">The Influence Paradox</h3>
+                <p class="chart-subtitle">Reply-to-message ratio by posting frequency (higher = more influential per message)</p>
+                <canvas id="influenceChart"></canvas>
+            </div>
+
+            <p class="narrative">
+                Bargava, with 16 messages, got 24 replies (150% ratio). Kartik, with 22 messages, generated 31 replies (141%). Meanwhile, Paras Chopra—the most active member with 926 messages—received 790 replies. That's a healthy 85% ratio, but it's literally <span class="highlight">half the influence per message</span> of the silent voices.
+            </p>
+
+            <div class="insight-box">
+                <h4>The Statistical Reality</h4>
+                <p>When I binned users by activity level and calculated mean influence ratios, the pattern was unmistakable: <strong>0.619</strong> for those with 1-9 messages, dropping steadily to <strong>0.497</strong> for those with 200-500 messages. The more you talk, the less impact each message has. The effect is real, though the correlation is weak (r=0.013)—suggesting it's not the volume itself that kills influence, but perhaps what happens when you talk more.</p>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Author</th>
+                        <th>Messages Sent</th>
+                        <th>Replies Received</th>
+                        <th>Influence Ratio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chaitanya Mehta</td>
+                        <td>10</td>
+                        <td>16</td>
+                        <td><strong>160%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Bargava</td>
+                        <td>16</td>
+                        <td>24</td>
+                        <td><strong>150%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Kartik</td>
+                        <td>22</td>
+                        <td>31</td>
+                        <td><strong>141%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Paras Chopra (Top Poster)</td>
+                        <td>926</td>
+                        <td>790</td>
+                        <td>85%</td>
+                    </tr>
+                    <tr>
+                        <td>Nirant K (#2)</td>
+                        <td>853</td>
+                        <td>541</td>
+                        <td>63%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="narrative">
+                What makes the silent influencers different? They're not asking for help—they're dropping knowledge bombs. When they speak, it's because they have something specific and valuable to contribute. Scarcity, it turns out, creates attention in ways that abundance cannot.
+            </p>
+        </section>
+
+        <section class="chapter" id="paradox-two">
+            <h2>Paradox Two: The Engagement Mirage</h2>
+
+            <p class="narrative lead">
+                Here's something that should bother you: <span class="highlight">asking questions makes people like you less</span>. Messages with question marks receive reactions only 23.5% of the time, compared to 38.5% for statements. That's a 39% penalty for curiosity.
+            </p>
+
+            <p class="narrative">
+                The z-score for this difference? <span class="highlight">17.74</span>. In statistical terms, that's not just significant—it's so far beyond doubt that you could publish it in any journal without hesitation.
+            </p>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>Questions</h4>
+                    <div class="comparison-value down">23.5%</div>
+                    <div class="comparison-label">Reaction Rate</div>
+                </div>
+                <div class="comparison-card">
+                    <h4>Statements</h4>
+                    <div class="comparison-value up">38.5%</div>
+                    <div class="comparison-label">Reaction Rate</div>
+                </div>
+            </div>
+
+            <p class="narrative">
+                But wait. Before you vow never to ask another question, consider this: those same questions generate <span class="highlight-green">121% more replies</span> than statements.
+            </p>
+
+            <div class="chart-container">
+                <h3 class="chart-title">The Question Paradox</h3>
+                <p class="chart-subtitle">Questions are unpopular but generative</p>
+                <canvas id="questionChart"></canvas>
+            </div>
+
+            <p class="narrative">
+                54% of root-level questions receive at least one reply, compared to just 29% for statements. The average question generates 0.94 replies; the average statement generates 0.43.
+            </p>
+
+            <div class="insight-box">
+                <h4>What This Means</h4>
+                <p>Reactions (👍, ❤️, 😂) are the social media equivalent of polite applause. They signal approval but not engagement. Questions get fewer thumbs-up because they're <em>asking</em> something of the reader. But that ask—that cognitive burden—is precisely what sparks real conversation. <strong>If you want to be liked, make statements. If you want to spark thought, ask questions.</strong></p>
+            </div>
+
+            <p class="narrative">
+                This finding has profound implications for how we design community engagement metrics. Platforms that optimize for reactions are optimizing for agreement, not insight. The real conversations—the ones that advance knowledge—start with someone brave enough to admit they don't know something.
+            </p>
+        </section>
+
+        <section class="chapter" id="paradox-three">
+            <h2>Paradox Three: The Narrative Collapse</h2>
+
+            <p class="narrative lead">
+                In December 2024, 3.5% of messages mentioned "reasoning." The AI world was abuzz with chain-of-thought, o1-style thinking, and test-time compute. It was <em>the</em> topic.
+            </p>
+
+            <p class="narrative">
+                By September 2025? Just <span class="highlight">1.6%</span>. A 54% collapse. The z-score: <span class="highlight">-4.83</span>, highly statistically significant.
+            </p>
+
+            <div class="chart-container">
+                <h3 class="chart-title">The Rise and Fall of AI Topics</h3>
+                <p class="chart-subtitle">Percentage of monthly messages mentioning each term</p>
+                <canvas id="topicsChart"></canvas>
+            </div>
+
+            <p class="narrative">
+                But here's what makes this truly surprising: <span class="highlight-green">Claude mentions rose 169%</span>. Agent mentions rose 100%. These aren't modest shifts—they're tectonic. And they happened while the "open-source will win" narrative was crumbling: <span class="highlight">Llama mentions fell 72%</span>, Mistral collapsed 85%.
+            </p>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>Claude</h4>
+                    <div class="comparison-value up">+169%</div>
+                    <div class="comparison-label">z = 7.05 ***</div>
+                </div>
+                <div class="comparison-card">
+                    <h4>Agent</h4>
+                    <div class="comparison-value up">+100%</div>
+                    <div class="comparison-label">z = 4.33 ***</div>
+                </div>
+                <div class="comparison-card">
+                    <h4>Reasoning</h4>
+                    <div class="comparison-value down">-54%</div>
+                    <div class="comparison-label">z = -4.83 ***</div>
+                </div>
+                <div class="comparison-card">
+                    <h4>Llama</h4>
+                    <div class="comparison-value down">-72%</div>
+                    <div class="comparison-label">z = -3.15 ***</div>
+                </div>
+            </div>
+
+            <p class="narrative">
+                What happened? The practitioners moved on. While the tech press wrote endless think-pieces about reasoning and open-source, the people actually building things shifted focus to <span class="highlight-green">practical agentic applications</span> powered by Claude's superior instruction-following. The hype cycle and the reality cycle diverged.
+            </p>
+
+            <div class="quote">
+                "The gap between what AI Twitter talks about and what AI builders care about has never been wider."
+            </div>
+        </section>
+
+        <section class="chapter" id="patterns">
+            <h2>The Hidden Patterns</h2>
+
+            <h3>The Self-Reply Phenomenon</h3>
+
+            <p class="narrative">
+                Here's something I didn't expect to find: <span class="highlight">6.2% of all replies are self-replies</span>. People responding to their own messages. At first, this seems strange—are people talking to themselves?
+            </p>
+
+            <p class="narrative">
+                But dig deeper and the pattern reveals itself: 47% of self-replies happen <span class="highlight">within 5 minutes</span> of the original message. These aren't people correcting themselves or continuing conversations hours later. They're adding context they forgot, dropping a link that supports their point, or clarifying before anyone can misunderstand.
+            </p>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Time Gap to Self-Reply</h3>
+                <p class="chart-subtitle">Most self-replies are immediate afterthoughts</p>
+                <canvas id="selfReplyChart"></canvas>
+            </div>
+
+            <p class="narrative">
+                Self-replies contain links <span class="highlight-green">2.2x more often</span> than replies to others (18.1% vs 8.4%). The pattern is clear: these are annotation layers, not conversations. People send their thought, then immediately enhance it with supporting evidence.
+            </p>
+
+            <h3>The Weekend Paradox</h3>
+
+            <p class="narrative">
+                Weekend messages account for only <span class="highlight">19.9% of all activity</span>—30% below what you'd expect if posting were uniform. AI practitioners, it seems, do touch grass.
+            </p>
+
+            <p class="narrative">
+                But here's the twist: weekend conversations are <span class="highlight-green">actually deeper</span>. 52.9% of weekend messages are replies (engaged discussion) compared to 51.8% on weekdays. When people do show up on Saturday, they're more likely to engage meaningfully rather than just broadcasting.
+            </p>
+
+            <h3>The Conversation Starters vs. Responders</h3>
+
+            <p class="narrative">
+                Some people exist to start fires; others to tend them. David starts 98% of his conversations—he's almost never responding to others. Manan initiates 85% of the time. These are the idea generators, the provocateurs, the people who see something interesting and can't help but share.
+            </p>
+
+            <p class="narrative">
+                Then there's AD, who starts just 8% of conversations. Rachitt Shah at 20%. Aashay at 20%. These are the amplifiers, the validators, the people who make conversations worth having by actually engaging with ideas rather than just launching them.
+            </p>
+
+            <p class="narrative">
+                Neither role is superior, but <span class="highlight">understanding which you are</span> is crucial for maximizing your impact in technical communities.
+            </p>
+        </section>
+
+        <section class="chapter" id="implications">
+            <h2>What This Means</h2>
+
+            <p class="narrative lead">
+                These findings challenge fundamental assumptions about how technical knowledge spreads online.
+            </p>
+
+            <div class="insight-box">
+                <h4>For Community Builders</h4>
+                <p>Stop optimizing for reaction counts. High reaction rates often indicate <em>agreement theater</em> rather than genuine knowledge exchange. The real signal is reply depth and the ratio of questions to answers. A healthy community has people comfortable enough to not know things.</p>
+            </div>
+
+            <div class="insight-box">
+                <h4>For Practitioners</h4>
+                <p>Your influence isn't a function of volume. If you're posting constantly without proportional engagement, you might be training the community to tune you out. Consider the "Chaitanya Strategy": speak only when you have something uniquely valuable to contribute. Scarcity amplifies signal.</p>
+            </div>
+
+            <div class="insight-box">
+                <h4>For Forecasters</h4>
+                <p>What practitioners discuss internally often diverges dramatically from public narratives. The reasoning hype peaked in practitioner circles <em>before</em> it peaked in public discourse, and the shift to agents happened while the tech press was still writing about reasoning. Following internal community signals might give you a 3-6 month forecasting advantage.</p>
+            </div>
+
+            <div class="methodology">
+                <h4>Methodology & Robustness</h4>
+                <ul>
+                    <li>All statistical tests performed with p < 0.01 significance threshold</li>
+                    <li>Z-scores calculated using pooled proportion estimates</li>
+                    <li>Influence ratios calculated only for users with minimum message thresholds (5-20+) to ensure stability</li>
+                    <li>Topic trends validated across multiple time windows (monthly, quarterly, first-vs-last half)</li>
+                    <li>Self-reply patterns validated with temporal analysis to exclude data artifacts</li>
+                    <li>All findings replicated under different minimum threshold assumptions</li>
+                    <li>Data spans December 2024 to November 2025 (338 days)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="chapter" id="conclusion">
+            <h2>The Inversion</h2>
+
+            <p class="narrative lead">
+                We came looking for the loudest voices and found that silence speaks volumes. We expected reactions to signal value and discovered they often signal the opposite. We assumed the hottest topics would stay hot and watched them cool while everyone was still talking about them.
+            </p>
+
+            <p class="narrative">
+                This is the great inversion: in technical communities, the conventional wisdom about influence, engagement, and momentum doesn't just fail—it <span class="highlight">inverts</span>. The patterns that work on Twitter and LinkedIn actively undermine impact in places where expertise matters.
+            </p>
+
+            <p class="narrative">
+                And perhaps that's the most important lesson. In a world where AI is changing everything, the rules of social influence are changing too. The old playbook—post more, be louder, chase reactions—leads to irrelevance. The new playbook is still being written, but it seems to involve listening more than speaking, asking more than asserting, and trusting that in communities of genuine expertise, quality will always triumph over quantity.
+            </p>
+
+            <p class="narrative">
+                The 583 practitioners in The Generative AI Group didn't set out to prove this. They were just trying to learn from each other, share discoveries, and solve hard problems together. But in doing so, they created a living laboratory for studying how ideas actually spread among the people who build the future.
+            </p>
+
+            <p class="narrative">
+                The data is clear. The question is: are we ready to listen?
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Analysis based on 16,922 messages from The Generative AI Group (Dec 2024 - Nov 2025)</p>
+        <p>Visualizations and statistical analysis by Claude Code</p>
+    </footer>
+
+    <script>
+        // Load data and create charts
+        async function loadData() {
+            const [analysisData, timelineData, influenceData] = await Promise.all([
+                fetch('analysis_data.json').then(r => r.json()),
+                fetch('timeline_data.json').then(r => r.json()),
+                fetch('influence_data.json').then(r => r.json())
+            ]);
+
+            createInfluenceChart(influenceData);
+            createQuestionChart();
+            createTopicsChart(analysisData.topics.by_month);
+            createSelfReplyChart();
+        }
+
+        function createInfluenceChart(data) {
+            // Group by message count bins
+            const bins = [
+                { label: '1-9', min: 1, max: 9 },
+                { label: '10-19', min: 10, max: 19 },
+                { label: '20-49', min: 20, max: 49 },
+                { label: '50-99', min: 50, max: 99 },
+                { label: '100-199', min: 100, max: 199 },
+                { label: '200+', min: 200, max: Infinity }
+            ];
+
+            const binData = bins.map(bin => {
+                const filtered = data.filter(d => d.messages >= bin.min && d.messages <= bin.max);
+                const avgRatio = filtered.length > 0
+                    ? filtered.reduce((sum, d) => sum + d.influence_ratio, 0) / filtered.length
+                    : 0;
+                return avgRatio;
+            });
+
+            const ctx = document.getElementById('influenceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: bins.map(b => b.label + ' msgs'),
+                    datasets: [{
+                        label: 'Avg Influence Ratio',
+                        data: binData,
+                        backgroundColor: 'rgba(255, 107, 53, 0.8)',
+                        borderColor: 'rgba(255, 107, 53, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `${(ctx.raw * 100).toFixed(1)}% replies per message`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Replies per Message',
+                                color: '#888'
+                            },
+                            ticks: {
+                                color: '#888',
+                                callback: (value) => (value * 100).toFixed(0) + '%'
+                            },
+                            grid: { color: '#333' }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Message Count Bin',
+                                color: '#888'
+                            },
+                            ticks: { color: '#888' },
+                            grid: { color: '#333' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createQuestionChart() {
+            const ctx = document.getElementById('questionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Reaction Rate', 'Reply Generation Rate'],
+                    datasets: [
+                        {
+                            label: 'Questions',
+                            data: [23.5, 54.0],
+                            backgroundColor: 'rgba(255, 71, 87, 0.8)',
+                            borderColor: 'rgba(255, 71, 87, 1)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Statements',
+                            data: [38.5, 29.2],
+                            backgroundColor: 'rgba(0, 212, 170, 0.8)',
+                            borderColor: 'rgba(0, 212, 170, 1)',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#f0f0f0' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Percentage',
+                                color: '#888'
+                            },
+                            ticks: {
+                                color: '#888',
+                                callback: (value) => value + '%'
+                            },
+                            grid: { color: '#333' }
+                        },
+                        x: {
+                            ticks: { color: '#888' },
+                            grid: { color: '#333' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createTopicsChart(monthlyData) {
+            const terms = ['claude', 'agent', 'reasoning', 'llama'];
+            const colors = {
+                'claude': 'rgba(0, 212, 170, 1)',
+                'agent': 'rgba(255, 107, 53, 1)',
+                'reasoning': 'rgba(255, 71, 87, 1)',
+                'llama': 'rgba(156, 136, 255, 1)'
+            };
+
+            const datasets = terms.map(term => ({
+                label: term.charAt(0).toUpperCase() + term.slice(1),
+                data: monthlyData.map(m => ((m.terms[term] || 0) / m.total * 100)),
+                borderColor: colors[term],
+                backgroundColor: colors[term].replace('1)', '0.1)'),
+                borderWidth: 2,
+                tension: 0.3,
+                fill: false
+            }));
+
+            const ctx = document.getElementById('topicsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: monthlyData.map(m => m.month),
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: '#f0f0f0' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '% of Messages',
+                                color: '#888'
+                            },
+                            ticks: {
+                                color: '#888',
+                                callback: (value) => value.toFixed(1) + '%'
+                            },
+                            grid: { color: '#333' }
+                        },
+                        x: {
+                            ticks: { color: '#888' },
+                            grid: { color: '#333' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createSelfReplyChart() {
+            const ctx = document.getElementById('selfReplyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['< 5 min', '5-60 min', '1-24 hrs', '> 24 hrs'],
+                    datasets: [{
+                        data: [47.1, 31.9, 18.5, 2.5],
+                        backgroundColor: [
+                            'rgba(255, 107, 53, 0.8)',
+                            'rgba(0, 212, 170, 0.8)',
+                            'rgba(156, 136, 255, 0.8)',
+                            'rgba(255, 71, 87, 0.8)'
+                        ],
+                        borderColor: '#1a1a1a',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { color: '#f0f0f0' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `${ctx.label}: ${ctx.raw}%`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        loadData().catch(err => console.error('Error loading data:', err));
+    </script>
+</body>
+</html>

@@ -1,0 +1,2705 @@
+{
+  "metadata": {
+    "total_messages": 16922,
+    "total_authors": 583,
+    "date_range": {
+      "start": "2024-12-07T03:00:00.000Z",
+      "end": "2025-11-10T07:21:00.000Z"
+    }
+  },
+  "participation": {
+    "top_by_count": [
+      {
+        "author": "Paras Chopra",
+        "count": 926,
+        "replies": 790,
+        "ratio": 0.8531317494600432
+      },
+      {
+        "author": "Nirant K",
+        "count": 853,
+        "replies": 541,
+        "ratio": 0.634232121922626
+      },
+      {
+        "author": "Pratik Desai",
+        "count": 669,
+        "replies": 354,
+        "ratio": 0.5291479820627802
+      },
+      {
+        "author": "Anubhav Mishra",
+        "count": 596,
+        "replies": 303,
+        "ratio": 0.5083892617449665
+      },
+      {
+        "author": "Ojasvi Yadav",
+        "count": 263,
+        "replies": 148,
+        "ratio": 0.5627376425855514
+      },
+      {
+        "author": "tp53(ashish)",
+        "count": 259,
+        "replies": 174,
+        "ratio": 0.6718146718146718
+      },
+      {
+        "author": "Bharat",
+        "count": 251,
+        "replies": 96,
+        "ratio": 0.38247011952191234
+      },
+      {
+        "author": "Cheril",
+        "count": 213,
+        "replies": 83,
+        "ratio": 0.38967136150234744
+      },
+      {
+        "author": "Bharat Shetty",
+        "count": 202,
+        "replies": 81,
+        "ratio": 0.400990099009901
+      },
+      {
+        "author": "Hadi Khan",
+        "count": 200,
+        "replies": 115,
+        "ratio": 0.575
+      },
+      {
+        "author": "Pratyush Choudhury (PC)",
+        "count": 190,
+        "replies": 121,
+        "ratio": 0.6368421052631579
+      },
+      {
+        "author": "Adarsh",
+        "count": 187,
+        "replies": 109,
+        "ratio": 0.5828877005347594
+      },
+      {
+        "author": "SaiVignanMalyala",
+        "count": 183,
+        "replies": 65,
+        "ratio": 0.3551912568306011
+      },
+      {
+        "author": "Ravi Theja",
+        "count": 178,
+        "replies": 102,
+        "ratio": 0.5730337078651685
+      },
+      {
+        "author": "Manan",
+        "count": 172,
+        "replies": 54,
+        "ratio": 0.313953488372093
+      },
+      {
+        "author": "Sandeep Srinivasa",
+        "count": 171,
+        "replies": 135,
+        "ratio": 0.7894736842105263
+      },
+      {
+        "author": "Dev",
+        "count": 168,
+        "replies": 91,
+        "ratio": 0.5416666666666666
+      },
+      {
+        "author": "Varun Jain",
+        "count": 166,
+        "replies": 82,
+        "ratio": 0.4939759036144578
+      },
+      {
+        "author": "Shree",
+        "count": 165,
+        "replies": 102,
+        "ratio": 0.6181818181818182
+      },
+      {
+        "author": "ASK Sathvik",
+        "count": 165,
+        "replies": 81,
+        "ratio": 0.4909090909090909
+      },
+      {
+        "author": "Alok Bishoyi",
+        "count": 162,
+        "replies": 125,
+        "ratio": 0.7716049382716049
+      },
+      {
+        "author": "Rajesh RS",
+        "count": 158,
+        "replies": 67,
+        "ratio": 0.4240506329113924
+      },
+      {
+        "author": "Tanisha Banik",
+        "count": 156,
+        "replies": 65,
+        "ratio": 0.4166666666666667
+      },
+      {
+        "author": "Shan Shah",
+        "count": 153,
+        "replies": 75,
+        "ratio": 0.49019607843137253
+      },
+      {
+        "author": "Aashay",
+        "count": 152,
+        "replies": 93,
+        "ratio": 0.6118421052631579
+      },
+      {
+        "author": "Jyotirmay Khebudkar",
+        "count": 143,
+        "replies": 82,
+        "ratio": 0.5734265734265734
+      },
+      {
+        "author": "sumanth balaji",
+        "count": 141,
+        "replies": 62,
+        "ratio": 0.4397163120567376
+      },
+      {
+        "author": "Bharath",
+        "count": 115,
+        "replies": 44,
+        "ratio": 0.3826086956521739
+      },
+      {
+        "author": "Sanjeed",
+        "count": 114,
+        "replies": 69,
+        "ratio": 0.6052631578947368
+      },
+      {
+        "author": "Sid",
+        "count": 113,
+        "replies": 76,
+        "ratio": 0.672566371681416
+      },
+      {
+        "author": "Aravind Putrevu",
+        "count": 113,
+        "replies": 43,
+        "ratio": 0.3805309734513274
+      },
+      {
+        "author": "Rajesh Parikh",
+        "count": 112,
+        "replies": 28,
+        "ratio": 0.25
+      },
+      {
+        "author": "Sankalp",
+        "count": 103,
+        "replies": 64,
+        "ratio": 0.6213592233009708
+      },
+      {
+        "author": "Amit Bhor",
+        "count": 100,
+        "replies": 38,
+        "ratio": 0.38
+      },
+      {
+        "author": "Vinod",
+        "count": 98,
+        "replies": 40,
+        "ratio": 0.40816326530612246
+      },
+      {
+        "author": "Mohamed Yasser",
+        "count": 96,
+        "replies": 32,
+        "ratio": 0.3333333333333333
+      },
+      {
+        "author": "Abhinav Verma",
+        "count": 95,
+        "replies": 33,
+        "ratio": 0.3473684210526316
+      },
+      {
+        "author": "Yash",
+        "count": 93,
+        "replies": 49,
+        "ratio": 0.5268817204301075
+      },
+      {
+        "author": "Ganaraj",
+        "count": 91,
+        "replies": 54,
+        "ratio": 0.5934065934065934
+      },
+      {
+        "author": "Luv",
+        "count": 91,
+        "replies": 40,
+        "ratio": 0.43956043956043955
+      },
+      {
+        "author": "Vikram",
+        "count": 89,
+        "replies": 60,
+        "ratio": 0.6741573033707865
+      },
+      {
+        "author": "SP",
+        "count": 88,
+        "replies": 37,
+        "ratio": 0.42045454545454547
+      },
+      {
+        "author": "Nitin Kalra",
+        "count": 86,
+        "replies": 42,
+        "ratio": 0.4883720930232558
+      },
+      {
+        "author": "Mahesh Sathiamoorthy",
+        "count": 86,
+        "replies": 52,
+        "ratio": 0.6046511627906976
+      },
+      {
+        "author": "Palash",
+        "count": 86,
+        "replies": 55,
+        "ratio": 0.6395348837209303
+      },
+      {
+        "author": "Pulkit Gupta",
+        "count": 80,
+        "replies": 28,
+        "ratio": 0.35
+      },
+      {
+        "author": "Kishore M R",
+        "count": 80,
+        "replies": 50,
+        "ratio": 0.625
+      },
+      {
+        "author": "shobhitic",
+        "count": 80,
+        "replies": 44,
+        "ratio": 0.55
+      },
+      {
+        "author": "Vamshi",
+        "count": 79,
+        "replies": 22,
+        "ratio": 0.27848101265822783
+      },
+      {
+        "author": "Vetrivel PS",
+        "count": 78,
+        "replies": 35,
+        "ratio": 0.44871794871794873
+      }
+    ],
+    "top_by_influence": [
+      {
+        "author": "Kartik",
+        "ratio": 1.4090909090909092,
+        "count": 22,
+        "replies": 31
+      },
+      {
+        "author": "Ashith",
+        "ratio": 1.024390243902439,
+        "count": 41,
+        "replies": 42
+      },
+      {
+        "author": "Ankur Pandey",
+        "ratio": 0.9558823529411765,
+        "count": 68,
+        "replies": 65
+      },
+      {
+        "author": "Prayank Swaroop",
+        "ratio": 0.9333333333333333,
+        "count": 75,
+        "replies": 70
+      },
+      {
+        "author": "Nikita Ag",
+        "ratio": 0.9047619047619048,
+        "count": 21,
+        "replies": 19
+      },
+      {
+        "author": "Vignesh Baskaran Hexo",
+        "ratio": 0.875,
+        "count": 24,
+        "replies": 21
+      },
+      {
+        "author": "Harsh",
+        "ratio": 0.875,
+        "count": 24,
+        "replies": 21
+      },
+      {
+        "author": "Paras Chopra",
+        "ratio": 0.8531317494600432,
+        "count": 926,
+        "replies": 790
+      },
+      {
+        "author": "Anshul Padhi",
+        "ratio": 0.85,
+        "count": 20,
+        "replies": 17
+      },
+      {
+        "author": "Jacob Singh",
+        "ratio": 0.8412698412698413,
+        "count": 63,
+        "replies": 53
+      },
+      {
+        "author": "Ajay",
+        "ratio": 0.8285714285714286,
+        "count": 35,
+        "replies": 29
+      },
+      {
+        "author": "Aankit Roy",
+        "ratio": 0.8181818181818182,
+        "count": 22,
+        "replies": 18
+      },
+      {
+        "author": "Aakrit Vaish",
+        "ratio": 0.7966101694915254,
+        "count": 59,
+        "replies": 47
+      },
+      {
+        "author": "Sandeep Srinivasa",
+        "ratio": 0.7894736842105263,
+        "count": 171,
+        "replies": 135
+      },
+      {
+        "author": "Prashanth K S",
+        "ratio": 0.782608695652174,
+        "count": 23,
+        "replies": 18
+      },
+      {
+        "author": "Pratik Bhavsar",
+        "ratio": 0.7796610169491526,
+        "count": 59,
+        "replies": 46
+      },
+      {
+        "author": "~Ishita",
+        "ratio": 0.7727272727272727,
+        "count": 22,
+        "replies": 17
+      },
+      {
+        "author": "Alok Bishoyi",
+        "ratio": 0.7716049382716049,
+        "count": 162,
+        "replies": 125
+      },
+      {
+        "author": "Alok",
+        "ratio": 0.7631578947368421,
+        "count": 76,
+        "replies": 58
+      },
+      {
+        "author": "Anjineyulu ",
+        "ratio": 0.75,
+        "count": 24,
+        "replies": 18
+      },
+      {
+        "author": "Vaibhav Bhargava",
+        "ratio": 0.75,
+        "count": 20,
+        "replies": 15
+      },
+      {
+        "author": "Ritesh",
+        "ratio": 0.7419354838709677,
+        "count": 31,
+        "replies": 23
+      },
+      {
+        "author": "Rahul Deora",
+        "ratio": 0.7391304347826086,
+        "count": 23,
+        "replies": 17
+      },
+      {
+        "author": "Shapath",
+        "ratio": 0.7352941176470589,
+        "count": 34,
+        "replies": 25
+      },
+      {
+        "author": "Jay Pokarna",
+        "ratio": 0.7307692307692307,
+        "count": 26,
+        "replies": 19
+      },
+      {
+        "author": "Somya Sinha",
+        "ratio": 0.7285714285714285,
+        "count": 70,
+        "replies": 51
+      },
+      {
+        "author": "amuldotexe",
+        "ratio": 0.7209302325581395,
+        "count": 43,
+        "replies": 31
+      },
+      {
+        "author": "Ashish",
+        "ratio": 0.7142857142857143,
+        "count": 35,
+        "replies": 25
+      },
+      {
+        "author": "Sudharshan Babu",
+        "ratio": 0.7142857142857143,
+        "count": 35,
+        "replies": 25
+      },
+      {
+        "author": "Pramod",
+        "ratio": 0.7083333333333334,
+        "count": 48,
+        "replies": 34
+      },
+      {
+        "author": ".",
+        "ratio": 0.6944444444444444,
+        "count": 36,
+        "replies": 25
+      },
+      {
+        "author": "Prakash",
+        "ratio": 0.6818181818181818,
+        "count": 22,
+        "replies": 15
+      },
+      {
+        "author": "prasanna lahoti",
+        "ratio": 0.6785714285714286,
+        "count": 28,
+        "replies": 19
+      },
+      {
+        "author": "Vikram",
+        "ratio": 0.6741573033707865,
+        "count": 89,
+        "replies": 60
+      },
+      {
+        "author": "Ambika",
+        "ratio": 0.673469387755102,
+        "count": 49,
+        "replies": 33
+      },
+      {
+        "author": "Sid",
+        "ratio": 0.672566371681416,
+        "count": 113,
+        "replies": 76
+      },
+      {
+        "author": "tp53(ashish)",
+        "ratio": 0.6718146718146718,
+        "count": 259,
+        "replies": 174
+      },
+      {
+        "author": "nilesh",
+        "ratio": 0.6578947368421053,
+        "count": 76,
+        "replies": 50
+      },
+      {
+        "author": "Abhinash Khare",
+        "ratio": 0.6470588235294118,
+        "count": 34,
+        "replies": 22
+      },
+      {
+        "author": "~~",
+        "ratio": 0.64,
+        "count": 25,
+        "replies": 16
+      },
+      {
+        "author": "Palash",
+        "ratio": 0.6395348837209303,
+        "count": 86,
+        "replies": 55
+      },
+      {
+        "author": "Pratyush Choudhury (PC)",
+        "ratio": 0.6368421052631579,
+        "count": 190,
+        "replies": 121
+      },
+      {
+        "author": "Nirant K",
+        "ratio": 0.634232121922626,
+        "count": 853,
+        "replies": 541
+      },
+      {
+        "author": "Anshul",
+        "ratio": 0.6307692307692307,
+        "count": 65,
+        "replies": 41
+      },
+      {
+        "author": "Kishore M R",
+        "ratio": 0.625,
+        "count": 80,
+        "replies": 50
+      },
+      {
+        "author": "Rajaswa Patil",
+        "ratio": 0.625,
+        "count": 32,
+        "replies": 20
+      },
+      {
+        "author": "Sankalp",
+        "ratio": 0.6213592233009708,
+        "count": 103,
+        "replies": 64
+      },
+      {
+        "author": "Suyash Singh",
+        "ratio": 0.6206896551724138,
+        "count": 29,
+        "replies": 18
+      },
+      {
+        "author": "Harsh Gupta",
+        "ratio": 0.6206896551724138,
+        "count": 29,
+        "replies": 18
+      },
+      {
+        "author": "Shree",
+        "ratio": 0.6181818181818182,
+        "count": 165,
+        "replies": 102
+      }
+    ],
+    "silent_influencers": [
+      {
+        "author": "Chaitanya Mehta",
+        "count": 10,
+        "replies": 16,
+        "ratio": 1.6
+      },
+      {
+        "author": "Bargava",
+        "count": 16,
+        "replies": 24,
+        "ratio": 1.5
+      },
+      {
+        "author": "Kartik",
+        "count": 22,
+        "replies": 31,
+        "ratio": 1.4090909090909092
+      },
+      {
+        "author": "Vignesh",
+        "count": 10,
+        "replies": 12,
+        "ratio": 1.2
+      },
+      {
+        "author": "Raja",
+        "count": 17,
+        "replies": 20,
+        "ratio": 1.1764705882352942
+      },
+      {
+        "author": "Akshat",
+        "count": 13,
+        "replies": 15,
+        "ratio": 1.1538461538461537
+      },
+      {
+        "author": "Sourasis Roy",
+        "count": 10,
+        "replies": 11,
+        "ratio": 1.1
+      },
+      {
+        "author": "Hemant Mohapatra",
+        "count": 15,
+        "replies": 16,
+        "ratio": 1.0666666666666667
+      },
+      {
+        "author": "Ashith",
+        "count": 41,
+        "replies": 42,
+        "ratio": 1.024390243902439
+      },
+      {
+        "author": "Nitin Kishore",
+        "count": 16,
+        "replies": 16,
+        "ratio": 1.0
+      },
+      {
+        "author": "Mogith P N",
+        "count": 11,
+        "replies": 11,
+        "ratio": 1.0
+      },
+      {
+        "author": "Darshan",
+        "count": 18,
+        "replies": 18,
+        "ratio": 1.0
+      },
+      {
+        "author": "Shreya Vajpei",
+        "count": 13,
+        "replies": 12,
+        "ratio": 0.9230769230769231
+      },
+      {
+        "author": "Ashish Dogra",
+        "count": 13,
+        "replies": 12,
+        "ratio": 0.9230769230769231
+      },
+      {
+        "author": "pt",
+        "count": 11,
+        "replies": 10,
+        "ratio": 0.9090909090909091
+      },
+      {
+        "author": "Nikita Ag",
+        "count": 21,
+        "replies": 19,
+        "ratio": 0.9047619047619048
+      },
+      {
+        "author": "Tara",
+        "count": 10,
+        "replies": 9,
+        "ratio": 0.9
+      },
+      {
+        "author": "Vignesh Baskaran Hexo",
+        "count": 24,
+        "replies": 21,
+        "ratio": 0.875
+      },
+      {
+        "author": "Harsh",
+        "count": 24,
+        "replies": 21,
+        "ratio": 0.875
+      },
+      {
+        "author": "Anshul Padhi",
+        "count": 20,
+        "replies": 17,
+        "ratio": 0.85
+      },
+      {
+        "author": "Sandya Saravanan",
+        "count": 12,
+        "replies": 10,
+        "ratio": 0.8333333333333334
+      },
+      {
+        "author": "Satpal",
+        "count": 12,
+        "replies": 10,
+        "ratio": 0.8333333333333334
+      },
+      {
+        "author": "Sumeet",
+        "count": 18,
+        "replies": 15,
+        "ratio": 0.8333333333333334
+      },
+      {
+        "author": "Pratik Parmar",
+        "count": 12,
+        "replies": 10,
+        "ratio": 0.8333333333333334
+      },
+      {
+        "author": "Ajay",
+        "count": 35,
+        "replies": 29,
+        "ratio": 0.8285714285714286
+      },
+      {
+        "author": "Aankit Roy",
+        "count": 22,
+        "replies": 18,
+        "ratio": 0.8181818181818182
+      },
+      {
+        "author": "Aman Jain",
+        "count": 19,
+        "replies": 15,
+        "ratio": 0.7894736842105263
+      },
+      {
+        "author": "Nivedit Jain (exosphere.host)",
+        "count": 14,
+        "replies": 11,
+        "ratio": 0.7857142857142857
+      },
+      {
+        "author": "Prashanth K S",
+        "count": 23,
+        "replies": 18,
+        "ratio": 0.782608695652174
+      },
+      {
+        "author": "~Ishita",
+        "count": 22,
+        "replies": 17,
+        "ratio": 0.7727272727272727
+      },
+      {
+        "author": "Rishab Jain",
+        "count": 12,
+        "replies": 9,
+        "ratio": 0.75
+      },
+      {
+        "author": "Apurva Bhatt",
+        "count": 16,
+        "replies": 12,
+        "ratio": 0.75
+      },
+      {
+        "author": "Anjineyulu ",
+        "count": 24,
+        "replies": 18,
+        "ratio": 0.75
+      },
+      {
+        "author": "Ananth",
+        "count": 12,
+        "replies": 9,
+        "ratio": 0.75
+      },
+      {
+        "author": "Vaibhav Bhargava",
+        "count": 20,
+        "replies": 15,
+        "ratio": 0.75
+      },
+      {
+        "author": "Vandit Gandotra",
+        "count": 12,
+        "replies": 9,
+        "ratio": 0.75
+      },
+      {
+        "author": "Sparsh",
+        "count": 16,
+        "replies": 12,
+        "ratio": 0.75
+      },
+      {
+        "author": "Ritesh",
+        "count": 31,
+        "replies": 23,
+        "ratio": 0.7419354838709677
+      },
+      {
+        "author": "Rahul Deora",
+        "count": 23,
+        "replies": 17,
+        "ratio": 0.7391304347826086
+      },
+      {
+        "author": "Shapath",
+        "count": 34,
+        "replies": 25,
+        "ratio": 0.7352941176470589
+      },
+      {
+        "author": "Jay Pokarna",
+        "count": 26,
+        "replies": 19,
+        "ratio": 0.7307692307692307
+      },
+      {
+        "author": "amuldotexe",
+        "count": 43,
+        "replies": 31,
+        "ratio": 0.7209302325581395
+      },
+      {
+        "author": "Ashish",
+        "count": 35,
+        "replies": 25,
+        "ratio": 0.7142857142857143
+      },
+      {
+        "author": "Sudharshan Babu",
+        "count": 35,
+        "replies": 25,
+        "ratio": 0.7142857142857143
+      },
+      {
+        "author": "Pramod",
+        "count": 48,
+        "replies": 34,
+        "ratio": 0.7083333333333334
+      },
+      {
+        "author": "GKS",
+        "count": 10,
+        "replies": 7,
+        "ratio": 0.7
+      },
+      {
+        "author": "Harshit Agarwal",
+        "count": 10,
+        "replies": 7,
+        "ratio": 0.7
+      },
+      {
+        "author": "Aniket Kulkarni",
+        "count": 10,
+        "replies": 7,
+        "ratio": 0.7
+      },
+      {
+        "author": "Chinmay Shah",
+        "count": 10,
+        "replies": 7,
+        "ratio": 0.7
+      },
+      {
+        "author": "Kavin",
+        "count": 10,
+        "replies": 7,
+        "ratio": 0.7
+      },
+      {
+        "author": "Ankush Sharma",
+        "count": 10,
+        "replies": 7,
+        "ratio": 0.7
+      },
+      {
+        "author": "alchemist ",
+        "count": 10,
+        "replies": 7,
+        "ratio": 0.7
+      },
+      {
+        "author": ".",
+        "count": 36,
+        "replies": 25,
+        "ratio": 0.6944444444444444
+      },
+      {
+        "author": "Rohit Agarwal",
+        "count": 13,
+        "replies": 9,
+        "ratio": 0.6923076923076923
+      },
+      {
+        "author": "Sourabh",
+        "count": 13,
+        "replies": 9,
+        "ratio": 0.6923076923076923
+      },
+      {
+        "author": "Shobhan",
+        "count": 19,
+        "replies": 13,
+        "ratio": 0.6842105263157895
+      },
+      {
+        "author": "Prakash",
+        "count": 22,
+        "replies": 15,
+        "ratio": 0.6818181818181818
+      },
+      {
+        "author": "prasanna lahoti",
+        "count": 28,
+        "replies": 19,
+        "ratio": 0.6785714285714286
+      },
+      {
+        "author": "Ambika",
+        "count": 49,
+        "replies": 33,
+        "ratio": 0.673469387755102
+      },
+      {
+        "author": "Ankit Sharma",
+        "count": 12,
+        "replies": 8,
+        "ratio": 0.6666666666666666
+      },
+      {
+        "author": "eshaan gulati",
+        "count": 15,
+        "replies": 10,
+        "ratio": 0.6666666666666666
+      },
+      {
+        "author": "Abhinash Khare",
+        "count": 34,
+        "replies": 22,
+        "ratio": 0.6470588235294118
+      },
+      {
+        "author": "Saurav",
+        "count": 17,
+        "replies": 11,
+        "ratio": 0.6470588235294118
+      },
+      {
+        "author": "Ashwin Ramaswamy",
+        "count": 17,
+        "replies": 11,
+        "ratio": 0.6470588235294118
+      },
+      {
+        "author": "nikhil@medianama.com",
+        "count": 14,
+        "replies": 9,
+        "ratio": 0.6428571428571429
+      },
+      {
+        "author": "~~",
+        "count": 25,
+        "replies": 16,
+        "ratio": 0.64
+      },
+      {
+        "author": "sudz",
+        "count": 11,
+        "replies": 7,
+        "ratio": 0.6363636363636364
+      },
+      {
+        "author": "Ashwin",
+        "count": 19,
+        "replies": 12,
+        "ratio": 0.631578947368421
+      },
+      {
+        "author": "Sharath Puranik",
+        "count": 19,
+        "replies": 12,
+        "ratio": 0.631578947368421
+      },
+      {
+        "author": "Swanand",
+        "count": 19,
+        "replies": 12,
+        "ratio": 0.631578947368421
+      },
+      {
+        "author": "Rajaswa Patil",
+        "count": 32,
+        "replies": 20,
+        "ratio": 0.625
+      },
+      {
+        "author": "Suyash Singh",
+        "count": 29,
+        "replies": 18,
+        "ratio": 0.6206896551724138
+      },
+      {
+        "author": "Harsh Gupta",
+        "count": 29,
+        "replies": 18,
+        "ratio": 0.6206896551724138
+      },
+      {
+        "author": "Amit",
+        "count": 34,
+        "replies": 21,
+        "ratio": 0.6176470588235294
+      },
+      {
+        "author": "Mohsin",
+        "count": 13,
+        "replies": 8,
+        "ratio": 0.6153846153846154
+      },
+      {
+        "author": "Nishank",
+        "count": 23,
+        "replies": 14,
+        "ratio": 0.6086956521739131
+      },
+      {
+        "author": "Abhishek",
+        "count": 38,
+        "replies": 23,
+        "ratio": 0.6052631578947368
+      },
+      {
+        "author": "Sushant",
+        "count": 15,
+        "replies": 9,
+        "ratio": 0.6
+      },
+      {
+        "author": "Rohan Saxena",
+        "count": 25,
+        "replies": 15,
+        "ratio": 0.6
+      },
+      {
+        "author": "chetanya rastogi",
+        "count": 15,
+        "replies": 9,
+        "ratio": 0.6
+      },
+      {
+        "author": "Sandipan",
+        "count": 20,
+        "replies": 12,
+        "ratio": 0.6
+      },
+      {
+        "author": "Mayank Shekhar",
+        "count": 35,
+        "replies": 21,
+        "ratio": 0.6
+      },
+      {
+        "author": "Sandesh",
+        "count": 10,
+        "replies": 6,
+        "ratio": 0.6
+      },
+      {
+        "author": "@theshresthshukla",
+        "count": 49,
+        "replies": 29,
+        "ratio": 0.5918367346938775
+      },
+      {
+        "author": "Jayanth",
+        "count": 17,
+        "replies": 10,
+        "ratio": 0.5882352941176471
+      },
+      {
+        "author": "Cheril (Redapto)",
+        "count": 29,
+        "replies": 17,
+        "ratio": 0.5862068965517241
+      },
+      {
+        "author": "Neha M",
+        "count": 36,
+        "replies": 21,
+        "ratio": 0.5833333333333334
+      },
+      {
+        "author": "Lavish Saluja",
+        "count": 12,
+        "replies": 7,
+        "ratio": 0.5833333333333334
+      },
+      {
+        "author": "Bhumil Haria",
+        "count": 12,
+        "replies": 7,
+        "ratio": 0.5833333333333334
+      },
+      {
+        "author": "Atik Shaikh",
+        "count": 19,
+        "replies": 11,
+        "ratio": 0.5789473684210527
+      },
+      {
+        "author": "Sumanth Raghavendra",
+        "count": 45,
+        "replies": 26,
+        "ratio": 0.5777777777777777
+      },
+      {
+        "author": "Luv Singh",
+        "count": 40,
+        "replies": 23,
+        "ratio": 0.575
+      },
+      {
+        "author": "MD Fazal",
+        "count": 14,
+        "replies": 8,
+        "ratio": 0.5714285714285714
+      },
+      {
+        "author": "Krishna",
+        "count": 30,
+        "replies": 17,
+        "ratio": 0.5666666666666667
+      },
+      {
+        "author": "Diwakar",
+        "count": 30,
+        "replies": 17,
+        "ratio": 0.5666666666666667
+      },
+      {
+        "author": "Pranav Hari",
+        "count": 23,
+        "replies": 13,
+        "ratio": 0.5652173913043478
+      },
+      {
+        "author": "Raghav Ravishankar",
+        "count": 25,
+        "replies": 14,
+        "ratio": 0.56
+      },
+      {
+        "author": "Tanmay",
+        "count": 38,
+        "replies": 21,
+        "ratio": 0.5526315789473685
+      },
+      {
+        "author": "Aniruddha Chattopadhyay",
+        "count": 29,
+        "replies": 16,
+        "ratio": 0.5517241379310345
+      },
+      {
+        "author": "Prateek",
+        "count": 20,
+        "replies": 11,
+        "ratio": 0.55
+      },
+      {
+        "author": "Ed",
+        "count": 11,
+        "replies": 6,
+        "ratio": 0.5454545454545454
+      },
+      {
+        "author": "Kewal",
+        "count": 11,
+        "replies": 6,
+        "ratio": 0.5454545454545454
+      },
+      {
+        "author": "Adithya S K",
+        "count": 11,
+        "replies": 6,
+        "ratio": 0.5454545454545454
+      },
+      {
+        "author": "Saurabh",
+        "count": 37,
+        "replies": 20,
+        "ratio": 0.5405405405405406
+      },
+      {
+        "author": "Sreeraag Gorty",
+        "count": 13,
+        "replies": 7,
+        "ratio": 0.5384615384615384
+      },
+      {
+        "author": "Sunaje",
+        "count": 13,
+        "replies": 7,
+        "ratio": 0.5384615384615384
+      },
+      {
+        "author": "Mayank Gupta",
+        "count": 13,
+        "replies": 7,
+        "ratio": 0.5384615384615384
+      },
+      {
+        "author": "Nipun",
+        "count": 39,
+        "replies": 21,
+        "ratio": 0.5384615384615384
+      },
+      {
+        "author": "Bharath M",
+        "count": 15,
+        "replies": 8,
+        "ratio": 0.5333333333333333
+      },
+      {
+        "author": "Sri Krishna",
+        "count": 34,
+        "replies": 18,
+        "ratio": 0.5294117647058824
+      },
+      {
+        "author": "AD",
+        "count": 25,
+        "replies": 13,
+        "ratio": 0.52
+      },
+      {
+        "author": "Sangeetha Venkatesan",
+        "count": 39,
+        "replies": 20,
+        "ratio": 0.5128205128205128
+      },
+      {
+        "author": "Abhishek Chadha",
+        "count": 20,
+        "replies": 10,
+        "ratio": 0.5
+      },
+      {
+        "author": "Sreechand Tavva",
+        "count": 10,
+        "replies": 5,
+        "ratio": 0.5
+      },
+      {
+        "author": "Chaitanya",
+        "count": 30,
+        "replies": 15,
+        "ratio": 0.5
+      },
+      {
+        "author": "Sachin",
+        "count": 12,
+        "replies": 6,
+        "ratio": 0.5
+      },
+      {
+        "author": "Srihari",
+        "count": 16,
+        "replies": 8,
+        "ratio": 0.5
+      },
+      {
+        "author": "Abhishek Maiti",
+        "count": 12,
+        "replies": 6,
+        "ratio": 0.5
+      },
+      {
+        "author": "Adjay",
+        "count": 24,
+        "replies": 12,
+        "ratio": 0.5
+      },
+      {
+        "author": "Adithya L Bhat",
+        "count": 12,
+        "replies": 6,
+        "ratio": 0.5
+      },
+      {
+        "author": "Kashyap Kompella",
+        "count": 31,
+        "replies": 15,
+        "ratio": 0.4838709677419355
+      },
+      {
+        "author": "Arun",
+        "count": 27,
+        "replies": 13,
+        "ratio": 0.48148148148148145
+      },
+      {
+        "author": "Shashank",
+        "count": 25,
+        "replies": 12,
+        "ratio": 0.48
+      },
+      {
+        "author": "Sidharth Ramachandran",
+        "count": 44,
+        "replies": 21,
+        "ratio": 0.4772727272727273
+      },
+      {
+        "author": "Arko C - Pipeshift",
+        "count": 44,
+        "replies": 21,
+        "ratio": 0.4772727272727273
+      },
+      {
+        "author": "Abhiram Sharma",
+        "count": 21,
+        "replies": 10,
+        "ratio": 0.47619047619047616
+      },
+      {
+        "author": "Stawan",
+        "count": 17,
+        "replies": 8,
+        "ratio": 0.47058823529411764
+      },
+      {
+        "author": "Nihal Kashinath",
+        "count": 15,
+        "replies": 7,
+        "ratio": 0.4666666666666667
+      },
+      {
+        "author": "Sheetal Chauhan",
+        "count": 30,
+        "replies": 14,
+        "ratio": 0.4666666666666667
+      },
+      {
+        "author": "Ankur Goel",
+        "count": 15,
+        "replies": 7,
+        "ratio": 0.4666666666666667
+      },
+      {
+        "author": "Nikhil",
+        "count": 15,
+        "replies": 7,
+        "ratio": 0.4666666666666667
+      },
+      {
+        "author": "Avi",
+        "count": 13,
+        "replies": 6,
+        "ratio": 0.46153846153846156
+      },
+      {
+        "author": "Aayush Jain",
+        "count": 13,
+        "replies": 6,
+        "ratio": 0.46153846153846156
+      },
+      {
+        "author": "Yashwardhan Chaudhuri",
+        "count": 26,
+        "replies": 12,
+        "ratio": 0.46153846153846156
+      },
+      {
+        "author": "Priyank Agrawal",
+        "count": 37,
+        "replies": 17,
+        "ratio": 0.4594594594594595
+      },
+      {
+        "author": "Pathik Ghugare",
+        "count": 11,
+        "replies": 5,
+        "ratio": 0.45454545454545453
+      },
+      {
+        "author": "Rahul Sundar",
+        "count": 22,
+        "replies": 10,
+        "ratio": 0.45454545454545453
+      },
+      {
+        "author": "naras",
+        "count": 11,
+        "replies": 5,
+        "ratio": 0.45454545454545453
+      },
+      {
+        "author": "Moghal Saif Aliullah",
+        "count": 49,
+        "replies": 22,
+        "ratio": 0.4489795918367347
+      },
+      {
+        "author": "Akshaj Jain",
+        "count": 29,
+        "replies": 13,
+        "ratio": 0.4482758620689655
+      },
+      {
+        "author": "M",
+        "count": 29,
+        "replies": 13,
+        "ratio": 0.4482758620689655
+      },
+      {
+        "author": "Aman",
+        "count": 36,
+        "replies": 16,
+        "ratio": 0.4444444444444444
+      },
+      {
+        "author": "Ashvanth.S",
+        "count": 23,
+        "replies": 10,
+        "ratio": 0.43478260869565216
+      },
+      {
+        "author": "Kuldeep Pisda",
+        "count": 23,
+        "replies": 10,
+        "ratio": 0.43478260869565216
+      },
+      {
+        "author": "charchit",
+        "count": 21,
+        "replies": 9,
+        "ratio": 0.42857142857142855
+      },
+      {
+        "author": "Adithya Dsilva",
+        "count": 35,
+        "replies": 15,
+        "ratio": 0.42857142857142855
+      },
+      {
+        "author": "Karan Danthi",
+        "count": 19,
+        "replies": 8,
+        "ratio": 0.42105263157894735
+      },
+      {
+        "author": "Suryansh",
+        "count": 19,
+        "replies": 8,
+        "ratio": 0.42105263157894735
+      },
+      {
+        "author": "Mehul Nath Jindal",
+        "count": 19,
+        "replies": 8,
+        "ratio": 0.42105263157894735
+      },
+      {
+        "author": "Prashant",
+        "count": 31,
+        "replies": 13,
+        "ratio": 0.41935483870967744
+      },
+      {
+        "author": "Yatharth Pipsies",
+        "count": 48,
+        "replies": 20,
+        "ratio": 0.4166666666666667
+      },
+      {
+        "author": "Akshay Taneja",
+        "count": 34,
+        "replies": 14,
+        "ratio": 0.4117647058823529
+      },
+      {
+        "author": "$HA\u20b9ATH",
+        "count": 17,
+        "replies": 7,
+        "ratio": 0.4117647058823529
+      },
+      {
+        "author": "Mahesh Chandran G",
+        "count": 39,
+        "replies": 16,
+        "ratio": 0.41025641025641024
+      },
+      {
+        "author": "Raman",
+        "count": 22,
+        "replies": 9,
+        "ratio": 0.4090909090909091
+      }
+    ]
+  },
+  "temporal": {
+    "by_hour": [
+      {
+        "hour": 0,
+        "count": 103
+      },
+      {
+        "hour": 1,
+        "count": 186
+      },
+      {
+        "hour": 2,
+        "count": 494
+      },
+      {
+        "hour": 3,
+        "count": 921
+      },
+      {
+        "hour": 4,
+        "count": 1309
+      },
+      {
+        "hour": 5,
+        "count": 1292
+      },
+      {
+        "hour": 6,
+        "count": 1213
+      },
+      {
+        "hour": 7,
+        "count": 1209
+      },
+      {
+        "hour": 8,
+        "count": 1180
+      },
+      {
+        "hour": 9,
+        "count": 792
+      },
+      {
+        "hour": 10,
+        "count": 669
+      },
+      {
+        "hour": 11,
+        "count": 680
+      },
+      {
+        "hour": 12,
+        "count": 788
+      },
+      {
+        "hour": 13,
+        "count": 772
+      },
+      {
+        "hour": 14,
+        "count": 862
+      },
+      {
+        "hour": 15,
+        "count": 810
+      },
+      {
+        "hour": 16,
+        "count": 973
+      },
+      {
+        "hour": 17,
+        "count": 973
+      },
+      {
+        "hour": 18,
+        "count": 898
+      },
+      {
+        "hour": 19,
+        "count": 356
+      },
+      {
+        "hour": 20,
+        "count": 197
+      },
+      {
+        "hour": 21,
+        "count": 93
+      },
+      {
+        "hour": 22,
+        "count": 82
+      },
+      {
+        "hour": 23,
+        "count": 70
+      }
+    ],
+    "by_day": [
+      {
+        "day": "Monday",
+        "count": 2565
+      },
+      {
+        "day": "Tuesday",
+        "count": 2805
+      },
+      {
+        "day": "Wednesday",
+        "count": 2867
+      },
+      {
+        "day": "Thursday",
+        "count": 2708
+      },
+      {
+        "day": "Friday",
+        "count": 2608
+      },
+      {
+        "day": "Saturday",
+        "count": 1729
+      },
+      {
+        "day": "Sunday",
+        "count": 1640
+      }
+    ],
+    "by_week": [
+      {
+        "week": "2024-W48",
+        "count": 43
+      },
+      {
+        "week": "2024-W49",
+        "count": 400
+      },
+      {
+        "week": "2024-W50",
+        "count": 542
+      },
+      {
+        "week": "2024-W51",
+        "count": 243
+      },
+      {
+        "week": "2024-W52",
+        "count": 93
+      },
+      {
+        "week": "2025-W00",
+        "count": 113
+      },
+      {
+        "week": "2025-W01",
+        "count": 247
+      },
+      {
+        "week": "2025-W02",
+        "count": 458
+      },
+      {
+        "week": "2025-W03",
+        "count": 713
+      },
+      {
+        "week": "2025-W04",
+        "count": 925
+      },
+      {
+        "week": "2025-W05",
+        "count": 678
+      },
+      {
+        "week": "2025-W06",
+        "count": 569
+      },
+      {
+        "week": "2025-W07",
+        "count": 411
+      },
+      {
+        "week": "2025-W08",
+        "count": 346
+      },
+      {
+        "week": "2025-W09",
+        "count": 254
+      },
+      {
+        "week": "2025-W10",
+        "count": 263
+      },
+      {
+        "week": "2025-W11",
+        "count": 184
+      },
+      {
+        "week": "2025-W12",
+        "count": 231
+      },
+      {
+        "week": "2025-W13",
+        "count": 247
+      },
+      {
+        "week": "2025-W14",
+        "count": 305
+      },
+      {
+        "week": "2025-W15",
+        "count": 220
+      },
+      {
+        "week": "2025-W16",
+        "count": 305
+      },
+      {
+        "week": "2025-W17",
+        "count": 358
+      },
+      {
+        "week": "2025-W18",
+        "count": 279
+      },
+      {
+        "week": "2025-W19",
+        "count": 285
+      },
+      {
+        "week": "2025-W20",
+        "count": 351
+      },
+      {
+        "week": "2025-W21",
+        "count": 349
+      },
+      {
+        "week": "2025-W22",
+        "count": 352
+      },
+      {
+        "week": "2025-W23",
+        "count": 296
+      },
+      {
+        "week": "2025-W24",
+        "count": 190
+      },
+      {
+        "week": "2025-W25",
+        "count": 288
+      },
+      {
+        "week": "2025-W26",
+        "count": 354
+      },
+      {
+        "week": "2025-W27",
+        "count": 243
+      },
+      {
+        "week": "2025-W28",
+        "count": 376
+      },
+      {
+        "week": "2025-W29",
+        "count": 359
+      },
+      {
+        "week": "2025-W30",
+        "count": 393
+      },
+      {
+        "week": "2025-W31",
+        "count": 784
+      },
+      {
+        "week": "2025-W32",
+        "count": 393
+      },
+      {
+        "week": "2025-W33",
+        "count": 358
+      },
+      {
+        "week": "2025-W34",
+        "count": 409
+      },
+      {
+        "week": "2025-W35",
+        "count": 279
+      },
+      {
+        "week": "2025-W36",
+        "count": 258
+      },
+      {
+        "week": "2025-W37",
+        "count": 299
+      },
+      {
+        "week": "2025-W38",
+        "count": 357
+      },
+      {
+        "week": "2025-W39",
+        "count": 280
+      },
+      {
+        "week": "2025-W40",
+        "count": 207
+      },
+      {
+        "week": "2025-W41",
+        "count": 185
+      },
+      {
+        "week": "2025-W42",
+        "count": 340
+      },
+      {
+        "week": "2025-W43",
+        "count": 286
+      },
+      {
+        "week": "2025-W44",
+        "count": 185
+      },
+      {
+        "week": "2025-W45",
+        "count": 39
+      }
+    ]
+  },
+  "topics": {
+    "by_month": [
+      {
+        "month": "2024-12",
+        "total": 1321,
+        "terms": {
+          "code": 62,
+          "gpt": 21,
+          "llama": 18,
+          "openai": 50,
+          "mistral": 3,
+          "open-source": 22,
+          "vision": 11,
+          "fine-tune": 13,
+          "multimodal": 6,
+          "vector": 2,
+          "claude": 40,
+          "agent": 16,
+          "rag": 15,
+          "gemini": 37,
+          "context": 23,
+          "prompt": 29,
+          "reasoning": 33,
+          "embedding": 5,
+          "token": 33,
+          "cost": 36
+        }
+      },
+      {
+        "month": "2025-01",
+        "total": 2382,
+        "terms": {
+          "openai": 89,
+          "reasoning": 81,
+          "embedding": 5,
+          "rag": 9,
+          "vector": 7,
+          "gpt": 32,
+          "cost": 67,
+          "claude": 25,
+          "open-source": 38,
+          "llama": 23,
+          "fine-tune": 30,
+          "prompt": 48,
+          "gemini": 40,
+          "vision": 14,
+          "token": 44,
+          "code": 51,
+          "context": 27,
+          "agent": 27,
+          "multimodal": 13,
+          "mistral": 3
+        }
+      },
+      {
+        "month": "2025-02",
+        "total": 2053,
+        "terms": {
+          "mistral": 8,
+          "openai": 63,
+          "code": 64,
+          "cost": 60,
+          "rag": 12,
+          "reasoning": 90,
+          "prompt": 62,
+          "open-source": 27,
+          "agent": 33,
+          "fine-tune": 24,
+          "context": 32,
+          "token": 39,
+          "claude": 17,
+          "gemini": 58,
+          "gpt": 18,
+          "multimodal": 11,
+          "embedding": 2,
+          "llama": 5,
+          "vision": 3,
+          "vector": 1
+        }
+      },
+      {
+        "month": "2025-03",
+        "total": 1023,
+        "terms": {
+          "agent": 18,
+          "rag": 6,
+          "token": 18,
+          "openai": 43,
+          "gpt": 20,
+          "context": 11,
+          "cost": 18,
+          "claude": 19,
+          "code": 41,
+          "fine-tune": 6,
+          "prompt": 36,
+          "reasoning": 26,
+          "open-source": 29,
+          "gemini": 30,
+          "embedding": 7,
+          "mistral": 12,
+          "multimodal": 6,
+          "llama": 6,
+          "vision": 4,
+          "vector": 4
+        }
+      },
+      {
+        "month": "2025-04",
+        "total": 1279,
+        "terms": {
+          "token": 15,
+          "reasoning": 36,
+          "agent": 18,
+          "code": 65,
+          "cost": 43,
+          "openai": 31,
+          "open-source": 38,
+          "claude": 45,
+          "gemini": 30,
+          "mistral": 4,
+          "llama": 11,
+          "rag": 9,
+          "prompt": 46,
+          "gpt": 10,
+          "multimodal": 4,
+          "context": 30,
+          "vector": 10,
+          "embedding": 11,
+          "vision": 5,
+          "fine-tune": 5
+        }
+      },
+      {
+        "month": "2025-05",
+        "total": 1354,
+        "terms": {
+          "llama": 8,
+          "prompt": 53,
+          "open-source": 28,
+          "rag": 20,
+          "cost": 31,
+          "reasoning": 30,
+          "fine-tune": 13,
+          "gemini": 27,
+          "code": 84,
+          "multimodal": 3,
+          "context": 18,
+          "openai": 45,
+          "claude": 50,
+          "gpt": 16,
+          "embedding": 6,
+          "vector": 6,
+          "agent": 33,
+          "vision": 2,
+          "token": 20,
+          "mistral": 5
+        }
+      },
+      {
+        "month": "2025-06",
+        "total": 1205,
+        "terms": {
+          "prompt": 69,
+          "token": 19,
+          "gemini": 42,
+          "reasoning": 34,
+          "context": 31,
+          "vision": 6,
+          "llama": 3,
+          "mistral": 7,
+          "agent": 32,
+          "claude": 45,
+          "code": 55,
+          "openai": 22,
+          "open-source": 20,
+          "gpt": 15,
+          "cost": 31,
+          "rag": 16,
+          "vector": 7,
+          "embedding": 8,
+          "fine-tune": 5
+        }
+      },
+      {
+        "month": "2025-07",
+        "total": 1585,
+        "terms": {
+          "openai": 59,
+          "gemini": 48,
+          "cost": 53,
+          "prompt": 77,
+          "token": 33,
+          "code": 109,
+          "agent": 44,
+          "llama": 5,
+          "rag": 4,
+          "open-source": 21,
+          "claude": 96,
+          "context": 59,
+          "reasoning": 25,
+          "gpt": 17,
+          "fine-tune": 12,
+          "embedding": 7,
+          "multimodal": 1,
+          "vision": 2,
+          "mistral": 5,
+          "vector": 5
+        }
+      },
+      {
+        "month": "2025-08",
+        "total": 2035,
+        "terms": {
+          "code": 102,
+          "open-source": 61,
+          "gemini": 43,
+          "openai": 55,
+          "prompt": 83,
+          "reasoning": 47,
+          "gpt": 131,
+          "cost": 38,
+          "agent": 47,
+          "claude": 80,
+          "fine-tune": 26,
+          "token": 47,
+          "vision": 16,
+          "embedding": 8,
+          "context": 32,
+          "rag": 12,
+          "mistral": 4,
+          "llama": 5,
+          "multimodal": 7,
+          "vector": 2
+        }
+      },
+      {
+        "month": "2025-09",
+        "total": 1314,
+        "terms": {
+          "cost": 25,
+          "context": 39,
+          "code": 93,
+          "rag": 11,
+          "openai": 35,
+          "llama": 2,
+          "token": 16,
+          "embedding": 19,
+          "prompt": 67,
+          "fine-tune": 11,
+          "reasoning": 20,
+          "vector": 10,
+          "gemini": 32,
+          "claude": 58,
+          "open-source": 24,
+          "agent": 34,
+          "gpt": 23,
+          "multimodal": 1,
+          "vision": 2,
+          "mistral": 0
+        }
+      },
+      {
+        "month": "2025-10",
+        "total": 1130,
+        "terms": {
+          "openai": 63,
+          "gpt": 37,
+          "prompt": 25,
+          "cost": 39,
+          "fine-tune": 26,
+          "claude": 38,
+          "code": 62,
+          "vector": 2,
+          "gemini": 30,
+          "open-source": 26,
+          "context": 24,
+          "token": 34,
+          "llama": 4,
+          "mistral": 1,
+          "reasoning": 20,
+          "vision": 9,
+          "agent": 28,
+          "rag": 4,
+          "embedding": 2,
+          "multimodal": 2
+        }
+      },
+      {
+        "month": "2025-11",
+        "total": 241,
+        "terms": {
+          "prompt": 12,
+          "context": 7,
+          "code": 9,
+          "cost": 14,
+          "agent": 9,
+          "token": 2,
+          "claude": 7,
+          "openai": 7,
+          "multimodal": 1,
+          "gemini": 4,
+          "reasoning": 4,
+          "gpt": 2,
+          "fine-tune": 2,
+          "embedding": 1,
+          "open-source": 2,
+          "rag": 2,
+          "llama": 0,
+          "mistral": 0,
+          "vector": 0,
+          "vision": 0
+        }
+      }
+    ]
+  },
+  "threads": {
+    "size_distribution": {
+      "single": 5160,
+      "small": 2412,
+      "medium": 425,
+      "large": 129
+    },
+    "top_threads": [
+      {
+        "size": 39,
+        "author": "Aiswarya Sankar",
+        "text": "Like everything is technically doable that way just a question of how far and deep you customize it",
+        "time": "2025-07-30T02:59:00.000Z"
+      },
+      {
+        "size": 29,
+        "author": "Shreya Vajpei",
+        "text": "Folks what are you using for agentic AI orchestration - n8n or something else ?",
+        "time": "2025-08-25T12:43:00.000Z"
+      },
+      {
+        "size": 29,
+        "author": "Chaitanya Mehta",
+        "text": "We\u2019re facing noticeable latency (2\u20134s response delay) in our LiveKit phone call setup. Below is our current configuration: \u2022 SIP Trunking: Exotel (Mumbai endpoint) \u2022 LiveKit Server: Hosted on AWS Mumb",
+        "time": "2025-10-25T11:44:00.000Z"
+      },
+      {
+        "size": 27,
+        "author": "Paras Chopra",
+        "text": "The entire pipeline ought to be open sourced",
+        "time": "2025-04-27T04:06:00.000Z"
+      },
+      {
+        "size": 24,
+        "author": "Paras Chopra",
+        "text": "Thoughts on Karparthy\u2019s software 3.0 talk?\n\n\n\nI found his insistence on Co-pilot over auto pilot interesting. He said we are decades away from autopilot mode, which really is a statement on his belief",
+        "time": "2025-06-20T03:30:00.000Z"
+      },
+      {
+        "size": 21,
+        "author": "Paras Chopra",
+        "text": "how do you explain this? (serious question)",
+        "time": "2025-07-14T06:54:00.000Z"
+      },
+      {
+        "size": 20,
+        "author": "Adarsh",
+        "text": "The costs are insane!\n\n\n\nDeepseek R1:\n\n $0.14 / million input tokens (cache hit)\n\n $0.55 / million input tokens (cache miss) $2.19 / million output tokens\n\n\n\n\n\nOpenAI O1: \n\n$15 / million input\n\n$60 / ",
+        "time": "2025-01-20T12:36:00.000Z"
+      },
+      {
+        "size": 20,
+        "author": "Paras Chopra",
+        "text": "E.g. your atomic task could be to fix a bug, and long context can be providing all files of your source code to the model",
+        "time": "2025-07-22T10:32:00.000Z"
+      },
+      {
+        "size": 20,
+        "author": "Alok",
+        "text": "It cant even run a vending machine profitably atm mam",
+        "time": "2025-07-30T03:42:00.000Z"
+      },
+      {
+        "size": 19,
+        "author": "tp53(ashish)",
+        "text": "a16z investing in a company building a foundation model for psychology & therapy, www.slingshot.xyz\n\n\n\nhttps://a16z.com/announcement/investing-in-slingshot-ai/\n\n\n\nanybody know of open source efforts i",
+        "time": "2025-01-15T05:03:00.000Z"
+      },
+      {
+        "size": 19,
+        "author": "Anubhav Mishra",
+        "text": "https://x.com/alibaba_qwen/status/1884263157574820053?s=46",
+        "time": "2025-01-28T15:41:00.000Z"
+      },
+      {
+        "size": 19,
+        "author": "marmik pandya",
+        "text": "I'd love to speak with staff eng/EM+ engineering leaders regarding usage of cursor/coding agents in their orgs. \n\n\n\nWe've been doing analysis of productivity at the scale of 300+ engineering org and h",
+        "time": "2025-04-22T05:44:00.000Z"
+      },
+      {
+        "size": 19,
+        "author": "Sandeep Srinivasa",
+        "text": "Is anyone here building any production products using Qwen ?\n\n\n\nI saw a bunch of hype around it a few weeks ago (80% of startups in SF are building on top of chinese models, etc)",
+        "time": "2025-09-26T17:58:00.000Z"
+      },
+      {
+        "size": 18,
+        "author": "Ambika",
+        "text": "I\u2019m going out on a limb and trying to host a smol LM on a raspberry pi and harnessing the 200 clear days of Udaipur to see if I can solar power it. It\u2019s obviously not an enterprise project or anything",
+        "time": "2025-01-03T14:11:00.000Z"
+      },
+      {
+        "size": 18,
+        "author": "Jyotirmay Khebudkar",
+        "text": "https://arxiv.org/abs/2503.21934\n\n\n\nHardly any model was able to solve unseen problems taken from recent US Math Olympiad including R1,QwQ,o1,o3.\n\n\n\nSo it\u2019s more of benchmark overfitting than actual r",
+        "time": "2025-04-01T17:38:00.000Z"
+      },
+      {
+        "size": 18,
+        "author": "Paras Chopra",
+        "text": "Been thinking about this.\n\n\n\nIf you see Claude code system prompt, it runs in many many pages while most of our prompts are short (one paragraph long).\n\n\n\nAre we missing something that big labs get? D",
+        "time": "2025-06-30T04:37:00.000Z"
+      },
+      {
+        "size": 18,
+        "author": "Shree",
+        "text": "Guys was trying out N8N for first time. (So far I just coded things myself)\n\n\n\nI was working with a super old school firm, and tried explaining them what workflow is. It was kinda super complicated fo",
+        "time": "2025-07-04T13:25:00.000Z"
+      },
+      {
+        "size": 18,
+        "author": "Nivedit Jain (exosphere.host)",
+        "text": "I am noticing a lot of people building their own orchestrators, curious why everyone is building their own systems, why frameworks and current orchestrators like langgraph, temporal, etc are not servi",
+        "time": "2025-08-15T08:46:00.000Z"
+      },
+      {
+        "size": 17,
+        "author": "Vikram",
+        "text": "Hi All, has anyone used Perplexity API for web search? This is a for a web search use case for a specific report - want to understand if there is something to be aware of/ better alternatives? Docs an",
+        "time": "2024-12-23T08:10:00.000Z"
+      },
+      {
+        "size": 17,
+        "author": "Nirant K",
+        "text": "Folks, what's the best informed guess on why DeepSeekv3 was able to work?",
+        "time": "2024-12-28T08:15:00.000Z"
+      }
+    ]
+  },
+  "network": {
+    "top_interactions": [
+      {
+        "from": "Anubhav Mishra",
+        "to": "Paras Chopra",
+        "count": 45
+      },
+      {
+        "from": "Anubhav Mishra",
+        "to": "Anubhav Mishra",
+        "count": 41
+      },
+      {
+        "from": "Paras Chopra",
+        "to": "Paras Chopra",
+        "count": 41
+      },
+      {
+        "from": "Nirant K",
+        "to": "Paras Chopra",
+        "count": 37
+      },
+      {
+        "from": "Paras Chopra",
+        "to": "Anubhav Mishra",
+        "count": 33
+      },
+      {
+        "from": "Paras Chopra",
+        "to": "Nirant K",
+        "count": 30
+      },
+      {
+        "from": "Pratik Desai",
+        "to": "Paras Chopra",
+        "count": 29
+      },
+      {
+        "from": "Pratik Desai",
+        "to": "Nirant K",
+        "count": 28
+      },
+      {
+        "from": "ASK Sathvik",
+        "to": "Paras Chopra",
+        "count": 27
+      },
+      {
+        "from": "Dev",
+        "to": "Pratik Desai",
+        "count": 26
+      },
+      {
+        "from": "Pratik Desai",
+        "to": "Pratik Desai",
+        "count": 23
+      },
+      {
+        "from": "tp53(ashish)",
+        "to": "Paras Chopra",
+        "count": 23
+      },
+      {
+        "from": "Pratik Desai",
+        "to": "Dev",
+        "count": 21
+      },
+      {
+        "from": "Nirant K",
+        "to": "Nirant K",
+        "count": 21
+      },
+      {
+        "from": "Paras Chopra",
+        "to": "Pratik Desai",
+        "count": 21
+      },
+      {
+        "from": "Paras Chopra",
+        "to": "Varun Jain",
+        "count": 20
+      },
+      {
+        "from": "Cheril",
+        "to": "Paras Chopra",
+        "count": 20
+      },
+      {
+        "from": "Varun Jain",
+        "to": "Paras Chopra",
+        "count": 19
+      },
+      {
+        "from": "Aashay",
+        "to": "Paras Chopra",
+        "count": 18
+      },
+      {
+        "from": "Ravi Theja",
+        "to": "Paras Chopra",
+        "count": 18
+      },
+      {
+        "from": "ASK Sathvik",
+        "to": "Anubhav Mishra",
+        "count": 18
+      },
+      {
+        "from": "Bharat Shetty",
+        "to": "Paras Chopra",
+        "count": 18
+      },
+      {
+        "from": "tp53(ashish)",
+        "to": "tp53(ashish)",
+        "count": 18
+      },
+      {
+        "from": "Nirant K",
+        "to": "Sandeep Srinivasa",
+        "count": 18
+      },
+      {
+        "from": "Cheril",
+        "to": "Cheril",
+        "count": 17
+      },
+      {
+        "from": "Pratik Desai",
+        "to": "Pratyush Choudhury (PC)",
+        "count": 17
+      },
+      {
+        "from": "Paras Chopra",
+        "to": "ASK Sathvik",
+        "count": 17
+      },
+      {
+        "from": "Pratik Desai",
+        "to": "Aashay",
+        "count": 16
+      },
+      {
+        "from": "Ojasvi Yadav",
+        "to": "Ojasvi Yadav",
+        "count": 16
+      },
+      {
+        "from": "Dev",
+        "to": "Nirant K",
+        "count": 16
+      },
+      {
+        "from": "Paras Chopra",
+        "to": "nilesh",
+        "count": 16
+      },
+      {
+        "from": "Anubhav Mishra",
+        "to": "Nirant K",
+        "count": 15
+      },
+      {
+        "from": "Nirant K",
+        "to": "Pratik Desai",
+        "count": 15
+      },
+      {
+        "from": "nilesh",
+        "to": "Paras Chopra",
+        "count": 15
+      },
+      {
+        "from": "Pratyush Choudhury (PC)",
+        "to": "Pratik Desai",
+        "count": 15
+      },
+      {
+        "from": "Anubhav Mishra",
+        "to": "Pratik Desai",
+        "count": 15
+      },
+      {
+        "from": "Paras Chopra",
+        "to": "tp53(ashish)",
+        "count": 15
+      },
+      {
+        "from": "Hadi Khan",
+        "to": "Hadi Khan",
+        "count": 15
+      },
+      {
+        "from": "Pratyush Choudhury (PC)",
+        "to": "Nirant K",
+        "count": 15
+      },
+      {
+        "from": "Nirant K",
+        "to": "Dev",
+        "count": 15
+      },
+      {
+        "from": "Paras Chopra",
+        "to": "Cheril",
+        "count": 14
+      },
+      {
+        "from": "Nirant K",
+        "to": "Anubhav Mishra",
+        "count": 13
+      },
+      {
+        "from": "SaiVignanMalyala",
+        "to": "SaiVignanMalyala",
+        "count": 13
+      },
+      {
+        "from": "Nirant K",
+        "to": "Alok Bishoyi",
+        "count": 13
+      },
+      {
+        "from": "Amit Bhor",
+        "to": "Paras Chopra",
+        "count": 13
+      },
+      {
+        "from": "Aashay",
+        "to": "Pratik Desai",
+        "count": 12
+      },
+      {
+        "from": "Jyotirmay Khebudkar",
+        "to": "Jyotirmay Khebudkar",
+        "count": 12
+      },
+      {
+        "from": "Nirant K",
+        "to": "tp53(ashish)",
+        "count": 12
+      },
+      {
+        "from": "Tejas vaidhya",
+        "to": "Paras Chopra",
+        "count": 12
+      },
+      {
+        "from": "SP",
+        "to": "Paras Chopra",
+        "count": 12
+      }
+    ],
+    "bridge_connectors": [
+      {
+        "author": "Paras Chopra",
+        "score": 659.7651097170872
+      },
+      {
+        "author": "Nirant K",
+        "score": 573.522449429837
+      },
+      {
+        "author": "Pratik Desai",
+        "score": 358.4717562096071
+      },
+      {
+        "author": "Anubhav Mishra",
+        "score": 289.1850618548614
+      },
+      {
+        "author": "tp53(ashish)",
+        "score": 151.55197128378106
+      },
+      {
+        "author": "Ojasvi Yadav",
+        "score": 142.3938200906205
+      },
+      {
+        "author": "Pratyush Choudhury (PC)",
+        "score": 129.68808734806757
+      },
+      {
+        "author": "Hadi Khan",
+        "score": 122.73956167430288
+      },
+      {
+        "author": "Adarsh",
+        "score": 118.1185844818672
+      },
+      {
+        "author": "Ravi Theja",
+        "score": 116.0344776348823
+      },
+      {
+        "author": "Shree",
+        "score": 108.30512453249847
+      },
+      {
+        "author": "Aashay",
+        "score": 108.2497113160123
+      },
+      {
+        "author": "Cheril",
+        "score": 106.2449998823474
+      },
+      {
+        "author": "Sandeep Srinivasa",
+        "score": 105.8536725862641
+      },
+      {
+        "author": "Bharat Shetty",
+        "score": 101.02474944289642
+      },
+      {
+        "author": "ASK Sathvik",
+        "score": 97.3498844375277
+      },
+      {
+        "author": "Dev",
+        "score": 91.9945650568554
+      },
+      {
+        "author": "Shan Shah",
+        "score": 90.82951062292474
+      },
+      {
+        "author": "Jyotirmay Khebudkar",
+        "score": 90.55385138137417
+      },
+      {
+        "author": "Rajesh RS",
+        "score": 83.47454701883683
+      },
+      {
+        "author": "Tanisha Banik",
+        "score": 81.82297965730655
+      },
+      {
+        "author": "Bharat",
+        "score": 80.19975062305369
+      },
+      {
+        "author": "Sid",
+        "score": 76.99350621968063
+      },
+      {
+        "author": "Alok Bishoyi",
+        "score": 72.4568837309472
+      },
+      {
+        "author": "Varun Jain",
+        "score": 72.44308110509934
+      },
+      {
+        "author": "SaiVignanMalyala",
+        "score": 68.8839603971781
+      },
+      {
+        "author": "Bharath",
+        "score": 65.66582063752801
+      },
+      {
+        "author": "Sanjeed",
+        "score": 65.40642170307133
+      },
+      {
+        "author": "Palash",
+        "score": 62.048368229954285
+      },
+      {
+        "author": "Ankur Pandey",
+        "score": 60.868711174132805
+      }
+    ]
+  }
+}

@@ -1,0 +1,1002 @@
+[
+  {
+    "source": "Anubhav Mishra",
+    "target": "Paras Chopra",
+    "weight": 45
+  },
+  {
+    "source": "Anubhav Mishra",
+    "target": "Anubhav Mishra",
+    "weight": 41
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Paras Chopra",
+    "weight": 41
+  },
+  {
+    "source": "Nirant K",
+    "target": "Paras Chopra",
+    "weight": 37
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Anubhav Mishra",
+    "weight": 33
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Nirant K",
+    "weight": 30
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Paras Chopra",
+    "weight": 29
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Nirant K",
+    "weight": 28
+  },
+  {
+    "source": "ASK Sathvik",
+    "target": "Paras Chopra",
+    "weight": 27
+  },
+  {
+    "source": "Dev",
+    "target": "Pratik Desai",
+    "weight": 26
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Pratik Desai",
+    "weight": 23
+  },
+  {
+    "source": "tp53(ashish)",
+    "target": "Paras Chopra",
+    "weight": 23
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Dev",
+    "weight": 21
+  },
+  {
+    "source": "Nirant K",
+    "target": "Nirant K",
+    "weight": 21
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Pratik Desai",
+    "weight": 21
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Varun Jain",
+    "weight": 20
+  },
+  {
+    "source": "Cheril",
+    "target": "Paras Chopra",
+    "weight": 20
+  },
+  {
+    "source": "Varun Jain",
+    "target": "Paras Chopra",
+    "weight": 19
+  },
+  {
+    "source": "Aashay",
+    "target": "Paras Chopra",
+    "weight": 18
+  },
+  {
+    "source": "Ravi Theja",
+    "target": "Paras Chopra",
+    "weight": 18
+  },
+  {
+    "source": "ASK Sathvik",
+    "target": "Anubhav Mishra",
+    "weight": 18
+  },
+  {
+    "source": "Bharat Shetty",
+    "target": "Paras Chopra",
+    "weight": 18
+  },
+  {
+    "source": "tp53(ashish)",
+    "target": "tp53(ashish)",
+    "weight": 18
+  },
+  {
+    "source": "Nirant K",
+    "target": "Sandeep Srinivasa",
+    "weight": 18
+  },
+  {
+    "source": "Cheril",
+    "target": "Cheril",
+    "weight": 17
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Pratyush Choudhury (PC)",
+    "weight": 17
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "ASK Sathvik",
+    "weight": 17
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Aashay",
+    "weight": 16
+  },
+  {
+    "source": "Ojasvi Yadav",
+    "target": "Ojasvi Yadav",
+    "weight": 16
+  },
+  {
+    "source": "Dev",
+    "target": "Nirant K",
+    "weight": 16
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "nilesh",
+    "weight": 16
+  },
+  {
+    "source": "Anubhav Mishra",
+    "target": "Nirant K",
+    "weight": 15
+  },
+  {
+    "source": "Nirant K",
+    "target": "Pratik Desai",
+    "weight": 15
+  },
+  {
+    "source": "nilesh",
+    "target": "Paras Chopra",
+    "weight": 15
+  },
+  {
+    "source": "Pratyush Choudhury (PC)",
+    "target": "Pratik Desai",
+    "weight": 15
+  },
+  {
+    "source": "Anubhav Mishra",
+    "target": "Pratik Desai",
+    "weight": 15
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "tp53(ashish)",
+    "weight": 15
+  },
+  {
+    "source": "Hadi Khan",
+    "target": "Hadi Khan",
+    "weight": 15
+  },
+  {
+    "source": "Pratyush Choudhury (PC)",
+    "target": "Nirant K",
+    "weight": 15
+  },
+  {
+    "source": "Nirant K",
+    "target": "Dev",
+    "weight": 15
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Cheril",
+    "weight": 14
+  },
+  {
+    "source": "Nirant K",
+    "target": "Anubhav Mishra",
+    "weight": 13
+  },
+  {
+    "source": "SaiVignanMalyala",
+    "target": "SaiVignanMalyala",
+    "weight": 13
+  },
+  {
+    "source": "Nirant K",
+    "target": "Alok Bishoyi",
+    "weight": 13
+  },
+  {
+    "source": "Amit Bhor",
+    "target": "Paras Chopra",
+    "weight": 13
+  },
+  {
+    "source": "Aashay",
+    "target": "Pratik Desai",
+    "weight": 12
+  },
+  {
+    "source": "Jyotirmay Khebudkar",
+    "target": "Jyotirmay Khebudkar",
+    "weight": 12
+  },
+  {
+    "source": "Nirant K",
+    "target": "tp53(ashish)",
+    "weight": 12
+  },
+  {
+    "source": "Tejas vaidhya",
+    "target": "Paras Chopra",
+    "weight": 12
+  },
+  {
+    "source": "SP",
+    "target": "Paras Chopra",
+    "weight": 12
+  },
+  {
+    "source": "Abhinav Verma",
+    "target": "Nirant K",
+    "weight": 11
+  },
+  {
+    "source": "Sanjeed",
+    "target": "Sanjeed",
+    "weight": 11
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Ravi Theja",
+    "weight": 11
+  },
+  {
+    "source": "Pratyush Choudhury (PC)",
+    "target": "Anubhav Mishra",
+    "weight": 11
+  },
+  {
+    "source": "Mohamed Yasser",
+    "target": "Mohamed Yasser",
+    "weight": 11
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Aashay",
+    "weight": 10
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Ravi Theja",
+    "weight": 10
+  },
+  {
+    "source": "Cheril",
+    "target": "Pratik Desai",
+    "weight": 10
+  },
+  {
+    "source": "Nirant K",
+    "target": "Pratyush Choudhury (PC)",
+    "weight": 10
+  },
+  {
+    "source": "Ojasvi Yadav",
+    "target": "Paras Chopra",
+    "weight": 9
+  },
+  {
+    "source": "Bharath",
+    "target": "Paras Chopra",
+    "weight": 9
+  },
+  {
+    "source": "Ravi Theja",
+    "target": "Nirant K",
+    "weight": 9
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Bharat Shetty",
+    "weight": 9
+  },
+  {
+    "source": "Bharat Shetty",
+    "target": "Bharat Shetty",
+    "weight": 9
+  },
+  {
+    "source": "Ankur Pandey",
+    "target": "Paras Chopra",
+    "weight": 9
+  },
+  {
+    "source": "Shan Shah",
+    "target": "Paras Chopra",
+    "weight": 9
+  },
+  {
+    "source": "Ravi Theja",
+    "target": "Pratik Desai",
+    "weight": 9
+  },
+  {
+    "source": "Gokul",
+    "target": "Paras Chopra",
+    "weight": 9
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Prayank Swaroop",
+    "weight": 9
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Sumanth Raghavendra",
+    "weight": 9
+  },
+  {
+    "source": "Shree",
+    "target": "Paras Chopra",
+    "weight": 9
+  },
+  {
+    "source": "Ankur Pandey",
+    "target": "Ankur Pandey",
+    "weight": 9
+  },
+  {
+    "source": "tp53(ashish)",
+    "target": "Nirant K",
+    "weight": 9
+  },
+  {
+    "source": "Bharat",
+    "target": "Pratyush Choudhury (PC)",
+    "weight": 9
+  },
+  {
+    "source": "Nirant K",
+    "target": "Alok",
+    "weight": 9
+  },
+  {
+    "source": "Aravind Putrevu",
+    "target": "Nirant K",
+    "weight": 8
+  },
+  {
+    "source": "Rajesh RS",
+    "target": "Anubhav Mishra",
+    "weight": 8
+  },
+  {
+    "source": "Anubhav Mishra",
+    "target": "ASK Sathvik",
+    "weight": 8
+  },
+  {
+    "source": "Pratyush Choudhury (PC)",
+    "target": "Ojasvi Yadav",
+    "weight": 8
+  },
+  {
+    "source": "Nabeel",
+    "target": "Nabeel",
+    "weight": 8
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Tejas vaidhya",
+    "weight": 8
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Aakrit Vaish",
+    "weight": 8
+  },
+  {
+    "source": "Aakrit Vaish",
+    "target": "Paras Chopra",
+    "weight": 8
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Ganaraj",
+    "weight": 8
+  },
+  {
+    "source": "Sumanth Raghavendra",
+    "target": "Paras Chopra",
+    "weight": 8
+  },
+  {
+    "source": "Nirant K",
+    "target": "Ravi Theja",
+    "weight": 8
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Pratik Bhavsar",
+    "weight": 8
+  },
+  {
+    "source": "Shree",
+    "target": "Shree",
+    "weight": 8
+  },
+  {
+    "source": "Sandeep Srinivasa",
+    "target": "Nirant K",
+    "weight": 8
+  },
+  {
+    "source": "Tanisha Banik",
+    "target": "Paras Chopra",
+    "weight": 8
+  },
+  {
+    "source": "Tanisha Banik",
+    "target": "Bharat Shetty",
+    "weight": 8
+  },
+  {
+    "source": "Pratyush Choudhury (PC)",
+    "target": "Bharat",
+    "weight": 8
+  },
+  {
+    "source": "Aashay",
+    "target": "Nirant K",
+    "weight": 7
+  },
+  {
+    "source": "Cheril",
+    "target": "SP",
+    "weight": 7
+  },
+  {
+    "source": "Kishore M R",
+    "target": "Kishore M R",
+    "weight": 7
+  },
+  {
+    "source": "ASK Sathvik",
+    "target": "ASK Sathvik",
+    "weight": 7
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Aakrit Vaish",
+    "weight": 7
+  },
+  {
+    "source": "Hadi Khan",
+    "target": "Nirant K",
+    "weight": 7
+  },
+  {
+    "source": "Ganaraj",
+    "target": "Paras Chopra",
+    "weight": 7
+  },
+  {
+    "source": "Vinod",
+    "target": "Paras Chopra",
+    "weight": 7
+  },
+  {
+    "source": "Sid",
+    "target": "Sid",
+    "weight": 7
+  },
+  {
+    "source": "Alok Bishoyi",
+    "target": "Alok Bishoyi",
+    "weight": 7
+  },
+  {
+    "source": "Vinod",
+    "target": "Pratik Desai",
+    "weight": 7
+  },
+  {
+    "source": "Anubhav Mishra",
+    "target": "Pratyush Choudhury (PC)",
+    "weight": 7
+  },
+  {
+    "source": "Nirant K",
+    "target": "Rohit Agarwal",
+    "weight": 7
+  },
+  {
+    "source": "Suryansh",
+    "target": "Paras Chopra",
+    "weight": 7
+  },
+  {
+    "source": "Abhishek",
+    "target": "Nirant K",
+    "weight": 7
+  },
+  {
+    "source": "Bharat Shetty",
+    "target": "Tanisha Banik",
+    "weight": 7
+  },
+  {
+    "source": "Aiswarya Sankar",
+    "target": "Dev",
+    "weight": 7
+  },
+  {
+    "source": "Aiswarya Sankar",
+    "target": "Nirant K",
+    "weight": 7
+  },
+  {
+    "source": "Nitin Kalra",
+    "target": "sumanth balaji",
+    "weight": 7
+  },
+  {
+    "source": "ashish (tp53)",
+    "target": "ashish (tp53)",
+    "weight": 7
+  },
+  {
+    "source": "Nirant K",
+    "target": "Sid",
+    "weight": 6
+  },
+  {
+    "source": "Manan",
+    "target": "Manan",
+    "weight": 6
+  },
+  {
+    "source": "Aravind Putrevu",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "Mahesh Sathiamoorthy",
+    "weight": 6
+  },
+  {
+    "source": "SP",
+    "target": "Cheril",
+    "weight": 6
+  },
+  {
+    "source": "Ashvanth.S",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Palash",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Palash",
+    "weight": 6
+  },
+  {
+    "source": "Tokenbender",
+    "target": "Nirant K",
+    "weight": 6
+  },
+  {
+    "source": "Bharath",
+    "target": "Anubhav Mishra",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "ASK Sathvik",
+    "weight": 6
+  },
+  {
+    "source": "Bharath",
+    "target": "Nirant K",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "Bharat",
+    "weight": 6
+  },
+  {
+    "source": "Ravi Theja",
+    "target": "Ojasvi Yadav",
+    "weight": 6
+  },
+  {
+    "source": "Nischith",
+    "target": "Nischith",
+    "weight": 6
+  },
+  {
+    "source": "Yatharth Pipsies",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Tanmay Sachan",
+    "weight": 6
+  },
+  {
+    "source": "Jyotirmay Khebudkar",
+    "target": "tp53(ashish)",
+    "weight": 6
+  },
+  {
+    "source": "Priyesh Srivastava",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Adarsh",
+    "target": "Pratik Desai",
+    "weight": 6
+  },
+  {
+    "source": "Sankalp",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Anubhav Mishra",
+    "weight": 6
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Jacob Singh",
+    "weight": 6
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Sandeep Srinivasa",
+    "weight": 6
+  },
+  {
+    "source": "Vamshi",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Ravi Theja",
+    "target": "Ravi Theja",
+    "weight": 6
+  },
+  {
+    "source": "Saurabh",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Amit Bhor",
+    "target": "Nirant K",
+    "weight": 6
+  },
+  {
+    "source": "Vamshi",
+    "target": "Vamshi",
+    "weight": 6
+  },
+  {
+    "source": "Rajesh Parikh",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Amit Bhor",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "Ojasvi Yadav",
+    "weight": 6
+  },
+  {
+    "source": "Ganaraj",
+    "target": "Ganaraj",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "Prayank Swaroop",
+    "weight": 6
+  },
+  {
+    "source": "Sid",
+    "target": "Anubhav Mishra",
+    "weight": 6
+  },
+  {
+    "source": "Cheril",
+    "target": "Anubhav Mishra",
+    "weight": 6
+  },
+  {
+    "source": "Abhinav Verma",
+    "target": "Anubhav Mishra",
+    "weight": 6
+  },
+  {
+    "source": "Vetrivel PS",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Ojasvi Yadav",
+    "target": "Nirant K",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "Ajay",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "Shree",
+    "weight": 6
+  },
+  {
+    "source": "Pratyush Choudhury (PC)",
+    "target": "Paras Chopra",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "Ashith",
+    "weight": 6
+  },
+  {
+    "source": "Anubhav Mishra",
+    "target": "Alok Bishoyi",
+    "weight": 6
+  },
+  {
+    "source": "Shree",
+    "target": "Nirant K",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "Aiswarya Sankar",
+    "weight": 6
+  },
+  {
+    "source": "Nirant K",
+    "target": "Amit",
+    "weight": 6
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Ankur Pandey",
+    "weight": 6
+  },
+  {
+    "source": "Arko C - Pipeshift",
+    "target": "Sandeep Srinivasa",
+    "weight": 6
+  },
+  {
+    "source": "Luv",
+    "target": "Nirant K",
+    "weight": 6
+  },
+  {
+    "source": "Tanisha Banik",
+    "target": "Nirant K",
+    "weight": 6
+  },
+  {
+    "source": "amuldotexe",
+    "target": "AD",
+    "weight": 6
+  },
+  {
+    "source": "Rajesh RS",
+    "target": "Paras Chopra",
+    "weight": 5
+  },
+  {
+    "source": "Nirant K",
+    "target": "Nitin Kalra",
+    "weight": 5
+  },
+  {
+    "source": "Vetrivel PS",
+    "target": "Pratik Desai",
+    "weight": 5
+  },
+  {
+    "source": "Abhinav Verma",
+    "target": "Abhinav Verma",
+    "weight": 5
+  },
+  {
+    "source": "Gokul",
+    "target": "Pratik Desai",
+    "weight": 5
+  },
+  {
+    "source": "Bharat Shetty",
+    "target": "Rajesh RS",
+    "weight": 5
+  },
+  {
+    "source": "Cheril",
+    "target": "Jyotirmay Khebudkar",
+    "weight": 5
+  },
+  {
+    "source": "Yatharth Pipsies",
+    "target": "Aravind Putrevu",
+    "weight": 5
+  },
+  {
+    "source": "SP",
+    "target": "Ojasvi Yadav",
+    "weight": 5
+  },
+  {
+    "source": "Abhinav Verma",
+    "target": "Pratik Desai",
+    "weight": 5
+  },
+  {
+    "source": "Ojasvi Yadav",
+    "target": "Bharat",
+    "weight": 5
+  },
+  {
+    "source": "Adarsh",
+    "target": "Paras Chopra",
+    "weight": 5
+  },
+  {
+    "source": "Aravind Putrevu",
+    "target": "Pratik Desai",
+    "weight": 5
+  },
+  {
+    "source": "Shan Shah",
+    "target": "Shan Shah",
+    "weight": 5
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Mahesh Sathiamoorthy",
+    "weight": 5
+  },
+  {
+    "source": "Tokenbender",
+    "target": "Paras Chopra",
+    "weight": 5
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Tokenbender",
+    "weight": 5
+  },
+  {
+    "source": "Dev",
+    "target": "Paras Chopra",
+    "weight": 5
+  },
+  {
+    "source": "nilesh",
+    "target": "nilesh",
+    "weight": 5
+  },
+  {
+    "source": "tp53(ashish)",
+    "target": "Pratik Desai",
+    "weight": 5
+  },
+  {
+    "source": "Tanmay Sachan",
+    "target": "Paras Chopra",
+    "weight": 5
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Gokul",
+    "weight": 5
+  },
+  {
+    "source": "Luci | Manish ",
+    "target": "Pulkit Gupta",
+    "weight": 5
+  },
+  {
+    "source": "Pratik Desai",
+    "target": "Adarsh",
+    "weight": 5
+  },
+  {
+    "source": "SP",
+    "target": "Anubhav Mishra",
+    "weight": 5
+  },
+  {
+    "source": "Dhruv Kumar",
+    "target": "Paras Chopra",
+    "weight": 5
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Sandeep Srinivasa",
+    "weight": 5
+  },
+  {
+    "source": "Nirant K",
+    "target": "Aashay",
+    "weight": 5
+  },
+  {
+    "source": "Paras Chopra",
+    "target": "Vinod",
+    "weight": 5
+  },
+  {
+    "source": "Aakrit Vaish",
+    "target": "Aakrit Vaish",
+    "weight": 5
+  },
+  {
+    "source": "Samhan",
+    "target": "Samhan",
+    "weight": 5
+  },
+  {
+    "source": "Ojasvi Yadav",
+    "target": "Pratik Desai",
+    "weight": 5
+  },
+  {
+    "source": "Rajesh Parikh",
+    "target": "Pratik Desai",
+    "weight": 5
+  },
+  {
+    "source": "Aakrit Vaish",
+    "target": "Pratik Desai",
+    "weight": 5
+  },
+  {
+    "source": "Rachitt Shah",
+    "target": "Paras Chopra",
+    "weight": 5
+  },
+  {
+    "source": "Nirant K",
+    "target": "SaiVignanMalyala",
+    "weight": 5
+  }
+]

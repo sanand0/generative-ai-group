@@ -1,0 +1,4638 @@
+[
+  {
+    "date": "2024-12-07",
+    "messages": 43,
+    "unique_authors": 19,
+    "reactions": 10,
+    "questions": 15,
+    "links": 4,
+    "replies": 20,
+    "terms": {
+      "gpt": 1,
+      "llama": 2
+    }
+  },
+  {
+    "date": "2024-12-08",
+    "messages": 7,
+    "unique_authors": 5,
+    "reactions": 3,
+    "questions": 1,
+    "links": 0,
+    "replies": 1,
+    "terms": {
+      "claude": 1
+    }
+  },
+  {
+    "date": "2024-12-09",
+    "messages": 73,
+    "unique_authors": 31,
+    "reactions": 34,
+    "questions": 17,
+    "links": 12,
+    "replies": 26,
+    "terms": {
+      "agent": 2,
+      "llama": 1,
+      "gemini": 1,
+      "claude": 3,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2024-12-10",
+    "messages": 61,
+    "unique_authors": 27,
+    "reactions": 31,
+    "questions": 19,
+    "links": 11,
+    "replies": 22,
+    "terms": {
+      "claude": 3,
+      "gpt": 1,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2024-12-11",
+    "messages": 90,
+    "unique_authors": 37,
+    "reactions": 42,
+    "questions": 21,
+    "links": 19,
+    "replies": 46,
+    "terms": {
+      "gpt": 3,
+      "llama": 1,
+      "reasoning": 2,
+      "agent": 1,
+      "claude": 5,
+      "gemini": 5
+    }
+  },
+  {
+    "date": "2024-12-12",
+    "messages": 33,
+    "unique_authors": 17,
+    "reactions": 7,
+    "questions": 8,
+    "links": 1,
+    "replies": 16,
+    "terms": {
+      "reasoning": 1,
+      "gemini": 2,
+      "claude": 2,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2024-12-13",
+    "messages": 72,
+    "unique_authors": 37,
+    "reactions": 30,
+    "questions": 16,
+    "links": 11,
+    "replies": 37,
+    "terms": {
+      "llama": 1,
+      "gpt": 3,
+      "gemini": 3,
+      "reasoning": 3,
+      "agent": 3,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2024-12-14",
+    "messages": 64,
+    "unique_authors": 30,
+    "reactions": 30,
+    "questions": 20,
+    "links": 10,
+    "replies": 27,
+    "terms": {
+      "agent": 2,
+      "reasoning": 2,
+      "gemini": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2024-12-15",
+    "messages": 56,
+    "unique_authors": 19,
+    "reactions": 17,
+    "questions": 14,
+    "links": 3,
+    "replies": 30,
+    "terms": {
+      "gemini": 3,
+      "reasoning": 5,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2024-12-16",
+    "messages": 91,
+    "unique_authors": 20,
+    "reactions": 24,
+    "questions": 16,
+    "links": 9,
+    "replies": 37,
+    "terms": {
+      "claude": 6,
+      "gemini": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2024-12-17",
+    "messages": 106,
+    "unique_authors": 37,
+    "reactions": 37,
+    "questions": 15,
+    "links": 10,
+    "replies": 51,
+    "terms": {
+      "gpt": 3,
+      "claude": 2,
+      "gemini": 5,
+      "agent": 2,
+      "llama": 1,
+      "reasoning": 3
+    }
+  },
+  {
+    "date": "2024-12-18",
+    "messages": 55,
+    "unique_authors": 30,
+    "reactions": 20,
+    "questions": 17,
+    "links": 10,
+    "replies": 32,
+    "terms": {
+      "reasoning": 1,
+      "agent": 2,
+      "llama": 2
+    }
+  },
+  {
+    "date": "2024-12-19",
+    "messages": 56,
+    "unique_authors": 24,
+    "reactions": 14,
+    "questions": 10,
+    "links": 14,
+    "replies": 24,
+    "terms": {
+      "gemini": 3,
+      "claude": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2024-12-20",
+    "messages": 103,
+    "unique_authors": 40,
+    "reactions": 34,
+    "questions": 23,
+    "links": 14,
+    "replies": 50,
+    "terms": {
+      "gpt": 2,
+      "gemini": 5,
+      "agent": 1,
+      "llama": 1,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2024-12-21",
+    "messages": 75,
+    "unique_authors": 24,
+    "reactions": 24,
+    "questions": 18,
+    "links": 14,
+    "replies": 29,
+    "terms": {
+      "claude": 1,
+      "reasoning": 2,
+      "gemini": 3
+    }
+  },
+  {
+    "date": "2024-12-22",
+    "messages": 21,
+    "unique_authors": 6,
+    "reactions": 8,
+    "questions": 4,
+    "links": 2,
+    "replies": 14,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2024-12-23",
+    "messages": 40,
+    "unique_authors": 17,
+    "reactions": 14,
+    "questions": 11,
+    "links": 5,
+    "replies": 22,
+    "terms": {
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2024-12-24",
+    "messages": 41,
+    "unique_authors": 21,
+    "reactions": 13,
+    "questions": 11,
+    "links": 7,
+    "replies": 22,
+    "terms": {
+      "gemini": 1,
+      "reasoning": 1,
+      "gpt": 3
+    }
+  },
+  {
+    "date": "2024-12-25",
+    "messages": 20,
+    "unique_authors": 10,
+    "reactions": 7,
+    "questions": 7,
+    "links": 7,
+    "replies": 14,
+    "terms": {
+      "agent": 1
+    }
+  },
+  {
+    "date": "2024-12-26",
+    "messages": 31,
+    "unique_authors": 16,
+    "reactions": 18,
+    "questions": 10,
+    "links": 5,
+    "replies": 15,
+    "terms": {
+      "reasoning": 4,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2024-12-27",
+    "messages": 24,
+    "unique_authors": 16,
+    "reactions": 11,
+    "questions": 4,
+    "links": 3,
+    "replies": 13,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2024-12-28",
+    "messages": 66,
+    "unique_authors": 21,
+    "reactions": 19,
+    "questions": 23,
+    "links": 8,
+    "replies": 31,
+    "terms": {
+      "gpt": 3,
+      "llama": 6,
+      "claude": 13,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2024-12-29",
+    "messages": 60,
+    "unique_authors": 26,
+    "reactions": 14,
+    "questions": 16,
+    "links": 6,
+    "replies": 23,
+    "terms": {
+      "reasoning": 2,
+      "claude": 1,
+      "gpt": 1,
+      "gemini": 2,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2024-12-30",
+    "messages": 23,
+    "unique_authors": 13,
+    "reactions": 9,
+    "questions": 7,
+    "links": 4,
+    "replies": 14,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2024-12-31",
+    "messages": 10,
+    "unique_authors": 8,
+    "reactions": 7,
+    "questions": 0,
+    "links": 0,
+    "replies": 1,
+    "terms": {
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-01-01",
+    "messages": 18,
+    "unique_authors": 8,
+    "reactions": 15,
+    "questions": 7,
+    "links": 6,
+    "replies": 5,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-01-02",
+    "messages": 24,
+    "unique_authors": 13,
+    "reactions": 12,
+    "questions": 4,
+    "links": 4,
+    "replies": 15,
+    "terms": {
+      "gpt": 5,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-01-03",
+    "messages": 53,
+    "unique_authors": 20,
+    "reactions": 28,
+    "questions": 8,
+    "links": 9,
+    "replies": 32,
+    "terms": {
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-01-04",
+    "messages": 18,
+    "unique_authors": 12,
+    "reactions": 5,
+    "questions": 4,
+    "links": 4,
+    "replies": 10,
+    "terms": {
+      "gpt": 2,
+      "gemini": 3
+    }
+  },
+  {
+    "date": "2025-01-06",
+    "messages": 23,
+    "unique_authors": 15,
+    "reactions": 12,
+    "questions": 5,
+    "links": 3,
+    "replies": 7,
+    "terms": {
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-01-07",
+    "messages": 53,
+    "unique_authors": 17,
+    "reactions": 22,
+    "questions": 15,
+    "links": 8,
+    "replies": 26,
+    "terms": {
+      "claude": 2
+    }
+  },
+  {
+    "date": "2025-01-08",
+    "messages": 35,
+    "unique_authors": 20,
+    "reactions": 21,
+    "questions": 8,
+    "links": 7,
+    "replies": 16,
+    "terms": {
+      "gpt": 1,
+      "gemini": 3,
+      "agent": 1,
+      "llama": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-01-09",
+    "messages": 11,
+    "unique_authors": 9,
+    "reactions": 5,
+    "questions": 3,
+    "links": 2,
+    "replies": 5,
+    "terms": {
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-01-10",
+    "messages": 98,
+    "unique_authors": 34,
+    "reactions": 29,
+    "questions": 25,
+    "links": 11,
+    "replies": 42,
+    "terms": {
+      "reasoning": 3,
+      "llama": 3,
+      "gemini": 7,
+      "gpt": 3,
+      "agent": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-01-11",
+    "messages": 27,
+    "unique_authors": 14,
+    "reactions": 9,
+    "questions": 3,
+    "links": 1,
+    "replies": 13,
+    "terms": {}
+  },
+  {
+    "date": "2025-01-12",
+    "messages": 39,
+    "unique_authors": 20,
+    "reactions": 21,
+    "questions": 7,
+    "links": 7,
+    "replies": 19,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-01-13",
+    "messages": 77,
+    "unique_authors": 24,
+    "reactions": 27,
+    "questions": 15,
+    "links": 9,
+    "replies": 40,
+    "terms": {
+      "claude": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-01-14",
+    "messages": 56,
+    "unique_authors": 25,
+    "reactions": 31,
+    "questions": 13,
+    "links": 9,
+    "replies": 32,
+    "terms": {
+      "gpt": 3,
+      "reasoning": 4,
+      "agent": 2,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-01-15",
+    "messages": 65,
+    "unique_authors": 24,
+    "reactions": 28,
+    "questions": 15,
+    "links": 11,
+    "replies": 32,
+    "terms": {
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-01-16",
+    "messages": 178,
+    "unique_authors": 33,
+    "reactions": 61,
+    "questions": 43,
+    "links": 17,
+    "replies": 99,
+    "terms": {
+      "claude": 5,
+      "gpt": 2,
+      "llama": 2,
+      "gemini": 1,
+      "reasoning": 5
+    }
+  },
+  {
+    "date": "2025-01-17",
+    "messages": 26,
+    "unique_authors": 19,
+    "reactions": 13,
+    "questions": 7,
+    "links": 4,
+    "replies": 15,
+    "terms": {
+      "claude": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-01-18",
+    "messages": 17,
+    "unique_authors": 10,
+    "reactions": 6,
+    "questions": 5,
+    "links": 4,
+    "replies": 7,
+    "terms": {}
+  },
+  {
+    "date": "2025-01-19",
+    "messages": 58,
+    "unique_authors": 20,
+    "reactions": 18,
+    "questions": 12,
+    "links": 13,
+    "replies": 29,
+    "terms": {
+      "gemini": 4,
+      "claude": 2,
+      "agent": 1,
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-01-20",
+    "messages": 89,
+    "unique_authors": 31,
+    "reactions": 25,
+    "questions": 21,
+    "links": 13,
+    "replies": 49,
+    "terms": {
+      "reasoning": 8,
+      "gemini": 2,
+      "gpt": 4
+    }
+  },
+  {
+    "date": "2025-01-21",
+    "messages": 82,
+    "unique_authors": 36,
+    "reactions": 27,
+    "questions": 16,
+    "links": 15,
+    "replies": 47,
+    "terms": {
+      "reasoning": 3,
+      "gemini": 2,
+      "llama": 2,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-01-22",
+    "messages": 150,
+    "unique_authors": 44,
+    "reactions": 46,
+    "questions": 36,
+    "links": 19,
+    "replies": 72,
+    "terms": {
+      "gemini": 3,
+      "reasoning": 10,
+      "llama": 2,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-01-23",
+    "messages": 213,
+    "unique_authors": 73,
+    "reactions": 89,
+    "questions": 46,
+    "links": 22,
+    "replies": 116,
+    "terms": {
+      "reasoning": 8,
+      "gemini": 7,
+      "gpt": 2,
+      "agent": 3,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-01-24",
+    "messages": 62,
+    "unique_authors": 32,
+    "reactions": 28,
+    "questions": 13,
+    "links": 8,
+    "replies": 25,
+    "terms": {
+      "gemini": 2,
+      "llama": 1,
+      "claude": 1,
+      "agent": 2,
+      "reasoning": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-01-25",
+    "messages": 59,
+    "unique_authors": 21,
+    "reactions": 22,
+    "questions": 20,
+    "links": 19,
+    "replies": 29,
+    "terms": {
+      "claude": 2,
+      "reasoning": 4,
+      "gpt": 5,
+      "agent": 4,
+      "llama": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-01-26",
+    "messages": 42,
+    "unique_authors": 15,
+    "reactions": 16,
+    "questions": 10,
+    "links": 8,
+    "replies": 29,
+    "terms": {
+      "reasoning": 3,
+      "agent": 1,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-01-27",
+    "messages": 199,
+    "unique_authors": 44,
+    "reactions": 68,
+    "questions": 41,
+    "links": 26,
+    "replies": 85,
+    "terms": {
+      "reasoning": 11,
+      "gemini": 2,
+      "gpt": 3,
+      "llama": 2,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-01-28",
+    "messages": 170,
+    "unique_authors": 48,
+    "reactions": 61,
+    "questions": 46,
+    "links": 26,
+    "replies": 67,
+    "terms": {
+      "claude": 1,
+      "llama": 5,
+      "reasoning": 2,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-01-29",
+    "messages": 120,
+    "unique_authors": 48,
+    "reactions": 42,
+    "questions": 27,
+    "links": 22,
+    "replies": 51,
+    "terms": {
+      "reasoning": 6,
+      "llama": 2,
+      "claude": 1,
+      "agent": 3
+    }
+  },
+  {
+    "date": "2025-01-30",
+    "messages": 91,
+    "unique_authors": 36,
+    "reactions": 30,
+    "questions": 24,
+    "links": 10,
+    "replies": 46,
+    "terms": {
+      "claude": 1,
+      "reasoning": 2,
+      "agent": 3,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-01-31",
+    "messages": 229,
+    "unique_authors": 59,
+    "reactions": 82,
+    "questions": 46,
+    "links": 30,
+    "replies": 131,
+    "terms": {
+      "reasoning": 8,
+      "agent": 1,
+      "claude": 2,
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-02-01",
+    "messages": 74,
+    "unique_authors": 29,
+    "reactions": 23,
+    "questions": 17,
+    "links": 10,
+    "replies": 33,
+    "terms": {
+      "reasoning": 3,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-02-02",
+    "messages": 59,
+    "unique_authors": 12,
+    "reactions": 24,
+    "questions": 14,
+    "links": 5,
+    "replies": 48,
+    "terms": {
+      "reasoning": 8
+    }
+  },
+  {
+    "date": "2025-02-03",
+    "messages": 133,
+    "unique_authors": 36,
+    "reactions": 52,
+    "questions": 31,
+    "links": 18,
+    "replies": 49,
+    "terms": {
+      "claude": 1,
+      "reasoning": 5,
+      "gemini": 13,
+      "agent": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-02-04",
+    "messages": 127,
+    "unique_authors": 33,
+    "reactions": 35,
+    "questions": 34,
+    "links": 14,
+    "replies": 64,
+    "terms": {
+      "reasoning": 4,
+      "gpt": 2,
+      "claude": 3,
+      "gemini": 3,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-02-05",
+    "messages": 76,
+    "unique_authors": 38,
+    "reactions": 28,
+    "questions": 20,
+    "links": 15,
+    "replies": 28,
+    "terms": {
+      "gpt": 1,
+      "agent": 3,
+      "reasoning": 4,
+      "gemini": 4
+    }
+  },
+  {
+    "date": "2025-02-06",
+    "messages": 55,
+    "unique_authors": 33,
+    "reactions": 22,
+    "questions": 20,
+    "links": 17,
+    "replies": 25,
+    "terms": {
+      "reasoning": 5,
+      "gpt": 1,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-02-07",
+    "messages": 155,
+    "unique_authors": 38,
+    "reactions": 46,
+    "questions": 34,
+    "links": 12,
+    "replies": 79,
+    "terms": {
+      "gemini": 1,
+      "reasoning": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-02-08",
+    "messages": 73,
+    "unique_authors": 22,
+    "reactions": 18,
+    "questions": 13,
+    "links": 6,
+    "replies": 29,
+    "terms": {
+      "gemini": 2,
+      "reasoning": 2,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-02-09",
+    "messages": 79,
+    "unique_authors": 20,
+    "reactions": 17,
+    "questions": 17,
+    "links": 8,
+    "replies": 50,
+    "terms": {
+      "reasoning": 13,
+      "gpt": 2,
+      "gemini": 1,
+      "claude": 2,
+      "agent": 3
+    }
+  },
+  {
+    "date": "2025-02-10",
+    "messages": 159,
+    "unique_authors": 47,
+    "reactions": 51,
+    "questions": 32,
+    "links": 16,
+    "replies": 82,
+    "terms": {
+      "gemini": 13,
+      "agent": 1,
+      "reasoning": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-02-11",
+    "messages": 128,
+    "unique_authors": 42,
+    "reactions": 31,
+    "questions": 31,
+    "links": 14,
+    "replies": 63,
+    "terms": {
+      "reasoning": 6,
+      "agent": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-02-12",
+    "messages": 94,
+    "unique_authors": 28,
+    "reactions": 35,
+    "questions": 21,
+    "links": 18,
+    "replies": 40,
+    "terms": {
+      "gemini": 2,
+      "reasoning": 8,
+      "agent": 3
+    }
+  },
+  {
+    "date": "2025-02-13",
+    "messages": 60,
+    "unique_authors": 30,
+    "reactions": 17,
+    "questions": 15,
+    "links": 8,
+    "replies": 29,
+    "terms": {
+      "reasoning": 2,
+      "gemini": 2,
+      "agent": 2,
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-02-14",
+    "messages": 25,
+    "unique_authors": 16,
+    "reactions": 9,
+    "questions": 9,
+    "links": 3,
+    "replies": 12,
+    "terms": {
+      "claude": 1,
+      "reasoning": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-02-15",
+    "messages": 24,
+    "unique_authors": 14,
+    "reactions": 6,
+    "questions": 8,
+    "links": 6,
+    "replies": 6,
+    "terms": {
+      "gemini": 6,
+      "gpt": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-02-16",
+    "messages": 35,
+    "unique_authors": 17,
+    "reactions": 12,
+    "questions": 9,
+    "links": 7,
+    "replies": 17,
+    "terms": {
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-02-17",
+    "messages": 77,
+    "unique_authors": 36,
+    "reactions": 25,
+    "questions": 17,
+    "links": 10,
+    "replies": 44,
+    "terms": {
+      "llama": 1,
+      "gemini": 2,
+      "reasoning": 4,
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-02-18",
+    "messages": 108,
+    "unique_authors": 37,
+    "reactions": 29,
+    "questions": 31,
+    "links": 12,
+    "replies": 56,
+    "terms": {
+      "reasoning": 10,
+      "agent": 1,
+      "gemini": 1,
+      "llama": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-02-19",
+    "messages": 77,
+    "unique_authors": 31,
+    "reactions": 22,
+    "questions": 21,
+    "links": 19,
+    "replies": 37,
+    "terms": {
+      "agent": 4,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-02-20",
+    "messages": 30,
+    "unique_authors": 23,
+    "reactions": 12,
+    "questions": 8,
+    "links": 6,
+    "replies": 16,
+    "terms": {
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-02-21",
+    "messages": 39,
+    "unique_authors": 18,
+    "reactions": 17,
+    "questions": 11,
+    "links": 12,
+    "replies": 15,
+    "terms": {}
+  },
+  {
+    "date": "2025-02-22",
+    "messages": 45,
+    "unique_authors": 22,
+    "reactions": 13,
+    "questions": 16,
+    "links": 5,
+    "replies": 22,
+    "terms": {
+      "reasoning": 1,
+      "agent": 2,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-02-23",
+    "messages": 22,
+    "unique_authors": 10,
+    "reactions": 4,
+    "questions": 6,
+    "links": 3,
+    "replies": 7,
+    "terms": {
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-02-24",
+    "messages": 84,
+    "unique_authors": 36,
+    "reactions": 28,
+    "questions": 22,
+    "links": 11,
+    "replies": 39,
+    "terms": {
+      "reasoning": 2,
+      "gpt": 4,
+      "gemini": 5,
+      "llama": 2,
+      "agent": 3,
+      "claude": 5
+    }
+  },
+  {
+    "date": "2025-02-25",
+    "messages": 23,
+    "unique_authors": 16,
+    "reactions": 9,
+    "questions": 8,
+    "links": 5,
+    "replies": 11,
+    "terms": {
+      "reasoning": 4,
+      "claude": 2
+    }
+  },
+  {
+    "date": "2025-02-26",
+    "messages": 58,
+    "unique_authors": 28,
+    "reactions": 18,
+    "questions": 10,
+    "links": 13,
+    "replies": 26,
+    "terms": {}
+  },
+  {
+    "date": "2025-02-27",
+    "messages": 64,
+    "unique_authors": 29,
+    "reactions": 29,
+    "questions": 15,
+    "links": 14,
+    "replies": 35,
+    "terms": {
+      "claude": 1,
+      "reasoning": 1,
+      "agent": 2,
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-02-28",
+    "messages": 70,
+    "unique_authors": 24,
+    "reactions": 15,
+    "questions": 20,
+    "links": 10,
+    "replies": 28,
+    "terms": {
+      "gpt": 3,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-03-01",
+    "messages": 25,
+    "unique_authors": 11,
+    "reactions": 6,
+    "questions": 5,
+    "links": 4,
+    "replies": 5,
+    "terms": {
+      "agent": 2,
+      "gpt": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-03-02",
+    "messages": 8,
+    "unique_authors": 5,
+    "reactions": 3,
+    "questions": 1,
+    "links": 1,
+    "replies": 3,
+    "terms": {
+      "claude": 2,
+      "agent": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-03-03",
+    "messages": 54,
+    "unique_authors": 25,
+    "reactions": 22,
+    "questions": 21,
+    "links": 7,
+    "replies": 27,
+    "terms": {
+      "claude": 1,
+      "gpt": 1,
+      "agent": 3,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-03-04",
+    "messages": 25,
+    "unique_authors": 15,
+    "reactions": 13,
+    "questions": 8,
+    "links": 3,
+    "replies": 10,
+    "terms": {
+      "gemini": 3,
+      "claude": 2,
+      "gpt": 1,
+      "reasoning": 3
+    }
+  },
+  {
+    "date": "2025-03-05",
+    "messages": 52,
+    "unique_authors": 23,
+    "reactions": 15,
+    "questions": 12,
+    "links": 10,
+    "replies": 18,
+    "terms": {
+      "gemini": 2,
+      "agent": 2,
+      "reasoning": 6,
+      "gpt": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-03-06",
+    "messages": 58,
+    "unique_authors": 29,
+    "reactions": 16,
+    "questions": 11,
+    "links": 10,
+    "replies": 39,
+    "terms": {
+      "reasoning": 2,
+      "gpt": 2,
+      "agent": 3,
+      "claude": 3
+    }
+  },
+  {
+    "date": "2025-03-07",
+    "messages": 34,
+    "unique_authors": 22,
+    "reactions": 8,
+    "questions": 12,
+    "links": 10,
+    "replies": 17,
+    "terms": {
+      "reasoning": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-03-08",
+    "messages": 23,
+    "unique_authors": 13,
+    "reactions": 5,
+    "questions": 9,
+    "links": 3,
+    "replies": 12,
+    "terms": {
+      "agent": 1,
+      "gemini": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-03-09",
+    "messages": 23,
+    "unique_authors": 13,
+    "reactions": 11,
+    "questions": 7,
+    "links": 2,
+    "replies": 9,
+    "terms": {
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-03-10",
+    "messages": 73,
+    "unique_authors": 30,
+    "reactions": 18,
+    "questions": 23,
+    "links": 9,
+    "replies": 40,
+    "terms": {
+      "reasoning": 3,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-03-11",
+    "messages": 25,
+    "unique_authors": 14,
+    "reactions": 12,
+    "questions": 6,
+    "links": 7,
+    "replies": 12,
+    "terms": {
+      "agent": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-03-12",
+    "messages": 57,
+    "unique_authors": 24,
+    "reactions": 12,
+    "questions": 15,
+    "links": 17,
+    "replies": 29,
+    "terms": {
+      "gpt": 2,
+      "agent": 1,
+      "gemini": 3
+    }
+  },
+  {
+    "date": "2025-03-13",
+    "messages": 42,
+    "unique_authors": 22,
+    "reactions": 12,
+    "questions": 9,
+    "links": 15,
+    "replies": 14,
+    "terms": {
+      "claude": 2,
+      "gemini": 6,
+      "agent": 1,
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-03-14",
+    "messages": 25,
+    "unique_authors": 13,
+    "reactions": 10,
+    "questions": 5,
+    "links": 4,
+    "replies": 10,
+    "terms": {
+      "reasoning": 2,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-03-15",
+    "messages": 18,
+    "unique_authors": 12,
+    "reactions": 7,
+    "questions": 8,
+    "links": 6,
+    "replies": 7,
+    "terms": {
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-03-16",
+    "messages": 4,
+    "unique_authors": 4,
+    "reactions": 1,
+    "questions": 2,
+    "links": 2,
+    "replies": 2,
+    "terms": {}
+  },
+  {
+    "date": "2025-03-17",
+    "messages": 14,
+    "unique_authors": 10,
+    "reactions": 4,
+    "questions": 7,
+    "links": 5,
+    "replies": 6,
+    "terms": {
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-03-18",
+    "messages": 38,
+    "unique_authors": 24,
+    "reactions": 12,
+    "questions": 13,
+    "links": 9,
+    "replies": 22,
+    "terms": {
+      "gemini": 5,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-03-19",
+    "messages": 54,
+    "unique_authors": 23,
+    "reactions": 17,
+    "questions": 12,
+    "links": 11,
+    "replies": 28,
+    "terms": {
+      "gpt": 3,
+      "llama": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-03-20",
+    "messages": 32,
+    "unique_authors": 17,
+    "reactions": 11,
+    "questions": 8,
+    "links": 7,
+    "replies": 11,
+    "terms": {
+      "gpt": 3,
+      "llama": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-03-21",
+    "messages": 14,
+    "unique_authors": 10,
+    "reactions": 8,
+    "questions": 4,
+    "links": 4,
+    "replies": 6,
+    "terms": {}
+  },
+  {
+    "date": "2025-03-22",
+    "messages": 28,
+    "unique_authors": 9,
+    "reactions": 7,
+    "questions": 9,
+    "links": 4,
+    "replies": 9,
+    "terms": {
+      "gpt": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-03-23",
+    "messages": 38,
+    "unique_authors": 23,
+    "reactions": 14,
+    "questions": 11,
+    "links": 12,
+    "replies": 26,
+    "terms": {
+      "claude": 1,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-03-24",
+    "messages": 24,
+    "unique_authors": 18,
+    "reactions": 8,
+    "questions": 7,
+    "links": 5,
+    "replies": 12,
+    "terms": {
+      "claude": 1,
+      "reasoning": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-03-25",
+    "messages": 22,
+    "unique_authors": 15,
+    "reactions": 8,
+    "questions": 4,
+    "links": 11,
+    "replies": 7,
+    "terms": {
+      "gemini": 3,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-03-26",
+    "messages": 32,
+    "unique_authors": 20,
+    "reactions": 8,
+    "questions": 11,
+    "links": 6,
+    "replies": 14,
+    "terms": {
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-03-27",
+    "messages": 17,
+    "unique_authors": 12,
+    "reactions": 5,
+    "questions": 3,
+    "links": 6,
+    "replies": 9,
+    "terms": {}
+  },
+  {
+    "date": "2025-03-28",
+    "messages": 74,
+    "unique_authors": 23,
+    "reactions": 16,
+    "questions": 14,
+    "links": 8,
+    "replies": 31,
+    "terms": {
+      "reasoning": 2,
+      "gpt": 1,
+      "llama": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-03-29",
+    "messages": 24,
+    "unique_authors": 14,
+    "reactions": 6,
+    "questions": 13,
+    "links": 5,
+    "replies": 13,
+    "terms": {
+      "reasoning": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-03-30",
+    "messages": 26,
+    "unique_authors": 15,
+    "reactions": 6,
+    "questions": 8,
+    "links": 3,
+    "replies": 10,
+    "terms": {
+      "gpt": 2,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-03-31",
+    "messages": 40,
+    "unique_authors": 13,
+    "reactions": 12,
+    "questions": 11,
+    "links": 3,
+    "replies": 24,
+    "terms": {
+      "gemini": 1,
+      "claude": 2,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-04-01",
+    "messages": 8,
+    "unique_authors": 7,
+    "reactions": 5,
+    "questions": 2,
+    "links": 4,
+    "replies": 2,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-04-02",
+    "messages": 62,
+    "unique_authors": 24,
+    "reactions": 16,
+    "questions": 9,
+    "links": 7,
+    "replies": 36,
+    "terms": {
+      "agent": 1,
+      "reasoning": 5,
+      "claude": 4,
+      "gemini": 1,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-04-03",
+    "messages": 32,
+    "unique_authors": 17,
+    "reactions": 13,
+    "questions": 9,
+    "links": 7,
+    "replies": 18,
+    "terms": {
+      "agent": 2,
+      "gemini": 2,
+      "claude": 4,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-04-04",
+    "messages": 41,
+    "unique_authors": 20,
+    "reactions": 7,
+    "questions": 9,
+    "links": 6,
+    "replies": 19,
+    "terms": {
+      "claude": 3,
+      "agent": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-04-05",
+    "messages": 38,
+    "unique_authors": 19,
+    "reactions": 18,
+    "questions": 12,
+    "links": 9,
+    "replies": 22,
+    "terms": {
+      "claude": 2,
+      "gemini": 2,
+      "gpt": 1,
+      "llama": 2
+    }
+  },
+  {
+    "date": "2025-04-06",
+    "messages": 48,
+    "unique_authors": 25,
+    "reactions": 12,
+    "questions": 11,
+    "links": 12,
+    "replies": 19,
+    "terms": {
+      "reasoning": 4,
+      "llama": 5,
+      "gemini": 2,
+      "gpt": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-04-07",
+    "messages": 52,
+    "unique_authors": 26,
+    "reactions": 13,
+    "questions": 13,
+    "links": 6,
+    "replies": 27,
+    "terms": {
+      "gpt": 1,
+      "llama": 1,
+      "gemini": 3,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-04-08",
+    "messages": 66,
+    "unique_authors": 26,
+    "reactions": 22,
+    "questions": 11,
+    "links": 6,
+    "replies": 30,
+    "terms": {
+      "claude": 3,
+      "agent": 1,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-04-09",
+    "messages": 50,
+    "unique_authors": 17,
+    "reactions": 14,
+    "questions": 8,
+    "links": 12,
+    "replies": 23,
+    "terms": {
+      "claude": 3,
+      "agent": 2,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-04-10",
+    "messages": 33,
+    "unique_authors": 22,
+    "reactions": 16,
+    "questions": 10,
+    "links": 7,
+    "replies": 10,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-04-11",
+    "messages": 46,
+    "unique_authors": 24,
+    "reactions": 14,
+    "questions": 12,
+    "links": 5,
+    "replies": 32,
+    "terms": {
+      "agent": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-04-12",
+    "messages": 10,
+    "unique_authors": 7,
+    "reactions": 2,
+    "questions": 4,
+    "links": 1,
+    "replies": 5,
+    "terms": {
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-04-13",
+    "messages": 16,
+    "unique_authors": 12,
+    "reactions": 0,
+    "questions": 7,
+    "links": 3,
+    "replies": 7,
+    "terms": {}
+  },
+  {
+    "date": "2025-04-14",
+    "messages": 22,
+    "unique_authors": 16,
+    "reactions": 7,
+    "questions": 5,
+    "links": 4,
+    "replies": 11,
+    "terms": {
+      "gpt": 5
+    }
+  },
+  {
+    "date": "2025-04-15",
+    "messages": 45,
+    "unique_authors": 32,
+    "reactions": 16,
+    "questions": 10,
+    "links": 7,
+    "replies": 27,
+    "terms": {
+      "gpt": 2,
+      "claude": 3
+    }
+  },
+  {
+    "date": "2025-04-16",
+    "messages": 68,
+    "unique_authors": 29,
+    "reactions": 20,
+    "questions": 22,
+    "links": 11,
+    "replies": 43,
+    "terms": {
+      "reasoning": 2,
+      "claude": 5,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-04-17",
+    "messages": 19,
+    "unique_authors": 18,
+    "reactions": 12,
+    "questions": 3,
+    "links": 3,
+    "replies": 12,
+    "terms": {
+      "claude": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-04-18",
+    "messages": 22,
+    "unique_authors": 12,
+    "reactions": 6,
+    "questions": 4,
+    "links": 6,
+    "replies": 11,
+    "terms": {
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-04-19",
+    "messages": 28,
+    "unique_authors": 18,
+    "reactions": 13,
+    "questions": 7,
+    "links": 4,
+    "replies": 16,
+    "terms": {
+      "claude": 4,
+      "agent": 1,
+      "reasoning": 2,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-04-20",
+    "messages": 64,
+    "unique_authors": 32,
+    "reactions": 19,
+    "questions": 16,
+    "links": 5,
+    "replies": 37,
+    "terms": {
+      "claude": 6,
+      "agent": 4,
+      "gemini": 4
+    }
+  },
+  {
+    "date": "2025-04-21",
+    "messages": 50,
+    "unique_authors": 32,
+    "reactions": 18,
+    "questions": 11,
+    "links": 13,
+    "replies": 25,
+    "terms": {
+      "claude": 3,
+      "agent": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-04-22",
+    "messages": 64,
+    "unique_authors": 30,
+    "reactions": 20,
+    "questions": 8,
+    "links": 8,
+    "replies": 43,
+    "terms": {
+      "gpt": 2,
+      "reasoning": 4,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-04-23",
+    "messages": 24,
+    "unique_authors": 12,
+    "reactions": 9,
+    "questions": 6,
+    "links": 3,
+    "replies": 14,
+    "terms": {
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-04-24",
+    "messages": 25,
+    "unique_authors": 17,
+    "reactions": 12,
+    "questions": 6,
+    "links": 5,
+    "replies": 11,
+    "terms": {
+      "gemini": 5,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-04-25",
+    "messages": 47,
+    "unique_authors": 28,
+    "reactions": 14,
+    "questions": 18,
+    "links": 13,
+    "replies": 24,
+    "terms": {
+      "reasoning": 3,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-04-26",
+    "messages": 31,
+    "unique_authors": 15,
+    "reactions": 11,
+    "questions": 7,
+    "links": 6,
+    "replies": 14,
+    "terms": {
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-04-27",
+    "messages": 167,
+    "unique_authors": 36,
+    "reactions": 59,
+    "questions": 50,
+    "links": 7,
+    "replies": 94,
+    "terms": {
+      "reasoning": 4,
+      "llama": 2
+    }
+  },
+  {
+    "date": "2025-04-28",
+    "messages": 48,
+    "unique_authors": 14,
+    "reactions": 10,
+    "questions": 14,
+    "links": 8,
+    "replies": 29,
+    "terms": {
+      "reasoning": 2,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-04-29",
+    "messages": 24,
+    "unique_authors": 13,
+    "reactions": 7,
+    "questions": 6,
+    "links": 2,
+    "replies": 16,
+    "terms": {
+      "agent": 3
+    }
+  },
+  {
+    "date": "2025-04-30",
+    "messages": 29,
+    "unique_authors": 18,
+    "reactions": 16,
+    "questions": 7,
+    "links": 8,
+    "replies": 15,
+    "terms": {
+      "agent": 1,
+      "gemini": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-05-01",
+    "messages": 43,
+    "unique_authors": 17,
+    "reactions": 10,
+    "questions": 15,
+    "links": 6,
+    "replies": 20,
+    "terms": {
+      "llama": 2,
+      "reasoning": 5,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-05-02",
+    "messages": 26,
+    "unique_authors": 15,
+    "reactions": 6,
+    "questions": 6,
+    "links": 3,
+    "replies": 14,
+    "terms": {
+      "llama": 1,
+      "claude": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-05-03",
+    "messages": 21,
+    "unique_authors": 15,
+    "reactions": 5,
+    "questions": 5,
+    "links": 1,
+    "replies": 16,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-05-04",
+    "messages": 9,
+    "unique_authors": 7,
+    "reactions": 1,
+    "questions": 1,
+    "links": 2,
+    "replies": 5,
+    "terms": {
+      "reasoning": 2,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-05-05",
+    "messages": 12,
+    "unique_authors": 8,
+    "reactions": 4,
+    "questions": 3,
+    "links": 1,
+    "replies": 9,
+    "terms": {
+      "gpt": 3
+    }
+  },
+  {
+    "date": "2025-05-06",
+    "messages": 29,
+    "unique_authors": 24,
+    "reactions": 12,
+    "questions": 9,
+    "links": 8,
+    "replies": 13,
+    "terms": {
+      "claude": 2,
+      "gpt": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-05-07",
+    "messages": 109,
+    "unique_authors": 31,
+    "reactions": 30,
+    "questions": 12,
+    "links": 11,
+    "replies": 48,
+    "terms": {
+      "agent": 2,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-05-08",
+    "messages": 45,
+    "unique_authors": 17,
+    "reactions": 12,
+    "questions": 13,
+    "links": 8,
+    "replies": 22,
+    "terms": {
+      "claude": 1,
+      "gemini": 1,
+      "reasoning": 2,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-05-09",
+    "messages": 18,
+    "unique_authors": 9,
+    "reactions": 3,
+    "questions": 7,
+    "links": 1,
+    "replies": 12,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-05-10",
+    "messages": 57,
+    "unique_authors": 16,
+    "reactions": 16,
+    "questions": 17,
+    "links": 9,
+    "replies": 28,
+    "terms": {
+      "claude": 3
+    }
+  },
+  {
+    "date": "2025-05-11",
+    "messages": 48,
+    "unique_authors": 23,
+    "reactions": 21,
+    "questions": 13,
+    "links": 8,
+    "replies": 22,
+    "terms": {
+      "claude": 4
+    }
+  },
+  {
+    "date": "2025-05-12",
+    "messages": 36,
+    "unique_authors": 22,
+    "reactions": 18,
+    "questions": 9,
+    "links": 4,
+    "replies": 19,
+    "terms": {
+      "gpt": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-05-13",
+    "messages": 54,
+    "unique_authors": 27,
+    "reactions": 13,
+    "questions": 20,
+    "links": 15,
+    "replies": 33,
+    "terms": {
+      "agent": 3,
+      "claude": 3,
+      "gemini": 2,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-05-14",
+    "messages": 29,
+    "unique_authors": 22,
+    "reactions": 11,
+    "questions": 9,
+    "links": 9,
+    "replies": 14,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-05-15",
+    "messages": 36,
+    "unique_authors": 22,
+    "reactions": 25,
+    "questions": 3,
+    "links": 6,
+    "replies": 16,
+    "terms": {
+      "gpt": 2,
+      "gemini": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-05-16",
+    "messages": 60,
+    "unique_authors": 21,
+    "reactions": 19,
+    "questions": 12,
+    "links": 13,
+    "replies": 34,
+    "terms": {
+      "reasoning": 2,
+      "claude": 1,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-05-17",
+    "messages": 22,
+    "unique_authors": 15,
+    "reactions": 12,
+    "questions": 3,
+    "links": 4,
+    "replies": 14,
+    "terms": {
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-05-18",
+    "messages": 33,
+    "unique_authors": 19,
+    "reactions": 7,
+    "questions": 6,
+    "links": 2,
+    "replies": 22,
+    "terms": {
+      "claude": 3,
+      "gemini": 3,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-05-19",
+    "messages": 36,
+    "unique_authors": 22,
+    "reactions": 11,
+    "questions": 9,
+    "links": 8,
+    "replies": 18,
+    "terms": {
+      "gemini": 1,
+      "gpt": 2,
+      "agent": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-05-20",
+    "messages": 65,
+    "unique_authors": 32,
+    "reactions": 18,
+    "questions": 19,
+    "links": 14,
+    "replies": 37,
+    "terms": {
+      "agent": 6,
+      "reasoning": 2,
+      "gemini": 3,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-05-21",
+    "messages": 62,
+    "unique_authors": 32,
+    "reactions": 14,
+    "questions": 18,
+    "links": 15,
+    "replies": 31,
+    "terms": {
+      "llama": 2,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-05-22",
+    "messages": 81,
+    "unique_authors": 35,
+    "reactions": 21,
+    "questions": 23,
+    "links": 9,
+    "replies": 45,
+    "terms": {
+      "claude": 6,
+      "gemini": 5,
+      "agent": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-05-23",
+    "messages": 44,
+    "unique_authors": 25,
+    "reactions": 15,
+    "questions": 11,
+    "links": 7,
+    "replies": 31,
+    "terms": {
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-05-24",
+    "messages": 30,
+    "unique_authors": 16,
+    "reactions": 7,
+    "questions": 9,
+    "links": 2,
+    "replies": 12,
+    "terms": {
+      "claude": 2,
+      "gpt": 1,
+      "gemini": 1,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-05-25",
+    "messages": 31,
+    "unique_authors": 19,
+    "reactions": 8,
+    "questions": 7,
+    "links": 4,
+    "replies": 18,
+    "terms": {
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-05-26",
+    "messages": 15,
+    "unique_authors": 11,
+    "reactions": 8,
+    "questions": 5,
+    "links": 5,
+    "replies": 7,
+    "terms": {
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-05-27",
+    "messages": 89,
+    "unique_authors": 41,
+    "reactions": 34,
+    "questions": 23,
+    "links": 10,
+    "replies": 55,
+    "terms": {
+      "agent": 5,
+      "gpt": 1,
+      "reasoning": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-05-28",
+    "messages": 92,
+    "unique_authors": 41,
+    "reactions": 32,
+    "questions": 31,
+    "links": 18,
+    "replies": 54,
+    "terms": {
+      "claude": 9,
+      "agent": 3,
+      "gpt": 1,
+      "llama": 1,
+      "reasoning": 3
+    }
+  },
+  {
+    "date": "2025-05-29",
+    "messages": 46,
+    "unique_authors": 22,
+    "reactions": 11,
+    "questions": 16,
+    "links": 11,
+    "replies": 26,
+    "terms": {
+      "reasoning": 2,
+      "agent": 2,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-05-30",
+    "messages": 44,
+    "unique_authors": 23,
+    "reactions": 13,
+    "questions": 12,
+    "links": 2,
+    "replies": 30,
+    "terms": {
+      "agent": 1,
+      "claude": 9,
+      "gemini": 8,
+      "gpt": 3
+    }
+  },
+  {
+    "date": "2025-05-31",
+    "messages": 32,
+    "unique_authors": 15,
+    "reactions": 9,
+    "questions": 8,
+    "links": 5,
+    "replies": 19,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-06-01",
+    "messages": 52,
+    "unique_authors": 21,
+    "reactions": 11,
+    "questions": 16,
+    "links": 8,
+    "replies": 25,
+    "terms": {
+      "gemini": 1,
+      "reasoning": 2,
+      "llama": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-06-02",
+    "messages": 44,
+    "unique_authors": 22,
+    "reactions": 13,
+    "questions": 12,
+    "links": 14,
+    "replies": 16,
+    "terms": {
+      "claude": 1,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-06-03",
+    "messages": 37,
+    "unique_authors": 23,
+    "reactions": 11,
+    "questions": 10,
+    "links": 7,
+    "replies": 17,
+    "terms": {
+      "agent": 2,
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-06-04",
+    "messages": 50,
+    "unique_authors": 24,
+    "reactions": 12,
+    "questions": 16,
+    "links": 13,
+    "replies": 27,
+    "terms": {
+      "agent": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-06-05",
+    "messages": 33,
+    "unique_authors": 21,
+    "reactions": 8,
+    "questions": 15,
+    "links": 4,
+    "replies": 18,
+    "terms": {
+      "gpt": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-06-06",
+    "messages": 62,
+    "unique_authors": 23,
+    "reactions": 11,
+    "questions": 13,
+    "links": 12,
+    "replies": 27,
+    "terms": {
+      "reasoning": 4,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-06-07",
+    "messages": 74,
+    "unique_authors": 33,
+    "reactions": 21,
+    "questions": 20,
+    "links": 8,
+    "replies": 49,
+    "terms": {
+      "claude": 6,
+      "gemini": 2,
+      "reasoning": 7
+    }
+  },
+  {
+    "date": "2025-06-08",
+    "messages": 12,
+    "unique_authors": 11,
+    "reactions": 4,
+    "questions": 2,
+    "links": 5,
+    "replies": 4,
+    "terms": {
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-06-09",
+    "messages": 36,
+    "unique_authors": 23,
+    "reactions": 16,
+    "questions": 7,
+    "links": 8,
+    "replies": 16,
+    "terms": {
+      "reasoning": 8,
+      "gpt": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-06-10",
+    "messages": 78,
+    "unique_authors": 34,
+    "reactions": 25,
+    "questions": 13,
+    "links": 11,
+    "replies": 43,
+    "terms": {
+      "gemini": 2,
+      "reasoning": 2,
+      "gpt": 2,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-06-11",
+    "messages": 30,
+    "unique_authors": 17,
+    "reactions": 6,
+    "questions": 9,
+    "links": 5,
+    "replies": 16,
+    "terms": {
+      "claude": 2,
+      "gpt": 5,
+      "gemini": 2,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-06-12",
+    "messages": 92,
+    "unique_authors": 41,
+    "reactions": 26,
+    "questions": 25,
+    "links": 12,
+    "replies": 50,
+    "terms": {
+      "claude": 2,
+      "gpt": 1,
+      "gemini": 2,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-06-13",
+    "messages": 18,
+    "unique_authors": 13,
+    "reactions": 8,
+    "questions": 6,
+    "links": 2,
+    "replies": 5,
+    "terms": {
+      "gemini": 3,
+      "agent": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-06-14",
+    "messages": 30,
+    "unique_authors": 18,
+    "reactions": 6,
+    "questions": 7,
+    "links": 10,
+    "replies": 16,
+    "terms": {
+      "claude": 1,
+      "agent": 3,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-06-15",
+    "messages": 19,
+    "unique_authors": 11,
+    "reactions": 4,
+    "questions": 7,
+    "links": 3,
+    "replies": 10,
+    "terms": {}
+  },
+  {
+    "date": "2025-06-16",
+    "messages": 12,
+    "unique_authors": 10,
+    "reactions": 6,
+    "questions": 5,
+    "links": 5,
+    "replies": 4,
+    "terms": {}
+  },
+  {
+    "date": "2025-06-17",
+    "messages": 37,
+    "unique_authors": 24,
+    "reactions": 17,
+    "questions": 10,
+    "links": 4,
+    "replies": 20,
+    "terms": {
+      "gemini": 2,
+      "agent": 2,
+      "reasoning": 3
+    }
+  },
+  {
+    "date": "2025-06-18",
+    "messages": 13,
+    "unique_authors": 10,
+    "reactions": 7,
+    "questions": 3,
+    "links": 8,
+    "replies": 5,
+    "terms": {
+      "gemini": 2,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-06-19",
+    "messages": 48,
+    "unique_authors": 30,
+    "reactions": 24,
+    "questions": 14,
+    "links": 14,
+    "replies": 28,
+    "terms": {
+      "agent": 2,
+      "claude": 4,
+      "reasoning": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-06-20",
+    "messages": 55,
+    "unique_authors": 28,
+    "reactions": 20,
+    "questions": 6,
+    "links": 7,
+    "replies": 39,
+    "terms": {
+      "claude": 1,
+      "agent": 5,
+      "reasoning": 3,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-06-21",
+    "messages": 6,
+    "unique_authors": 5,
+    "reactions": 1,
+    "questions": 2,
+    "links": 0,
+    "replies": 3,
+    "terms": {
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-06-22",
+    "messages": 16,
+    "unique_authors": 13,
+    "reactions": 6,
+    "questions": 5,
+    "links": 2,
+    "replies": 9,
+    "terms": {
+      "agent": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-06-23",
+    "messages": 60,
+    "unique_authors": 33,
+    "reactions": 25,
+    "questions": 14,
+    "links": 4,
+    "replies": 33,
+    "terms": {
+      "gemini": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-06-24",
+    "messages": 68,
+    "unique_authors": 32,
+    "reactions": 20,
+    "questions": 17,
+    "links": 8,
+    "replies": 41,
+    "terms": {
+      "gpt": 6,
+      "claude": 3,
+      "agent": 2,
+      "gemini": 5
+    }
+  },
+  {
+    "date": "2025-06-25",
+    "messages": 40,
+    "unique_authors": 25,
+    "reactions": 24,
+    "questions": 10,
+    "links": 9,
+    "replies": 29,
+    "terms": {
+      "gemini": 2,
+      "claude": 3,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-06-26",
+    "messages": 21,
+    "unique_authors": 11,
+    "reactions": 11,
+    "questions": 6,
+    "links": 6,
+    "replies": 8,
+    "terms": {
+      "claude": 2
+    }
+  },
+  {
+    "date": "2025-06-27",
+    "messages": 41,
+    "unique_authors": 22,
+    "reactions": 28,
+    "questions": 11,
+    "links": 11,
+    "replies": 22,
+    "terms": {
+      "agent": 3,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-06-28",
+    "messages": 42,
+    "unique_authors": 19,
+    "reactions": 10,
+    "questions": 15,
+    "links": 7,
+    "replies": 24,
+    "terms": {
+      "gemini": 5,
+      "claude": 10,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-06-29",
+    "messages": 26,
+    "unique_authors": 11,
+    "reactions": 7,
+    "questions": 6,
+    "links": 4,
+    "replies": 14,
+    "terms": {
+      "gemini": 3,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-06-30",
+    "messages": 53,
+    "unique_authors": 21,
+    "reactions": 12,
+    "questions": 13,
+    "links": 6,
+    "replies": 28,
+    "terms": {
+      "agent": 1,
+      "claude": 5,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-07-01",
+    "messages": 61,
+    "unique_authors": 30,
+    "reactions": 14,
+    "questions": 21,
+    "links": 11,
+    "replies": 32,
+    "terms": {
+      "gemini": 3,
+      "agent": 1,
+      "llama": 2
+    }
+  },
+  {
+    "date": "2025-07-02",
+    "messages": 52,
+    "unique_authors": 34,
+    "reactions": 29,
+    "questions": 11,
+    "links": 8,
+    "replies": 32,
+    "terms": {
+      "claude": 6,
+      "gemini": 5,
+      "agent": 2,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-07-03",
+    "messages": 73,
+    "unique_authors": 30,
+    "reactions": 25,
+    "questions": 20,
+    "links": 9,
+    "replies": 47,
+    "terms": {
+      "gemini": 4,
+      "claude": 3,
+      "reasoning": 2,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-07-04",
+    "messages": 40,
+    "unique_authors": 22,
+    "reactions": 13,
+    "questions": 11,
+    "links": 6,
+    "replies": 31,
+    "terms": {
+      "agent": 1,
+      "claude": 3,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-07-05",
+    "messages": 49,
+    "unique_authors": 21,
+    "reactions": 16,
+    "questions": 14,
+    "links": 7,
+    "replies": 29,
+    "terms": {
+      "agent": 1,
+      "gpt": 6,
+      "gemini": 2,
+      "claude": 2,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-07-06",
+    "messages": 28,
+    "unique_authors": 18,
+    "reactions": 8,
+    "questions": 8,
+    "links": 5,
+    "replies": 14,
+    "terms": {
+      "claude": 1,
+      "gemini": 2,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-07-07",
+    "messages": 41,
+    "unique_authors": 20,
+    "reactions": 23,
+    "questions": 11,
+    "links": 15,
+    "replies": 21,
+    "terms": {
+      "reasoning": 1,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-07-08",
+    "messages": 18,
+    "unique_authors": 12,
+    "reactions": 7,
+    "questions": 8,
+    "links": 6,
+    "replies": 8,
+    "terms": {
+      "agent": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-07-09",
+    "messages": 52,
+    "unique_authors": 33,
+    "reactions": 28,
+    "questions": 11,
+    "links": 15,
+    "replies": 27,
+    "terms": {
+      "gemini": 3,
+      "reasoning": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-07-10",
+    "messages": 30,
+    "unique_authors": 13,
+    "reactions": 12,
+    "questions": 9,
+    "links": 4,
+    "replies": 15,
+    "terms": {
+      "claude": 9,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-07-11",
+    "messages": 54,
+    "unique_authors": 36,
+    "reactions": 24,
+    "questions": 13,
+    "links": 17,
+    "replies": 29,
+    "terms": {
+      "reasoning": 2,
+      "gemini": 1,
+      "claude": 2,
+      "agent": 3
+    }
+  },
+  {
+    "date": "2025-07-12",
+    "messages": 20,
+    "unique_authors": 13,
+    "reactions": 7,
+    "questions": 7,
+    "links": 4,
+    "replies": 12,
+    "terms": {
+      "agent": 2,
+      "gemini": 3
+    }
+  },
+  {
+    "date": "2025-07-13",
+    "messages": 21,
+    "unique_authors": 13,
+    "reactions": 3,
+    "questions": 7,
+    "links": 2,
+    "replies": 7,
+    "terms": {
+      "gpt": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-07-14",
+    "messages": 85,
+    "unique_authors": 41,
+    "reactions": 34,
+    "questions": 25,
+    "links": 9,
+    "replies": 40,
+    "terms": {
+      "gemini": 4,
+      "reasoning": 1,
+      "claude": 3,
+      "agent": 1,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-07-15",
+    "messages": 18,
+    "unique_authors": 12,
+    "reactions": 7,
+    "questions": 3,
+    "links": 4,
+    "replies": 11,
+    "terms": {
+      "gpt": 1,
+      "claude": 4
+    }
+  },
+  {
+    "date": "2025-07-16",
+    "messages": 31,
+    "unique_authors": 21,
+    "reactions": 14,
+    "questions": 7,
+    "links": 10,
+    "replies": 14,
+    "terms": {
+      "claude": 5,
+      "gpt": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-07-17",
+    "messages": 121,
+    "unique_authors": 43,
+    "reactions": 59,
+    "questions": 31,
+    "links": 20,
+    "replies": 73,
+    "terms": {
+      "gpt": 1,
+      "agent": 6,
+      "claude": 8,
+      "gemini": 1,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-07-18",
+    "messages": 66,
+    "unique_authors": 29,
+    "reactions": 23,
+    "questions": 23,
+    "links": 7,
+    "replies": 36,
+    "terms": {
+      "claude": 5,
+      "agent": 1,
+      "gemini": 2,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-07-19",
+    "messages": 34,
+    "unique_authors": 21,
+    "reactions": 11,
+    "questions": 14,
+    "links": 8,
+    "replies": 22,
+    "terms": {
+      "gemini": 2,
+      "agent": 2,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-07-20",
+    "messages": 43,
+    "unique_authors": 23,
+    "reactions": 18,
+    "questions": 8,
+    "links": 8,
+    "replies": 26,
+    "terms": {
+      "reasoning": 1,
+      "agent": 3,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-07-21",
+    "messages": 57,
+    "unique_authors": 27,
+    "reactions": 27,
+    "questions": 11,
+    "links": 14,
+    "replies": 29,
+    "terms": {
+      "claude": 7,
+      "gemini": 1,
+      "gpt": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-07-22",
+    "messages": 87,
+    "unique_authors": 32,
+    "reactions": 24,
+    "questions": 29,
+    "links": 16,
+    "replies": 57,
+    "terms": {
+      "claude": 11,
+      "gemini": 4,
+      "agent": 1,
+      "llama": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-07-23",
+    "messages": 62,
+    "unique_authors": 29,
+    "reactions": 17,
+    "questions": 19,
+    "links": 13,
+    "replies": 28,
+    "terms": {
+      "claude": 2,
+      "gemini": 1,
+      "agent": 2,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-07-24",
+    "messages": 38,
+    "unique_authors": 20,
+    "reactions": 17,
+    "questions": 10,
+    "links": 10,
+    "replies": 18,
+    "terms": {
+      "gemini": 2,
+      "claude": 2,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-07-25",
+    "messages": 62,
+    "unique_authors": 33,
+    "reactions": 23,
+    "questions": 13,
+    "links": 8,
+    "replies": 42,
+    "terms": {
+      "agent": 5,
+      "claude": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-07-26",
+    "messages": 10,
+    "unique_authors": 6,
+    "reactions": 2,
+    "questions": 6,
+    "links": 4,
+    "replies": 4,
+    "terms": {
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-07-27",
+    "messages": 9,
+    "unique_authors": 7,
+    "reactions": 4,
+    "questions": 6,
+    "links": 4,
+    "replies": 4,
+    "terms": {
+      "claude": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-07-28",
+    "messages": 65,
+    "unique_authors": 30,
+    "reactions": 34,
+    "questions": 19,
+    "links": 14,
+    "replies": 36,
+    "terms": {
+      "gemini": 2,
+      "claude": 5,
+      "agent": 3
+    }
+  },
+  {
+    "date": "2025-07-29",
+    "messages": 58,
+    "unique_authors": 29,
+    "reactions": 26,
+    "questions": 21,
+    "links": 14,
+    "replies": 38,
+    "terms": {
+      "claude": 8,
+      "gpt": 2,
+      "gemini": 1,
+      "reasoning": 3
+    }
+  },
+  {
+    "date": "2025-07-30",
+    "messages": 188,
+    "unique_authors": 29,
+    "reactions": 55,
+    "questions": 30,
+    "links": 18,
+    "replies": 115,
+    "terms": {
+      "claude": 5,
+      "gemini": 2,
+      "reasoning": 2,
+      "agent": 3
+    }
+  },
+  {
+    "date": "2025-07-31",
+    "messages": 12,
+    "unique_authors": 9,
+    "reactions": 5,
+    "questions": 4,
+    "links": 4,
+    "replies": 6,
+    "terms": {
+      "claude": 1,
+      "gemini": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-08-01",
+    "messages": 50,
+    "unique_authors": 22,
+    "reactions": 17,
+    "questions": 8,
+    "links": 10,
+    "replies": 24,
+    "terms": {
+      "gemini": 1,
+      "gpt": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-08-02",
+    "messages": 11,
+    "unique_authors": 8,
+    "reactions": 5,
+    "questions": 5,
+    "links": 6,
+    "replies": 1,
+    "terms": {
+      "gpt": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-08-03",
+    "messages": 37,
+    "unique_authors": 17,
+    "reactions": 11,
+    "questions": 13,
+    "links": 8,
+    "replies": 21,
+    "terms": {
+      "claude": 1,
+      "agent": 2,
+      "gemini": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-08-04",
+    "messages": 34,
+    "unique_authors": 18,
+    "reactions": 16,
+    "questions": 8,
+    "links": 9,
+    "replies": 17,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-08-05",
+    "messages": 208,
+    "unique_authors": 51,
+    "reactions": 67,
+    "questions": 28,
+    "links": 26,
+    "replies": 122,
+    "terms": {
+      "claude": 9,
+      "gemini": 4,
+      "gpt": 12,
+      "agent": 1,
+      "reasoning": 4
+    }
+  },
+  {
+    "date": "2025-08-06",
+    "messages": 100,
+    "unique_authors": 40,
+    "reactions": 33,
+    "questions": 28,
+    "links": 22,
+    "replies": 52,
+    "terms": {
+      "claude": 3,
+      "gpt": 6,
+      "reasoning": 5,
+      "gemini": 3,
+      "agent": 3,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-08-07",
+    "messages": 220,
+    "unique_authors": 62,
+    "reactions": 73,
+    "questions": 46,
+    "links": 21,
+    "replies": 109,
+    "terms": {
+      "agent": 4,
+      "gpt": 29,
+      "reasoning": 5,
+      "gemini": 3,
+      "claude": 6
+    }
+  },
+  {
+    "date": "2025-08-08",
+    "messages": 129,
+    "unique_authors": 58,
+    "reactions": 36,
+    "questions": 29,
+    "links": 11,
+    "replies": 72,
+    "terms": {
+      "gemini": 5,
+      "gpt": 32,
+      "claude": 16,
+      "reasoning": 10,
+      "agent": 8
+    }
+  },
+  {
+    "date": "2025-08-09",
+    "messages": 56,
+    "unique_authors": 23,
+    "reactions": 20,
+    "questions": 11,
+    "links": 8,
+    "replies": 33,
+    "terms": {
+      "reasoning": 2,
+      "gemini": 2,
+      "gpt": 11,
+      "claude": 4
+    }
+  },
+  {
+    "date": "2025-08-10",
+    "messages": 68,
+    "unique_authors": 26,
+    "reactions": 20,
+    "questions": 17,
+    "links": 18,
+    "replies": 40,
+    "terms": {
+      "gpt": 2,
+      "agent": 3,
+      "claude": 2,
+      "gemini": 5
+    }
+  },
+  {
+    "date": "2025-08-11",
+    "messages": 65,
+    "unique_authors": 25,
+    "reactions": 21,
+    "questions": 19,
+    "links": 10,
+    "replies": 33,
+    "terms": {
+      "gpt": 10,
+      "reasoning": 6,
+      "gemini": 1,
+      "claude": 2
+    }
+  },
+  {
+    "date": "2025-08-12",
+    "messages": 56,
+    "unique_authors": 26,
+    "reactions": 26,
+    "questions": 14,
+    "links": 14,
+    "replies": 30,
+    "terms": {
+      "claude": 8,
+      "gpt": 1,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-08-13",
+    "messages": 62,
+    "unique_authors": 26,
+    "reactions": 25,
+    "questions": 21,
+    "links": 13,
+    "replies": 39,
+    "terms": {
+      "agent": 2,
+      "reasoning": 3,
+      "claude": 4,
+      "gpt": 3,
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-08-14",
+    "messages": 52,
+    "unique_authors": 26,
+    "reactions": 16,
+    "questions": 18,
+    "links": 10,
+    "replies": 29,
+    "terms": {
+      "gpt": 1,
+      "reasoning": 2,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-08-15",
+    "messages": 66,
+    "unique_authors": 21,
+    "reactions": 34,
+    "questions": 13,
+    "links": 5,
+    "replies": 39,
+    "terms": {
+      "llama": 1,
+      "gpt": 1,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-08-16",
+    "messages": 24,
+    "unique_authors": 14,
+    "reactions": 6,
+    "questions": 6,
+    "links": 8,
+    "replies": 12,
+    "terms": {
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-08-17",
+    "messages": 46,
+    "unique_authors": 24,
+    "reactions": 20,
+    "questions": 11,
+    "links": 12,
+    "replies": 28,
+    "terms": {
+      "agent": 2,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-08-18",
+    "messages": 22,
+    "unique_authors": 15,
+    "reactions": 10,
+    "questions": 8,
+    "links": 11,
+    "replies": 10,
+    "terms": {
+      "gpt": 1,
+      "gemini": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-08-19",
+    "messages": 84,
+    "unique_authors": 38,
+    "reactions": 41,
+    "questions": 14,
+    "links": 16,
+    "replies": 46,
+    "terms": {
+      "gemini": 1,
+      "gpt": 7,
+      "reasoning": 1,
+      "claude": 3
+    }
+  },
+  {
+    "date": "2025-08-20",
+    "messages": 68,
+    "unique_authors": 27,
+    "reactions": 20,
+    "questions": 15,
+    "links": 9,
+    "replies": 37,
+    "terms": {
+      "claude": 2,
+      "gpt": 3
+    }
+  },
+  {
+    "date": "2025-08-21",
+    "messages": 69,
+    "unique_authors": 36,
+    "reactions": 23,
+    "questions": 20,
+    "links": 15,
+    "replies": 37,
+    "terms": {
+      "claude": 8,
+      "gpt": 3,
+      "reasoning": 2,
+      "agent": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-08-22",
+    "messages": 45,
+    "unique_authors": 30,
+    "reactions": 19,
+    "questions": 11,
+    "links": 11,
+    "replies": 24,
+    "terms": {
+      "gemini": 4,
+      "claude": 3,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-08-23",
+    "messages": 24,
+    "unique_authors": 20,
+    "reactions": 14,
+    "questions": 5,
+    "links": 5,
+    "replies": 12,
+    "terms": {
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-08-24",
+    "messages": 21,
+    "unique_authors": 13,
+    "reactions": 4,
+    "questions": 9,
+    "links": 2,
+    "replies": 11,
+    "terms": {
+      "gemini": 2,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-08-25",
+    "messages": 40,
+    "unique_authors": 27,
+    "reactions": 15,
+    "questions": 12,
+    "links": 5,
+    "replies": 24,
+    "terms": {
+      "claude": 1,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-08-26",
+    "messages": 73,
+    "unique_authors": 26,
+    "reactions": 28,
+    "questions": 10,
+    "links": 3,
+    "replies": 50,
+    "terms": {
+      "agent": 3,
+      "claude": 2,
+      "gemini": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-08-27",
+    "messages": 77,
+    "unique_authors": 32,
+    "reactions": 31,
+    "questions": 22,
+    "links": 12,
+    "replies": 38,
+    "terms": {
+      "gemini": 3,
+      "agent": 2,
+      "claude": 2,
+      "gpt": 1,
+      "llama": 1,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-08-28",
+    "messages": 61,
+    "unique_authors": 22,
+    "reactions": 19,
+    "questions": 13,
+    "links": 5,
+    "replies": 24,
+    "terms": {
+      "gpt": 2,
+      "agent": 6
+    }
+  },
+  {
+    "date": "2025-08-29",
+    "messages": 55,
+    "unique_authors": 19,
+    "reactions": 17,
+    "questions": 17,
+    "links": 5,
+    "replies": 32,
+    "terms": {
+      "claude": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-08-30",
+    "messages": 82,
+    "unique_authors": 37,
+    "reactions": 26,
+    "questions": 16,
+    "links": 11,
+    "replies": 45,
+    "terms": {
+      "gpt": 3,
+      "llama": 1,
+      "claude": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-08-31",
+    "messages": 30,
+    "unique_authors": 15,
+    "reactions": 13,
+    "questions": 6,
+    "links": 5,
+    "replies": 19,
+    "terms": {
+      "gemini": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-09-01",
+    "messages": 32,
+    "unique_authors": 16,
+    "reactions": 11,
+    "questions": 13,
+    "links": 8,
+    "replies": 13,
+    "terms": {
+      "llama": 1
+    }
+  },
+  {
+    "date": "2025-09-02",
+    "messages": 36,
+    "unique_authors": 17,
+    "reactions": 14,
+    "questions": 9,
+    "links": 8,
+    "replies": 14,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-09-03",
+    "messages": 37,
+    "unique_authors": 15,
+    "reactions": 11,
+    "questions": 11,
+    "links": 8,
+    "replies": 24,
+    "terms": {}
+  },
+  {
+    "date": "2025-09-04",
+    "messages": 61,
+    "unique_authors": 31,
+    "reactions": 33,
+    "questions": 22,
+    "links": 5,
+    "replies": 34,
+    "terms": {
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-09-05",
+    "messages": 55,
+    "unique_authors": 36,
+    "reactions": 35,
+    "questions": 19,
+    "links": 15,
+    "replies": 35,
+    "terms": {
+      "claude": 3,
+      "gemini": 3,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-09-06",
+    "messages": 28,
+    "unique_authors": 19,
+    "reactions": 9,
+    "questions": 13,
+    "links": 6,
+    "replies": 16,
+    "terms": {
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-09-07",
+    "messages": 31,
+    "unique_authors": 20,
+    "reactions": 14,
+    "questions": 8,
+    "links": 7,
+    "replies": 20,
+    "terms": {
+      "reasoning": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-09-08",
+    "messages": 27,
+    "unique_authors": 16,
+    "reactions": 13,
+    "questions": 8,
+    "links": 2,
+    "replies": 15,
+    "terms": {
+      "reasoning": 2,
+      "agent": 3,
+      "gpt": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-09-09",
+    "messages": 22,
+    "unique_authors": 15,
+    "reactions": 7,
+    "questions": 8,
+    "links": 3,
+    "replies": 15,
+    "terms": {
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-09-10",
+    "messages": 24,
+    "unique_authors": 17,
+    "reactions": 14,
+    "questions": 9,
+    "links": 11,
+    "replies": 9,
+    "terms": {
+      "agent": 3,
+      "claude": 3,
+      "gemini": 2,
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-09-11",
+    "messages": 92,
+    "unique_authors": 30,
+    "reactions": 47,
+    "questions": 17,
+    "links": 11,
+    "replies": 57,
+    "terms": {
+      "claude": 4,
+      "gpt": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-09-12",
+    "messages": 52,
+    "unique_authors": 18,
+    "reactions": 25,
+    "questions": 14,
+    "links": 10,
+    "replies": 33,
+    "terms": {
+      "claude": 1,
+      "gpt": 2,
+      "gemini": 3,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-09-13",
+    "messages": 10,
+    "unique_authors": 9,
+    "reactions": 5,
+    "questions": 3,
+    "links": 5,
+    "replies": 3,
+    "terms": {}
+  },
+  {
+    "date": "2025-09-14",
+    "messages": 10,
+    "unique_authors": 9,
+    "reactions": 3,
+    "questions": 2,
+    "links": 4,
+    "replies": 5,
+    "terms": {}
+  },
+  {
+    "date": "2025-09-15",
+    "messages": 47,
+    "unique_authors": 21,
+    "reactions": 14,
+    "questions": 13,
+    "links": 10,
+    "replies": 33,
+    "terms": {
+      "reasoning": 1,
+      "gemini": 1,
+      "claude": 3,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-09-16",
+    "messages": 33,
+    "unique_authors": 20,
+    "reactions": 16,
+    "questions": 7,
+    "links": 9,
+    "replies": 17,
+    "terms": {
+      "claude": 2,
+      "gpt": 2,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-09-17",
+    "messages": 50,
+    "unique_authors": 22,
+    "reactions": 19,
+    "questions": 11,
+    "links": 7,
+    "replies": 27,
+    "terms": {
+      "reasoning": 2,
+      "gpt": 2,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-09-18",
+    "messages": 54,
+    "unique_authors": 25,
+    "reactions": 20,
+    "questions": 15,
+    "links": 8,
+    "replies": 24,
+    "terms": {
+      "claude": 1,
+      "reasoning": 4,
+      "agent": 3
+    }
+  },
+  {
+    "date": "2025-09-19",
+    "messages": 44,
+    "unique_authors": 20,
+    "reactions": 20,
+    "questions": 8,
+    "links": 8,
+    "replies": 23,
+    "terms": {
+      "claude": 1,
+      "gpt": 1,
+      "agent": 1,
+      "llama": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-09-20",
+    "messages": 61,
+    "unique_authors": 22,
+    "reactions": 11,
+    "questions": 18,
+    "links": 8,
+    "replies": 31,
+    "terms": {
+      "claude": 3,
+      "gemini": 2,
+      "gpt": 2,
+      "reasoning": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-09-21",
+    "messages": 9,
+    "unique_authors": 7,
+    "reactions": 1,
+    "questions": 2,
+    "links": 1,
+    "replies": 6,
+    "terms": {
+      "claude": 3,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-09-22",
+    "messages": 28,
+    "unique_authors": 16,
+    "reactions": 13,
+    "questions": 10,
+    "links": 8,
+    "replies": 16,
+    "terms": {
+      "agent": 3
+    }
+  },
+  {
+    "date": "2025-09-23",
+    "messages": 48,
+    "unique_authors": 28,
+    "reactions": 19,
+    "questions": 7,
+    "links": 15,
+    "replies": 28,
+    "terms": {
+      "agent": 3,
+      "gpt": 1,
+      "claude": 3
+    }
+  },
+  {
+    "date": "2025-09-24",
+    "messages": 92,
+    "unique_authors": 22,
+    "reactions": 18,
+    "questions": 25,
+    "links": 10,
+    "replies": 39,
+    "terms": {
+      "claude": 8,
+      "agent": 4,
+      "reasoning": 1,
+      "gpt": 2
+    }
+  },
+  {
+    "date": "2025-09-25",
+    "messages": 67,
+    "unique_authors": 26,
+    "reactions": 16,
+    "questions": 22,
+    "links": 15,
+    "replies": 24,
+    "terms": {
+      "agent": 4,
+      "claude": 3,
+      "gpt": 1,
+      "gemini": 2,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-09-26",
+    "messages": 88,
+    "unique_authors": 32,
+    "reactions": 27,
+    "questions": 24,
+    "links": 8,
+    "replies": 53,
+    "terms": {
+      "claude": 5,
+      "gpt": 1,
+      "reasoning": 2,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-09-27",
+    "messages": 25,
+    "unique_authors": 14,
+    "reactions": 15,
+    "questions": 3,
+    "links": 3,
+    "replies": 18,
+    "terms": {
+      "gpt": 1,
+      "claude": 2,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-09-28",
+    "messages": 34,
+    "unique_authors": 15,
+    "reactions": 11,
+    "questions": 12,
+    "links": 2,
+    "replies": 24,
+    "terms": {
+      "claude": 2,
+      "gemini": 4,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-09-29",
+    "messages": 53,
+    "unique_authors": 33,
+    "reactions": 18,
+    "questions": 15,
+    "links": 11,
+    "replies": 27,
+    "terms": {
+      "claude": 4,
+      "gpt": 1,
+      "gemini": 3,
+      "agent": 2
+    }
+  },
+  {
+    "date": "2025-09-30",
+    "messages": 64,
+    "unique_authors": 23,
+    "reactions": 14,
+    "questions": 16,
+    "links": 16,
+    "replies": 30,
+    "terms": {
+      "claude": 6,
+      "agent": 2,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-10-01",
+    "messages": 25,
+    "unique_authors": 16,
+    "reactions": 10,
+    "questions": 9,
+    "links": 9,
+    "replies": 11,
+    "terms": {
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-10-02",
+    "messages": 20,
+    "unique_authors": 13,
+    "reactions": 8,
+    "questions": 5,
+    "links": 6,
+    "replies": 12,
+    "terms": {
+      "claude": 1,
+      "gpt": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-10-03",
+    "messages": 60,
+    "unique_authors": 27,
+    "reactions": 12,
+    "questions": 12,
+    "links": 2,
+    "replies": 30,
+    "terms": {
+      "claude": 1,
+      "gemini": 3,
+      "gpt": 4,
+      "llama": 2,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-10-04",
+    "messages": 24,
+    "unique_authors": 11,
+    "reactions": 6,
+    "questions": 4,
+    "links": 1,
+    "replies": 13,
+    "terms": {}
+  },
+  {
+    "date": "2025-10-05",
+    "messages": 25,
+    "unique_authors": 18,
+    "reactions": 10,
+    "questions": 4,
+    "links": 4,
+    "replies": 15,
+    "terms": {
+      "gpt": 1,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-10-06",
+    "messages": 53,
+    "unique_authors": 28,
+    "reactions": 12,
+    "questions": 13,
+    "links": 3,
+    "replies": 26,
+    "terms": {
+      "gpt": 4,
+      "agent": 3,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-10-07",
+    "messages": 28,
+    "unique_authors": 21,
+    "reactions": 7,
+    "questions": 11,
+    "links": 6,
+    "replies": 14,
+    "terms": {
+      "gpt": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-10-08",
+    "messages": 21,
+    "unique_authors": 15,
+    "reactions": 10,
+    "questions": 8,
+    "links": 12,
+    "replies": 7,
+    "terms": {
+      "gemini": 3,
+      "reasoning": 2,
+      "agent": 4
+    }
+  },
+  {
+    "date": "2025-10-09",
+    "messages": 32,
+    "unique_authors": 17,
+    "reactions": 14,
+    "questions": 5,
+    "links": 8,
+    "replies": 22,
+    "terms": {
+      "claude": 2,
+      "gpt": 7,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-10-10",
+    "messages": 38,
+    "unique_authors": 20,
+    "reactions": 14,
+    "questions": 8,
+    "links": 13,
+    "replies": 17,
+    "terms": {
+      "agent": 2,
+      "reasoning": 1,
+      "gemini": 1,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-10-11",
+    "messages": 10,
+    "unique_authors": 7,
+    "reactions": 3,
+    "questions": 2,
+    "links": 0,
+    "replies": 8,
+    "terms": {}
+  },
+  {
+    "date": "2025-10-12",
+    "messages": 23,
+    "unique_authors": 11,
+    "reactions": 2,
+    "questions": 7,
+    "links": 5,
+    "replies": 11,
+    "terms": {
+      "claude": 2,
+      "agent": 1,
+      "gemini": 2,
+      "gpt": 1
+    }
+  },
+  {
+    "date": "2025-10-13",
+    "messages": 35,
+    "unique_authors": 19,
+    "reactions": 17,
+    "questions": 3,
+    "links": 6,
+    "replies": 19,
+    "terms": {
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-10-14",
+    "messages": 17,
+    "unique_authors": 11,
+    "reactions": 5,
+    "questions": 5,
+    "links": 3,
+    "replies": 11,
+    "terms": {
+      "gemini": 1,
+      "gpt": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-10-15",
+    "messages": 23,
+    "unique_authors": 13,
+    "reactions": 12,
+    "questions": 5,
+    "links": 2,
+    "replies": 11,
+    "terms": {
+      "gemini": 2,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-10-16",
+    "messages": 45,
+    "unique_authors": 23,
+    "reactions": 11,
+    "questions": 15,
+    "links": 6,
+    "replies": 32,
+    "terms": {
+      "agent": 4,
+      "claude": 5,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-10-17",
+    "messages": 37,
+    "unique_authors": 19,
+    "reactions": 13,
+    "questions": 9,
+    "links": 8,
+    "replies": 18,
+    "terms": {
+      "gemini": 1,
+      "gpt": 2,
+      "reasoning": 3,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-10-18",
+    "messages": 5,
+    "unique_authors": 4,
+    "reactions": 3,
+    "questions": 1,
+    "links": 0,
+    "replies": 3,
+    "terms": {
+      "gpt": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-10-19",
+    "messages": 27,
+    "unique_authors": 14,
+    "reactions": 13,
+    "questions": 7,
+    "links": 2,
+    "replies": 18,
+    "terms": {
+      "claude": 5,
+      "gpt": 2,
+      "gemini": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-10-20",
+    "messages": 21,
+    "unique_authors": 16,
+    "reactions": 10,
+    "questions": 4,
+    "links": 5,
+    "replies": 9,
+    "terms": {
+      "claude": 3,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-10-21",
+    "messages": 77,
+    "unique_authors": 28,
+    "reactions": 18,
+    "questions": 18,
+    "links": 9,
+    "replies": 36,
+    "terms": {
+      "gemini": 4,
+      "claude": 2,
+      "agent": 2,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-10-22",
+    "messages": 51,
+    "unique_authors": 26,
+    "reactions": 26,
+    "questions": 14,
+    "links": 9,
+    "replies": 27,
+    "terms": {
+      "agent": 2,
+      "reasoning": 2,
+      "gemini": 1,
+      "claude": 2
+    }
+  },
+  {
+    "date": "2025-10-23",
+    "messages": 33,
+    "unique_authors": 18,
+    "reactions": 17,
+    "questions": 8,
+    "links": 11,
+    "replies": 15,
+    "terms": {
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-10-24",
+    "messages": 23,
+    "unique_authors": 11,
+    "reactions": 10,
+    "questions": 5,
+    "links": 3,
+    "replies": 4,
+    "terms": {
+      "claude": 2,
+      "agent": 2,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-10-25",
+    "messages": 108,
+    "unique_authors": 28,
+    "reactions": 28,
+    "questions": 26,
+    "links": 8,
+    "replies": 61,
+    "terms": {
+      "claude": 4,
+      "agent": 1,
+      "gpt": 7,
+      "gemini": 2
+    }
+  },
+  {
+    "date": "2025-10-26",
+    "messages": 25,
+    "unique_authors": 18,
+    "reactions": 3,
+    "questions": 6,
+    "links": 7,
+    "replies": 13,
+    "terms": {
+      "gpt": 1,
+      "gemini": 1,
+      "reasoning": 1,
+      "claude": 1,
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-10-27",
+    "messages": 69,
+    "unique_authors": 21,
+    "reactions": 19,
+    "questions": 16,
+    "links": 17,
+    "replies": 41,
+    "terms": {
+      "agent": 2,
+      "gpt": 1,
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-10-28",
+    "messages": 42,
+    "unique_authors": 22,
+    "reactions": 22,
+    "questions": 5,
+    "links": 10,
+    "replies": 21,
+    "terms": {
+      "gpt": 2,
+      "claude": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-10-29",
+    "messages": 67,
+    "unique_authors": 27,
+    "reactions": 20,
+    "questions": 24,
+    "links": 11,
+    "replies": 41,
+    "terms": {
+      "reasoning": 1,
+      "claude": 2,
+      "agent": 1,
+      "gpt": 1,
+      "llama": 2,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-10-30",
+    "messages": 59,
+    "unique_authors": 36,
+    "reactions": 16,
+    "questions": 16,
+    "links": 11,
+    "replies": 23,
+    "terms": {
+      "claude": 3
+    }
+  },
+  {
+    "date": "2025-10-31",
+    "messages": 7,
+    "unique_authors": 6,
+    "reactions": 5,
+    "questions": 3,
+    "links": 3,
+    "replies": 4,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-11-01",
+    "messages": 17,
+    "unique_authors": 12,
+    "reactions": 6,
+    "questions": 5,
+    "links": 3,
+    "replies": 12,
+    "terms": {}
+  },
+  {
+    "date": "2025-11-02",
+    "messages": 16,
+    "unique_authors": 11,
+    "reactions": 6,
+    "questions": 2,
+    "links": 4,
+    "replies": 4,
+    "terms": {
+      "agent": 1
+    }
+  },
+  {
+    "date": "2025-11-03",
+    "messages": 22,
+    "unique_authors": 15,
+    "reactions": 8,
+    "questions": 10,
+    "links": 6,
+    "replies": 9,
+    "terms": {
+      "agent": 5,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-11-04",
+    "messages": 36,
+    "unique_authors": 19,
+    "reactions": 20,
+    "questions": 8,
+    "links": 10,
+    "replies": 16,
+    "terms": {
+      "claude": 1,
+      "gemini": 1,
+      "reasoning": 2
+    }
+  },
+  {
+    "date": "2025-11-05",
+    "messages": 74,
+    "unique_authors": 29,
+    "reactions": 21,
+    "questions": 12,
+    "links": 9,
+    "replies": 37,
+    "terms": {
+      "gpt": 1,
+      "agent": 3,
+      "claude": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-11-06",
+    "messages": 20,
+    "unique_authors": 12,
+    "reactions": 7,
+    "questions": 10,
+    "links": 6,
+    "replies": 6,
+    "terms": {
+      "claude": 1,
+      "gemini": 1
+    }
+  },
+  {
+    "date": "2025-11-07",
+    "messages": 10,
+    "unique_authors": 8,
+    "reactions": 7,
+    "questions": 1,
+    "links": 4,
+    "replies": 4,
+    "terms": {
+      "gpt": 1,
+      "gemini": 1,
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-11-08",
+    "messages": 7,
+    "unique_authors": 6,
+    "reactions": 4,
+    "questions": 3,
+    "links": 1,
+    "replies": 5,
+    "terms": {
+      "reasoning": 1
+    }
+  },
+  {
+    "date": "2025-11-09",
+    "messages": 19,
+    "unique_authors": 8,
+    "reactions": 6,
+    "questions": 5,
+    "links": 5,
+    "replies": 12,
+    "terms": {
+      "claude": 1
+    }
+  },
+  {
+    "date": "2025-11-10",
+    "messages": 20,
+    "unique_authors": 8,
+    "reactions": 6,
+    "questions": 3,
+    "links": 1,
+    "replies": 10,
+    "terms": {
+      "claude": 1,
+      "reasoning": 1
+    }
+  }
+]
