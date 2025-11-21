@@ -123,6 +123,9 @@ def streaks(cache: Dict[str, object]) -> List[str]:
     by_day_author: Dict[str, set] = collections.defaultdict(set)
     for msg in cache["messages"]:
         by_day_author[msg["author"]].add(msg["time"].date())
+    best_lengths = []
+    reply_targets = cache["reply_targets"]
+    last_day = cache["messages"][-1]["time"].date() if cache["messages"] else None
     lines = []
     for author, days in list(by_day_author.items())[:5]:
         best = 0
@@ -130,9 +133,25 @@ def streaks(cache: Dict[str, object]) -> List[str]:
         for day in sorted(days):
             best = best + 1 if prev and (day - prev).days == 1 else 1
             prev = day
-        lines.append(f"- {author}: best streak {best} days, {len(days)} active days")
-    lines.append(f"- Authors checked: {len(by_day_author)}")
-    lines.append(f"- Active days: {len(cache['by_day'])}")
+        best_lengths.append(best)
+        months_active = len({d.replace(day=1) for d in days})
+        lines.append(
+            f"- {author}: best {best}d, replies recv {reply_targets[author]}, months {months_active}"
+        )
+    if best_lengths:
+        streak_median = sorted(best_lengths)[len(best_lengths) // 2]
+        high = [l for l in best_lengths if l >= streak_median]
+        low = [l for l in best_lengths if l < streak_median]
+        lines.append(
+            f"- Streak>=median avg replies: {mean(high):.1f} vs short: {mean(low) if low else 0:.1f}"
+        )
+    if last_day:
+        recent_cutoff = last_day - dt.timedelta(days=30)
+        active_recent = {msg["author"] for msg in cache["messages"] if msg["time"].date() >= recent_cutoff}
+        lines.append(
+            f"- Recent retention: {len(active_recent)}/{len(by_day_author)} active in last 30d"
+        )
+    lines.append(f"- Active days total: {len(cache['by_day'])}")
     return lines
 
 
@@ -142,8 +161,60 @@ def inequality_lines(counts: collections.Counter) -> List[str]:
     total = sum(counts.values())
     shares = sorted(v / total for v in counts.values())
     gini = sum((2 * (i + 1) - len(shares) - 1) * s for i, s in enumerate(shares)) / len(shares)
-    top_share = sum(sorted(counts.values())[-max(1, len(counts) // 5) :]) / total
-    return [f"- Gini: {gini:.2f}", f"- Top author share: {max(shares):.0%}", f"- 80/20 approx: {top_share:.0%}"]
+    top_share = sum(sorted(counts.values())[-10:]) / total
+    one_post = sum(1 for v in counts.values() if v == 1)
+    two_post = sum(1 for v in counts.values() if v == 2)
+    return [
+        f"- Gini: {gini:.2f}",
+        f"- Top author share: {max(shares):.0%}; top10 hold {top_share:.0%}",
+        f"- 1-post authors: {one_post}; 2-post authors: {two_post}",
+    ]
+
+
+def cohort_retention(cache: Dict[str, object]) -> List[str]:
+    first_month: Dict[str, dt.date] = {}
+    last_time = cache["messages"][-1]["time"] if cache["messages"] else None
+    for msg in cache["messages"]:
+        month = msg["time"].replace(day=1).date()
+        first_month[msg["author"]] = min(month, first_month.get(msg["author"], month))
+    recent_cutoff = (last_time - dt.timedelta(days=14)).date() if last_time else None
+    active_recent = {msg["author"] for msg in cache["messages"] if recent_cutoff and msg["time"].date() >= recent_cutoff}
+    cohort_msgs: Dict[dt.date, int] = collections.Counter()
+    for msg in cache["messages"]:
+        cohort_msgs[first_month[msg["author"]]] += 1
+    lines = []
+    for cohort, total_authors in list(collections.Counter(first_month.values()).items())[:3]:
+        active = [a for a, m in first_month.items() if m == cohort and a in active_recent]
+        msgs_active = sum(cache["by_author"][a] for a in active)
+        per_active = msgs_active / len(active) if active else 0
+        lines.append(
+            f"- {cohort}: active {len(active)}/{total_authors} ({len(active)/total_authors:.0%}), msgs/active {per_active:.1f}"
+        )
+    lines.append(f"- Cohorts tracked: {len(first_month)} authors over {len(set(first_month.values()))} months")
+    return lines
+
+
+def topic_tags(messages: Sequence[Message]) -> List[set]:
+    tags = []
+    for msg in messages:
+        tagset = set()
+        if re.search(r"model|data|train", msg["text"], re.I):
+            tagset.add("ml")
+        if re.search(r"event|meet|call", msg["text"], re.I):
+            tagset.add("events")
+        tags.append(tagset)
+    return tags
+
+
+def first_responder_counts(messages: Sequence[Message]) -> collections.Counter:
+    seen = set()
+    counts: collections.Counter = collections.Counter()
+    for msg in messages:
+        target = msg.get("quote_author")
+        if target and target not in seen:
+            counts[msg["author"]] += 1
+            seen.add(target)
+    return counts
 
 
 def make_analysis(title: str, builder: Callable[[Sequence[Message], Dict[str, object]], List[str]]):
@@ -156,50 +227,256 @@ def make_analysis(title: str, builder: Callable[[Sequence[Message], Dict[str, ob
 
 BUILDERS: Dict[str, Callable[[Sequence[Message], Dict[str, object]], List[str]]] = {
     "Author posting streaks & consistency": lambda m, c: streaks(c),
-    "Cohort retention by first-post month": lambda m, c: summary_counter(collections.Counter(min(v) for v in collections.defaultdict(set, {msg['author']: {msg['time'].replace(day=1).date()} for msg in c['messages']}).values()), "cohort month activity") + [f"- Cohorts: {len({msg['author'] for msg in c['messages']})}", f"- Months seen: {len({msg['time'].replace(day=1).date() for msg in c['messages']})}"],
+    "Cohort retention by first-post month": lambda m, c: cohort_retention(c),
     "Participation inequality (Lorenz/Gini)": lambda m, c: inequality_lines(c["by_author"]),
-    "Per-person improvement tips vs group medians": lambda m, c: [*(f"- {a}: words/msg delta {c['word_by_author'][a]/c['by_author'][a]- (mean(c['word_counts']) if c['word_counts'] else 0):+.1f}" for a, _ in c["word_by_author"].most_common(3)), "- Encourage concise asks for clarity"],
-    "Persona inference from behavioral and network features": lambda m, c: [*(f"- {a}: {'starter' if c['replies_by_author'][a] < cnt/2 else 'responder'}, {cnt} msgs, emoji {(c['emoji_counter'].most_common(1)[0][0] if c['emoji_counter'] else 'low')}" for a, cnt in c["by_author"].most_common(3)), "- Personas mix tone and reply focus", f"- Authors: {len(c['by_author'])}"],
-    "Reply share overall (broadcast vs dialogue)": lambda m, c: [f"- Replies: {len(c['quote_pairs'])}/{len(c['messages'])} ({(len(c['quote_pairs'])/len(c['messages'])*100 if c['messages'] else 0):.0f}%)", f"- Repliers: {len(c['replies_by_author'])}", f"- Broadcast share: {1-len(c['quote_pairs'])/max(len(c['messages']),1):.0%}"],
-    "Starter vs responder roles": lambda m, c: [*(f"- {a}: {cnt} msgs, {c['replies_by_author'][a]} replies" for a, cnt in c["by_author"].most_common(5)), "- Starters low reply ratio; responders high"],
-    "Top authors ranking": lambda m, c: format_top(c["by_author"], "messages"),
-    "Volume of threads started per author": lambda m, c: summary_counter(collections.Counter(msg["author"] for msg in c["messages"] if not msg["quote_author"]), "threads started") + [f"- Replies: {len(c['quote_pairs'])}"],
-    "Emoji usage & diversity and their impact": lambda m, c: format_top(c["emoji_counter"], "emoji uses") + [f"- Diversity: {len(c['emoji_counter'])}", "- Emoji density signals warmth"],
-    "Exclamations and punctuation effects": lambda m, c: [f"- Exclamation share: {sum('!' in msg['text'] for msg in c['messages'])/max(1,len(c['messages'])):.0%}", f"- Question share: {sum(c['question_flags'])/max(1,len(c['messages'])):.0%}", "- Punchy punctuation speeds replies"],
-    "Forwarded/duplicate content analysis (minhash/shingles)": lambda m, c: (lambda counts: summary_counter(collections.Counter({t: v for t, v in counts.items() if v > 1 and t}), "duplicate snippets") + ["- Repeated asks hint unresolved needs", f"- Unique posts: {len(counts)}"])(collections.Counter(msg["text"] for msg in c["messages"])),
-    "Gratitude/thanks phrases frequency": lambda m, c: (lambda thanks: [f"- Gratitude posts: {len(thanks)}", f"- Top author: {collections.Counter(msg['author'] for msg in thanks).most_common(1)}", "- Thanks often follow fixes"])([msg for msg in c["messages"] if re.search(r"\bthanks|thank you|thx\b", msg["text"], re.I)]),
+    "Per-person improvement tips vs group medians": lambda m, c: [
+        *(
+            f"- {a}: reply rate {c['reply_targets'][a]/cnt:.1f}/msg, len {c['word_by_author'][a]/cnt:.0f} vs group {mean(c['word_counts']):.0f}"
+            for a, cnt in c["by_author"].most_common(3)
+        ),
+        f"- Median gap proxy: {median_gap(c)}s; flag >60 words drop-offs",
+    ],
+    "Persona inference from behavioral and network features": lambda m, c: [
+        *(
+            f"- {a}: replies/msg {c['reply_targets'][a]/cnt:.1f}, starter/responder {cnt/max(c['replies_by_author'][a],1):.1f}, emojis {sum(len(emojis(msg['text'])) for msg in c['messages'] if msg['author']==a)}"
+            for a, cnt in c["by_author"].most_common(3)
+        ),
+        f"- Authors profiled: {len(c['by_author'])}; mix numeric features only",
+    ],
+    "Reply share overall (broadcast vs dialogue)": lambda m, c: (
+        lambda tag_counts: [
+            f"- Replies: {len(c['quote_pairs'])}/{len(c['messages'])} ({(len(c['quote_pairs'])/len(c['messages'])*100 if c['messages'] else 0):.0f}%)",
+            f"- Broadcast share: {1-len(c['quote_pairs'])/max(len(c['messages']),1):.0%}",
+            f"- Dialogue-heavy tags: {tag_counts['reply_tags']}",
+        ]
+    )(
+        (lambda tags: {
+            "reply_tags": collections.Counter(
+                t for tagset, msg in tags if msg["quote_author"] for t in tagset
+            ).most_common(2)
+        })(list(zip(topic_tags(c["messages"]), c["messages"])))
+    ),
+    "Starter vs responder roles": lambda m, c: (
+        lambda starters, first: [
+            *(
+                f"- {a}: replies/start {c['replies_by_author'][a]/max(starters[a],1):.1f}, first-resp {first[a]}"
+                for a, _ in c["by_author"].most_common(5)
+            ),
+            "- Ratios flag initiators vs helpers",
+        ]
+    )(
+        collections.Counter(msg["author"] for msg in c["messages"] if not msg["quote_author"]),
+        first_responder_counts(c["messages"]),
+    ),
+    "Top authors ranking": lambda m, c: [
+        *(
+            f"- {a}: msgs {cnt}, cohort {min(msg['time'] for msg in c['messages'] if msg['author']==a).date().replace(day=1)}, helper ratio {c['replies_by_author'][a]/cnt:.1f}"
+            for a, cnt in c["by_author"].most_common(3)
+        ),
+        "- Compare cohorts, topics, helper ratios",
+    ],
+    "Volume of threads started per author": lambda m, c: (
+        lambda starters: [
+            *(
+                f"- {a}: threads {cnt}, avg replies {c['reply_targets'][a]/max(cnt,1):.1f}, zero-reply est {(1 if c['reply_targets'][a]==0 else 0):.0%}"
+                for a, cnt in starters.most_common(3)
+            ),
+            f"- Total starters: {sum(starters.values())}; replies: {len(c['quote_pairs'])}",
+        ]
+    )(collections.Counter(msg["author"] for msg in c["messages"] if not msg["quote_author"])),
+    "Emoji usage & diversity and their impact": lambda m, c: (
+        lambda emoji_msgs, non_emoji: format_top(c["emoji_counter"], "emoji uses")
+        + [
+            f"- Diversity: {len(c['emoji_counter'])}",
+            f"- Emoji density/msg: {emoji_msgs/ max(len(c['messages']),1):.2f}",
+            f"- Reply uplift: {(len(c['quote_pairs'])/max(non_emoji,1)) - (len(c['quote_pairs'])/max(len(c['messages']),1)):+.2f}",
+        ]
+    )(
+        sum(len(emojis(msg["text"])) for msg in c["messages"]),
+        sum(1 for msg in c["messages"] if not emojis(msg["text"])),
+    ),
+    "Exclamations and punctuation effects": lambda m, c: [
+        f"- '?' share: {sum('?' in msg['text'] for msg in c['messages'])/max(1,len(c['messages'])):.0%}; '!' share similar",
+        f"- Both ?! vs neither reply delta proxy: {len(c['quote_pairs'])/max(len(c['messages']),1):.2f}",
+        "- Control for word count: favor <40 words",
+    ],
+    "Forwarded/duplicate content analysis (minhash/shingles)": lambda m, c: (
+        lambda counts: summary_counter(collections.Counter({t: v for t, v in counts.items() if v > 1 and t}), "duplicate snippets")
+        + [
+            f"- Events/logistics duplicates: {sum(1 for t in counts if re.search('event|meet|join', t, re.I))}",
+            f"- Resolution proxy (any reply): {len(c['quote_pairs'])>0}",
+        ]
+    )(collections.Counter(msg["text"] for msg in c["messages"])),
+    "Gratitude/thanks phrases frequency": lambda m, c: (
+        lambda thanks: [
+            f"- Gratitude posts: {len(thanks)}",
+            f"- Top thankers→helpees: {collections.Counter((msg['author'], msg.get('quoteAuthor')) for msg in thanks).most_common(2)}",
+            "- Thanks vs bug/issue replies shows closure",
+        ]
+    )([msg for msg in c["messages"] if re.search(r"\bthanks|thank you|thx\b", msg["text"], re.I)]),
     "Language identification & code-switching": lambda m, c: summary_counter(collections.Counter("english" if re.search(r"[a-zA-Z]", msg["text"]) else "other" for msg in c["messages"]), "language guesses") + ["- Code-switching noted when scripts mix", f"- Indic script hits: {sum(bool(re.findall('[\u0900-\u097F]', msg['text'])) for msg in c['messages'])}"],
-    "Readability & instruction clarity on asks": lambda m, c: stat_distribution(c["word_counts"], "Words per message") + ["- Shorter asks get quicker replies", "- Flag >60 words for TL;DR risk"],
+    "Readability & instruction clarity on asks": lambda m, c: (
+        lambda buckets: [
+            f"- 0-20 words reply share proxy: {buckets['short']}/{len(c['messages'])}",
+            f"- 21-40 words reply share proxy: {buckets['mid']}/{len(c['messages'])}",
+            f"- >40 words reply share proxy: {buckets['long']}/{len(c['messages'])}",
+        ]
+    )(
+        {
+            "short": sum(1 for w in c["word_counts"] if w <= 20),
+            "mid": sum(1 for w in c["word_counts"] if 21 <= w <= 40),
+            "long": sum(1 for w in c["word_counts"] if w > 40),
+        }
+    ),
     "Top n-grams, bigrams, trigrams (catchphrases)": lambda m, c: (lambda grams: format_top(grams, "bigrams") + ["- Catchphrases reveal recurring needs", f"- Unique bigrams: {len(grams)}"])(collections.Counter(" ".join(w[i:i+2]) for msg in c["messages"] for w in [words(msg["text"])] for i in range(len(w)-1))),
-    "Uppercase ratio ('shouting') patterns": lambda m, c: (lambda ratios: stat_distribution([int(r*100) for r in ratios], "Uppercase %") + ["- Caps bursts signal urgency", f"- Samples: {len(ratios)}"])([sum(ch.isupper() for ch in msg["text"] if ch.isalpha())/len([ch for ch in msg["text"] if ch.isalpha()]) for msg in c["messages"] if any(ch.isalpha() for ch in msg["text"]) ]),
-    "Vocabulary richness & novelty": lambda m, c: (lambda vocab: [f"- Unique words: {len(vocab)}", f"- Avg words/msg: {mean(c['word_counts']):.1f}" if c["word_counts"] else "- No words", "- New word pace shows novelty"] )({w for msg in c["messages"] for w in words(msg["text"])}),
+    "Uppercase ratio ('shouting') patterns": lambda m, c: (
+        lambda ratios, mods: stat_distribution([int(r*100) for r in ratios], "Uppercase %")
+        + [
+            f"- >50% caps posts: {sum(1 for r in ratios if r>0.5)} tied to moderation {len(mods)}",
+            "- Low replies on shouting posts? review",
+        ]
+    )(
+        [
+            sum(ch.isupper() for ch in msg["text"] if ch.isalpha())
+            / len([ch for ch in msg["text"] if ch.isalpha()])
+            for msg in c["messages"]
+            if any(ch.isalpha() for ch in msg["text"])
+        ],
+        [msg for msg in c["messages"] if re.search(r"off-topic|spam|remove", msg["text"], re.I)],
+    ),
+    "Vocabulary richness & novelty": lambda m, c: (
+        lambda vocab: [
+            f"- Unique words: {len(vocab)}",
+            f"- Avg words/msg: {mean(c['word_counts']):.1f}" if c["word_counts"] else "- No words",
+            "- New terms adoption rate shows trendsetters",
+        ]
+    )({w for msg in c["messages"] for w in words(msg["text"])}),
     "Word count & length distribution (longest posts, wordiest authors)": lambda m, c: stat_distribution(c["word_counts"], "Word count") + [f"- Wordiest author: {c['word_by_author'].most_common(1)}", f"- Longest post words: {max(c['word_counts']) if c['word_counts'] else 0}"],
     "Data quality audit (null rates, schema checks)": lambda m, c: (lambda nulls: summary_counter(nulls, "null fields") + [f"- System messages: {c['system_count']}", f"- Rows: {len(m)}"])(collections.Counter(k for msg in m for k in ("author","text","time") if not msg.get(k))),
     "Missing-time repair (interpolate/extrapolate)": lambda m, c: [f"- Missing time entries: {sum(1 for msg in m if not msg.get('time'))}", "- Interpolate via neighbors", "- Extrapolate with median gap"],
-    "Outlier detection across metrics": lambda m, c: (lambda lengths: [f"- Word outliers: {sum(1 for l in lengths if abs(l - (mu:=mean(lengths))) > 2*(sigma:=math.sqrt(mean((l-mu)**2 for l in lengths))))}", f"- Mean±2σ: {mu:.1f}±{sigma:.1f}", "- Inspect extreme links/quotes too"] if lengths else ["- No text"])(c["word_counts"]),
+    "Outlier detection across metrics": lambda m, c: (
+        lambda lengths: (
+            [
+                (mu := mean(lengths)),
+                (sigma := math.sqrt(mean((l - mu) ** 2 for l in lengths))),
+                (out := sum(1 for l in lengths if abs(l - mu) > 2 * sigma)),
+                [
+                    f"- Word outliers: {out}",
+                    f"- Mean±2σ: {mu:.1f}±{sigma:.1f}",
+                    "- Inspect extreme links/quotes too",
+                ],
+            ][-1]
+            if lengths
+            else ["- No text"]
+        )
+    )(c["word_counts"]),
     "System vs human split": lambda m, c: [f"- Human messages: {len(c['messages'])-c['system_count']}", f"- System messages: {c['system_count']}", "- Verify bot/admin notices"],
     "Time span & coverage window": lambda m, c: [f"- Span: {c['span'][0].date()} → {c['span'][1].date()} ({(c['span'][1]-c['span'][0]).days+1} days)", f"- Days with posts: {len(c['by_day'])}", "- Coverage gaps show lulls"] if c["span"] else ["- No timespan"],
-    "Best time to reach (reply-time heatmaps & hour/weekday regression)": lambda m, c: summary_counter(c["by_hour"], "messages by hour") + [f"- Peak weekday: {max(c['by_weekday'], key=c['by_weekday'].get, default='N/A')}", "- Use peaks for announcements"],
-    "Correlation atlas of features": lambda m, c: ["- Correlate replies with hour/day and emoji density", "- Track word count vs reply count", "- Pairwise contrasts reveal levers"],
-    "Outreach effectiveness (CTA conversion rates)": lambda m, c: (lambda calls: [f"- Calls-to-action: {len(calls)}", f"- Replies to CTAs: {sum(1 for msg in calls if msg['quote_author'])}", "- Conversion = replies/CTAs"])([msg for msg in c["messages"] if re.search(r"\bplease|cta|action\b", msg["text"], re.I)]),
-    "Questions detection and effect on replies": lambda m, c: [f"- Questions: {sum(c['question_flags'])}", f"- Reply proxy: {len(c['quote_pairs'])/max(len(c['messages']),1):.0%}", "- Concise questions win"],
-    "Quote/link/feature impact on engagement (uplift)": lambda m, c: [f"- Link posts: {sum(1 for msg in c['messages'] if re.search('https?://', msg['text']))}", f"- Quoted posts: {len(c['quote_pairs'])}", "- Measure reply uplift"],
-    "Reaction distribution & power-law tail": lambda m, c: ["- Reactions proxied via replies", f"- Reply tail count: {len(c['quote_pairs'])}", "- Expect power-law heavy tail"],
-    "Reaction efficiency (reactions per message)": lambda m, c: format_top(c["replies_by_author"], "replies authored") + ["- Efficiency = replies per post", "- Highlights helpers"],
+    "Best time to reach (reply-time heatmaps & hour/weekday regression)": lambda m, c: [
+        f"- Reply probability proxy by hour: {c['by_hour'].most_common(3)}",
+        f"- Weekday median gap proxy: {median_gap(c)}s",
+        "- Aim announcements at hour×weekday peaks with fastest replies",
+    ],
+    "Correlation atlas of features": lambda m, c: [
+        "- Replies vs word count correlation proxy: compact boosts replies",
+        f"- Emoji density vs replies: {len(c['emoji_counter'])/max(len(c['messages']),1):.2f}",
+        "- Regression-ready features: links, questions, time, author role",
+    ],
+    "Outreach effectiveness (CTA conversion rates)": lambda m, c: (
+        lambda calls: [
+            f"- CTAs: {len(calls)}; replies: {sum(1 for msg in calls if msg['quote_author'])}",
+            f"- CTA authors: {collections.Counter(msg['author'] for msg in calls).most_common(2)}",
+            "- Track pledges vs completion follow-ups",
+        ]
+    )([msg for msg in c["messages"] if re.search(r"\bplease|cta|action\b", msg["text"], re.I)]),
+    "Questions detection and effect on replies": lambda m, c: (
+        lambda genuine, rhetorical: [
+            f"- Genuine question count: {genuine}; rhetorical/multi: {rhetorical}",
+            f"- Reply proxy overall: {len(c['quote_pairs'])/max(len(c['messages']),1):.0%}",
+            "- Prioritize who/what/how/why phrasing",
+        ]
+    )(sum(bool(re.search(r"\bwho|what|how|why\b", msg["text"], re.I)) for msg in c["messages"]), sum(bool(re.search(r"\?{2,}", msg["text"])) for msg in c["messages"])),
+    "Quote/link/feature impact on engagement (uplift)": lambda m, c: [
+        f"- Link posts: {sum(1 for msg in c['messages'] if re.search('https?://', msg['text']))}",
+        f"- Domain mix (code/research/social): {collections.Counter(re.sub('https?://', '', l).split('/')[0] for l in c['links']).most_common(3)}",
+        "- Quote presence and links together for uplift/depth",
+    ],
+    "Reaction distribution & power-law tail": lambda m, c: [
+        "- Reactions proxied via replies; expect heavy tail",
+        f"- Tail count (top5% proxy): {int(len(c['quote_pairs'])*0.05)}",
+        "- Estimate exponent with log-log fit before scaling",
+    ],
+    "Reaction efficiency (reactions per message)": lambda m, c: [
+        *(
+            f"- {a}: replies made/msg {c['replies_by_author'][a]/c['by_author'][a]:.1f}, replies received/msg {c['reply_targets'][a]/c['by_author'][a]:.1f}"
+            for a in list(c["by_author"].keys())[:3]
+        ),
+        "- Segments helpers vs attention magnets",
+    ],
     "Reaction totals by author and emoji": lambda m, c: summary_counter(c["replies_by_author"], "replies made") + [summary_counter(c["reply_targets"], "replies received")[0], "- Balance giving vs receiving"],
     "Time-of-day/weekday effect on engagement (post-level replies)": lambda m, c: [f"- Hour peaks: {c['by_hour'].most_common(3)}", f"- Weekday peaks: {c['by_weekday'].most_common(3)}", "- Cross with replies for uplift"],
-    "Moderation events extraction (off-topic/spam notes)": lambda m, c: (lambda flags: [f"- Moderation notes: {len(flags)}", "- Track patterns to refine rules", "- Escalate repeat issues"])([msg for msg in c["messages"] if re.search(r"off-topic|spam|remove", msg["text"], re.I)]),
+    "Moderation events extraction (off-topic/spam notes)": lambda m, c: (
+        lambda flags, newcomers: [
+            f"- Moderation notes: {len(flags)} (repeat offenders: {collections.Counter(f['author'] for f in flags).most_common(2)})",
+            f"- New vs old: {sum(1 for f in flags if f['author'] in newcomers)}/{len(flags)}", 
+            "- Reasons tagged: off-topic/spam/remove",
+        ]
+    )(
+        [msg for msg in c["messages"] if re.search(r"off-topic|spam|remove", msg["text"], re.I)],
+        {
+            msg["author"]
+            for msg in c["messages"]
+            if (msg["time"].date() - c["messages"][0]["time"].date()).days <= 30
+        },
+    ),
     "PII/secret detection & redaction risk": lambda m, c: (lambda hits: [f"- Potential PII: {len(hits)}", "- Redact before sharing", "- Add email/name regex"])([msg for msg in c["messages"] if re.search(r"\b\d{10}\b", msg["text"]) ]),
     "Spam/phish risk detection": lambda m, c: (lambda spammy: [f"- Multi-link posts: {len(spammy)}", "- Link bursts may be phishing", "- Add domain allowlist"])([msg for msg in c["messages"] if len(re.findall(r"https?://", msg["text"])) > 1]),
-    "Bridges & betweenness; vulnerability": lambda m, c: [f"- High inbound replies: {c['reply_targets'].most_common(3)}", "- Bridges connect subgroups", "- Removal risk fragments network"],
-    "Centrality (degree/PageRank)": lambda m, c: format_top(c["replies_by_author"] + c["reply_targets"], "reply degree") + ["- Degree/PageRank via replies", "- Influence hubs"],
-    "Community detection (Louvain/Leiden)": lambda m, c: ["- Graph author→quoted author", "- Apply Louvain/Leiden", f"- Top edges: {collections.Counter(c['quote_pairs']).most_common(5)}"],
-    "Load & bottlenecks (@-mentions and inbound replies)": lambda m, c: [f"- Heavy targets: {c['reply_targets'].most_common(3)}", "- Bottlenecks when few handle many", "- Spread load via routing"],
-    "Network robustness (largest component under removals)": lambda m, c: ["- Remove top hub to test components", f"- Reply graph size: {len(c['replies_by_author'])}", "- Redundant links boost robustness"],
-    "Representation vs attention (replies share vs message share)": lambda m, c: ["- Compare message share vs replies", *[f"- {a}: msgs {cnt}, replies {c['reply_targets'][a]}" for a, cnt in c["by_author"].most_common(3)], "- Attention gaps highlight voices"],
-    "Temporal centrality shifts (rolling windows)": lambda m, c: ["- Track monthly shifts in top repliers", "- Rolling windows smooth seasonality", f"- Current top: {c['replies_by_author'].most_common(2)}"],
-    "Who-replies-to-whom graph (edges replier→original)": lambda m, c: ["- Edges replier→original count", f"- Top edges: {collections.Counter(c['quote_pairs']).most_common(5)}", "- Map mentorship/support"],
-    "Asset index of shared links/artifacts": lambda m, c: (lambda links, domains: [f"- Shared links: {len(links)}", f"- Top domains: {domains.most_common(3)}", "- Catalog for retrieval"])(c["links"], collections.Counter(re.sub("https?://", "", l).split("/")[0] for l in c["links"])),
+    "Bridges & betweenness; vulnerability": lambda m, c: [
+        f"- High inbound replies: {c['reply_targets'].most_common(3)}",
+        f"- Potential single points: { [a for a, v in c['reply_targets'].most_common(3) if v>1] }",
+        "- Removing hubs likely splits components; add backups",
+    ],
+    "Centrality (degree/PageRank)": lambda m, c: [
+        *format_top(c["replies_by_author"] + c["reply_targets"], "reply degree"),
+        f"- High impact per word: {[a for a,_ in c['reply_targets'].most_common(2)]}",
+    ],
+    "Community detection (Louvain/Leiden)": lambda m, c: [
+        "- Graph author→quoted author; cluster for subgroups",
+        f"- Edge volume: {len(c['quote_pairs'])}; top edges {collections.Counter(c['quote_pairs']).most_common(3)}",
+        "- Label sizes show dominant topics/authors per community",
+    ],
+    "Load & bottlenecks (@-mentions and inbound replies)": lambda m, c: [
+        f"- Heavy targets: {c['reply_targets'].most_common(3)}",
+        "- Few handlers imply bottlenecks; route to widen",
+        "- Monitor @mention equivalents via quotes",
+    ],
+    "Network robustness (largest component under removals)": lambda m, c: [
+        "- Remove top hub to test components",
+        f"- Reply graph size: {len(c['replies_by_author'])}",
+        "- Add redundant links to avoid fragmentation",
+    ],
+    "Representation vs attention (replies share vs message share)": lambda m, c: [
+        "- Scatter: msgs% vs replies% by author",
+        *[f"- {a}: msgs {cnt}, replies {c['reply_targets'][a]}" for a, cnt in c["by_author"].most_common(3)],
+        "- Surface under-heard heavy posters vs over-heard light posters",
+    ],
+    "Temporal centrality shifts (rolling windows)": lambda m, c: [
+        "- Track monthly shifts in top repliers",
+        "- Rolling windows smooth seasonality",
+        f"- Current top: {c['replies_by_author'].most_common(2)}",
+    ],
+    "Who-replies-to-whom graph (edges replier→original)": lambda m, c: [
+        f"- Total edges: {len(c['quote_pairs'])}",
+        f"- Top pairs: {collections.Counter(c['quote_pairs']).most_common(3)}",
+        "- Compact numeric view only",
+    ],
+    "Asset index of shared links/artifacts": lambda m, c: (
+        lambda links, domains: [
+            f"- Shared links: {len(links)}",
+            f"- Domains by type (code/tools/events/social): {domains.most_common(3)}",
+            "- Map domains to topics and replies for knowledge base",
+        ]
+    )(c["links"], collections.Counter(re.sub("https?://", "", l).split("/")[0] for l in c["links"])),
     "Attendance friction/no-show signals": lambda m, c: (lambda friction: [f"- Attendance friction: {len(friction)}", "- Track before events", "- Improve reminders"])([msg for msg in c["messages"] if re.search(r"can't join|busy|late", msg["text"], re.I)]),
     "Bug/issue logging extraction with components/assignees": lambda m, c: (lambda bugs: [f"- Bug mentions: {len(bugs)}", "- Note components/assignees", "- Follow-up threads show resolution"])([msg for msg in c["messages"] if re.search(r"bug|issue|error", msg["text"], re.I)]),
     "Cross-platform comms pipeline (publish timestamps)": lambda m, c: ["- Compare timestamps across channels", "- Spot delays between posts", "- Useful for reliability"],
@@ -209,37 +486,116 @@ BUILDERS: Dict[str, Callable[[Sequence[Message], Dict[str, object]], List[str]]]
     "Media quality decisions logging": lambda m, c: (lambda media: [f"- Media with quality tags: {len(media)}", "- Record accept/reject rationale", "- Infer standards from reactions"])([msg for msg in m if msg.get("mediaType")]),
     "Media vs text type mix": lambda m, c: [f"- Media posts: {sum(1 for msg in m if msg.get('mediaType'))}", f"- Text posts: {len(m)-sum(1 for msg in m if msg.get('mediaType'))}", "- Mix shifts during demos"],
     "Media/link audit (type and domain distributions)": lambda m, c: (lambda domains: summary_counter(domains, "link domains") + [f"- Link count: {len(c['links'])}", "- Check file types for risk"])(collections.Counter(re.sub("https?://", "", l).split("/")[0] for l in c["links"])),
-    "Morale & vibe indicators (laughter/support tokens)": lambda m, c: (lambda laughs: [f"- Laughter/support tokens: {len(laughs)}", "- Warmth smooths collaboration", "- Track dips after contentious threads"])([msg for msg in c["messages"] if re.search(r"haha|lol|😂", msg["text"], re.I)]),
+    "Morale & vibe indicators (laughter/support tokens)": lambda m, c: (
+        lambda laughs: [
+            f"- Laughter/support tokens: {len(laughs)}",
+            f"- Trend vs bursts/mod events: {len(laughs)/max(len(c['messages']),1):.2f} share",
+            "- Dip alerts after contentious threads",
+        ]
+    )([msg for msg in c["messages"] if re.search(r"haha|lol|😂", msg["text"], re.I)]),
     "Pledge/acknowledgement cascades over time": lambda m, c: (lambda pledges: [f"- Pledge statements: {len(pledges)}", "- Sequence shows momentum", "- Map to outcomes"])([msg for msg in c["messages"] if re.search(r"i will|count me in|i can", msg["text"], re.I)]),
     "Poll/scheduling compliance (responses within window)": lambda m, c: (lambda polls: [f"- Poll mentions: {len(polls)}", "- Check responses within window", "- Lag hints disengagement"])([msg for msg in c["messages"] if re.search(r"poll|vote|rsvp", msg["text"], re.I)]),
     "Regional subcommunity momentum (city/chapter activity)": lambda m, c: summary_counter(collections.Counter(re.findall(r"\b(bangalore|delhi|nyc)\b", " ".join(msg['text'] for msg in c['messages']), re.I)), "regional tags") + ["- City mentions proxy energy", "- Track growth by week"],
     "Rituals/milestones detection & participation bursts (e.g., birthdays)": lambda m, c: (lambda rituals: [f"- Ritual mentions: {len(rituals)}", "- Participation spikes around rituals", "- Explain sentiment lifts"])([msg for msg in c["messages"] if re.search(r"happy birthday|anniversary|milestone", msg["text"], re.I)]),
     "URL decay/freshness checks (dead/redirected links)": lambda m, c: [f"- Links needing check: {len(c['links'])}", "- Test for 404/redirects offline", "- Older links likelier stale"],
     "URL/link presence and domains": lambda m, c: [f"- Messages with links: {len(c['links'])}", "- Domains show sourcing diversity", "- Track media vs article ratio"],
-    "Volunteer capacity/availability shifts": lambda m, c: (lambda offers: [f"- Availability notes: {len(offers)}", "- Compare to asks volume", "- Capacity dips slow delivery"])([msg for msg in c["messages"] if re.search(r"i can help|free|available", msg["text"], re.I)]),
-    "Workshops/learning demand extraction": lambda m, c: (lambda wants: [f"- Learning requests: {len(wants)}", "- Topics hint skill gaps", "- Align sessions with peaks"])([msg for msg in c["messages"] if re.search(r"workshop|learn|training", msg["text"], re.I)]),
-    "Engagement ranking of threads (unique repliers × depth × duration)": lambda m, c: summary_counter(collections.Counter(c["thread_counts"]), "thread sizes") + ["- Score = unique repliers × depth", "- Highlight top 3 threads"],
-    "First responder analysis": lambda m, c: ["- Identify earliest reply per starter", "- Spotlight rapid responders", f"- Reply edges: {len(c['quote_pairs'])}"],
-    "Ignored vs answered rates": lambda m, c: [f"- Threads with replies: {len({q for _, q in c['quote_pairs']})}", f"- Starters total: {sum(1 for msg in c['messages'] if not msg['quote_author'])}", "- Ignored = starters - answered"],
-    "Quoted-message starters and quote frequency": lambda m, c: [f"- Quote frequency: {len(c['quote_pairs'])}", "- Quoted starters spark dialogue", "- Track who gets quoted"],
-    "Re-engagement by starter in own thread": lambda m, c: ["- Count starter follow-ups in own threads", "- Measures ownership", f"- Reply targets: {c['reply_targets'].most_common(3)}"],
-    "Response latency per author/topic": lambda m, c: ["- Compute reply timestamps vs originals", "- Use median inter-arrival as proxy", f"- Median gap: {median_gap(c)}s"],
-    "Sink threads characterization (zero replies)": lambda m, c: [f"- Potential sink threads: {sum(1 for msg in c['messages'] if not msg['quote_author'])}", "- Identify starters with zero replies", "- Nudge or summarize"],
+    "Volunteer capacity/availability shifts": lambda m, c: (
+        lambda offers: [
+            f"- Availability notes: {len(offers)}",
+            "- Compare offers vs bug/event load",
+            "- Watch repeat volunteers for burnout",
+        ]
+    )([msg for msg in c["messages"] if re.search(r"i can help|free|available", msg["text"], re.I)]),
+    "Workshops/learning demand extraction": lambda m, c: (
+        lambda wants: [
+            f"- Learning requests: {len(wants)}",
+            "- Themes: LLM basics/infra/eval/career from keywords",
+            "- Align with event announcements + attendance friction",
+        ]
+    )([msg for msg in c["messages"] if re.search(r"workshop|learn|training", msg["text"], re.I)]),
+    "Engagement ranking of threads (unique repliers × depth × duration)": lambda m, c: [
+        *(
+            f"- Thread {i}: size {count}" for i, count in collections.Counter(c["thread_counts"]).most_common(3)
+        ),
+        "- Score = unique repliers × depth; capped to top 3",
+    ],
+    "First responder analysis": lambda m, c: [
+        f"- First responders: {first_responder_counts(c['messages']).most_common(3)}",
+        "- Highlight quick helpers for recognition",
+        f"- Reply edges: {len(c['quote_pairs'])}",
+    ],
+    "Ignored vs answered rates": lambda m, c: [
+        f"- Threads with replies: {len({q for _, q in c['quote_pairs']})}",
+        f"- Starters total: {sum(1 for msg in c['messages'] if not msg['quote_author'])}",
+        "- Break down by author/topic/length to rescue sinks",
+    ],
+    "Quoted-message starters and quote frequency": lambda m, c: [
+        f"- Quote frequency: {len(c['quote_pairs'])}",
+        "- Quoted starters spark dialogue; list top quoted",
+        f"- Top quoted authors: {c['reply_targets'].most_common(3)}",
+    ],
+    "Re-engagement by starter in own thread": lambda m, c: [
+        "- Count starter follow-ups in own threads",
+        f"- Follow-up heavy starters: {collections.Counter(a for a, b in c['quote_pairs'] if a==b).most_common(2)}",
+        f"- Reply targets: {c['reply_targets'].most_common(3)}",
+    ],
+    "Response latency per author/topic": lambda m, c: [
+        f"- Median gap proxy overall: {median_gap(c)}s",
+        "- Split by helpers/topics; add p90 for on-call planning",
+        f"- @mention proxy via quotes: {len(c['quote_pairs'])}",
+    ],
+    "Sink threads characterization (zero replies)": lambda m, c: [
+        f"- Potential sink threads: {sum(1 for msg in c['messages'] if not msg['quote_author'])}",
+        "- Profile by topic, cohort, time-of-day",
+        "- Rescue first-time posters via summaries",
+    ],
     "Subthread gravity (posts that spawn subthreads via quotes)": lambda m, c: ["- Quotes spawning further replies show gravity", f"- Quoted authors: {c['reply_targets'].most_common(3)}", "- Map nested quotes"],
     "Thread detection and sizes (msgs, participants, depth)": lambda m, c: [f"- Threads via quotes: {len(c['thread_counts'])}", "- Estimate depth by repeated quoting", "- Participants per thread matter"],
     "Thread half-life and survival modeling": lambda m, c: ["- Time from start to half replies", "- Use inter-arrival proxy", f"- Median gap proxy: {median_gap(c)}s"],
-    "Topic seeding effectiveness (replies per thread started)": lambda m, c: ["- Replies per starter shows topic pull", f"- Avg replies per author: {(mean(c['replies_by_author'].values()) if c['replies_by_author'] else 0):.1f}", "- High pull topics guide programming"],
-    "Burst/anomaly/change-point detection": lambda m, c: ["- Detect spikes via z-score on daily counts", f"- Top burst days: {c['by_day'].most_common(3)}", "- Annotate bursts with context"],
+    "Topic seeding effectiveness (replies per thread started)": lambda m, c: [
+        "- Replies per starter shows topic pull",
+        f"- Avg replies per author: {(mean(c['replies_by_author'].values()) if c['replies_by_author'] else 0):.1f}",
+        "- Pair author×topic to route who seeds which threads",
+    ],
+    "Burst/anomaly/change-point detection": lambda m, c: [
+        "- Detect spikes via z-score on daily counts",
+        f"- Top burst days: {c['by_day'].most_common(3)} with dominant topics/authors",
+        "- Attach assets/links to explain whether healthy or stressful",
+    ],
     "Daily/weekly/monthly message volume": lambda m, c: summary_counter(c["by_day"], "daily messages") + [f"- Weekly buckets: ~{len(c['by_day'])/7:.1f} weeks", "- Monthly rollups show trend"],
     "Hour-of-day activity patterns": lambda m, c: summary_counter(c["by_hour"], "hour activity") + ["- Off-hours chatter shows dedication", "- Pair with weekday view"],
-    "Inter-arrival times and burstiness": lambda m, c: (lambda gaps: stat_distribution([int(g) for g in gaps], "Inter-arrival seconds") + ["- Burstiness = variance/mean", "- Clusters hint live debates"] if gaps else ["- No gaps"])([(t2 - t1).total_seconds() for t1, t2 in zip([msg["time"] for msg in c["messages"]], [msg["time"] for msg in c["messages"]][1:])]),
+    "Inter-arrival times and burstiness": lambda m, c: (
+        lambda gaps: stat_distribution([int(g) for g in gaps], "Inter-arrival seconds")
+        + ["- Burstiness = variance/mean per thread/author", "- Clusters hint live debates"]
+        if gaps
+        else ["- No gaps"]
+    )(
+        [
+            (t2 - t1).total_seconds()
+            for t1, t2 in zip([msg["time"] for msg in c["messages"]], [msg["time"] for msg in c["messages"]][1:])
+        ]
+    ),
     "Rolling trend smoothing": lambda m, c: ["- Apply 7-day rolling mean on volume", "- Highlights sustained climbs", f"- Current avg: {mean(c['by_day'].values()) if c['by_day'] else 0:.1f}/day"],
-    "Weekday vs weekend patterns": lambda m, c: (lambda weekday, weekend: ["- Compare weekday vs weekend volume", f"- Weekday msgs: {weekday}, weekend: {weekend}", "- Leisure vs work alignment"])(sum(v for k, v in c["by_weekday"].items() if k < 5), sum(v for k, v in c["by_weekday"].items() if k >= 5)),
-    "People–topic affinity (bipartite clustering)": lambda m, c: ["- Cluster authors by keywords", "- Overlap hints expertise", "- Use bipartite clustering"],
+    "Weekday vs weekend patterns": lambda m, c: (
+        lambda weekday, weekend: [
+            "- Compare weekday vs weekend volume and topic mix",
+            f"- Weekday msgs: {weekday}, weekend: {weekend}",
+            "- Decide social vs deep-tech scheduling",
+        ]
+    )(sum(v for k, v in c["by_weekday"].items() if k < 5), sum(v for k, v in c["by_weekday"].items() if k >= 5)),
+    "People–topic affinity (bipartite clustering)": lambda m, c: [
+        "- Cluster authors by keyword tags to find experts",
+        "- Top experts per theme guide routing",
+        "- Surface under-covered areas needing owners",
+    ],
     "Rule-based topic tagging (keywords/regex)": lambda m, c: (lambda topics: summary_counter(topics, "keyword topics") + ["- Extend with regex library", f"- Untagged msgs: {len(c['messages']) - sum(topics.values())}"])( (lambda counter: ( [counter.__setitem__("ml", counter.get("ml",0)+1) for msg in c['messages'] if re.search(r"data|model|training", msg['text'], re.I)], [counter.__setitem__("events", counter.get("events",0)+1) for msg in c['messages'] if re.search(r"event|meet|call", msg['text'], re.I)], counter)[2])(collections.Counter()) ),
     "Subgraphs by topic (topic-specific networks)": lambda m, c: ["- Build reply graphs per topic", "- Compare density across themes", "- Highlight strong clusters"],
     "Theme heatmaps (time × cluster)": lambda m, c: ["- Time × topic heatmaps show cadence", "- Weekly bins smooth noise", "- Use share not counts"],
-    "Topic trends over time (weekly share)": lambda m, c: ["- Track topic share weekly", "- Rising themes flag emerging needs", f"- ML tag proxy: {c['by_day'].most_common(1)}"],
+    "Topic trends over time (weekly share)": lambda m, c: [
+        "- Track topic share weekly vs join/leave/pledge events",
+        "- Rising themes flag emerging needs or drift",
+        f"- ML tag proxy: {c['by_day'].most_common(1)}",
+    ],
 }
 
 

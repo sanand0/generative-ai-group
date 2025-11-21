@@ -47,3 +47,11 @@ def test_ensure_lines_minimum():
     lines = wa.ensure_lines(["- one"], "Test")
     assert len(lines) >= 3
     assert lines[0].startswith("-")
+
+
+def test_report_line_limits():
+    report = wa.generate_report(sample_messages())
+    for section in report.split("### ")[1:]:
+        lines = section.split("\n")[1:]
+        assert len(lines) <= 20
+        assert all(len(line) <= 100 for line in lines)
