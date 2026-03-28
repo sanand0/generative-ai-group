@@ -1,4 +1,8 @@
+__pycache__
 .vscode/
+
+# Skip data
+messages.json
 
 # Skip generated files
 *.opus

@@ -3,7 +3,8 @@
 A CLI tool and Python library to transform threaded WhatsApp Gen AI group transcripts into
 [a weekly podcast](https://github.com/sanand0/generative-ai-group/releases/download/main/podcast.xml) by
 
-- **Parsing** JSON exports of WhatsApp messages into threaded, weekly files.
+- **Merging and splitting** WhatsApp scraper JSON exports into weekly `messages/YYYY-MM-DD.json` shards.
+- **Parsing** weekly WhatsApp messages into threaded transcript files.
 - **Generating** a polished two-host dialogue script via OpenAI `gpt-4.1-mini`.
 - **Narrating** per-speaker TTS segments via OpenAI `gpt-4o-mini-tts` and concatenating into `podcast-$WEEK.mp3`.
 
@@ -12,6 +13,7 @@ A CLI tool and Python library to transform threaded WhatsApp Gen AI group transc
 You need:
 
 - A [scraped WhatsApp JSON export](https://tools.s-anand.net/whatsappscraper/) of the Gen AI Group chat as [`gen-ai-messages.json`](gen-ai-messages.json)
+- Optional incremental WhatsApp exports such as `m1.json`, `m2.json`, etc.
 - [`uv`](https://docs.astral.sh/uv/)
 - Environment variable `OPENAI_API_KEY` with a valid OpenAI API key.
 - `ffmpeg` installed and in `PATH` for audio concatenation.
@@ -19,17 +21,35 @@ You need:
 ```bash
 git clone https://github.com/sanand0/generative-ai-group.git
 cd generative-ai-group
+uv run split_whatsapp_messages.py gen-ai-messages.json
 export OPENAI_API_KEY="sk-..."
 uv run podcast.py
 ```
 
 Optionally, modify the voice style and podcast script prompts in [`config.toml`](config.toml)
 
+To merge multiple WhatsApp scraper exports into weekly JSON shards first:
+
+```bash
+uv run split_whatsapp_messages.py gen-ai-messages.json m1.json m2.json
+```
+
+This writes weekly files to `messages/` using the same week labeling as [`podcast.py`](podcast.py):
+
+- dated files are `messages/YYYY-MM-DD.json`
+- `YYYY-MM-DD` is the Sunday label computed by `group_by_week()`
+- Monday-Saturday messages go into the coming Sunday file
+- Sunday messages go into the following Sunday file
+- the current/future incomplete week is skipped
+- rows with null or malformed `time` are preserved in `messages/unknown-time.json`
+- if a weekly output file already exists, it is merged first so richer later rows can overwrite partial earlier rows by `messageId`
+
 This will:
 
-1. Read and filter messages.
-2. Group them by ISO-week (Sunday start).
-3. For each week, it creates:
+1. Merge one or more WhatsApp scraper exports into weekly JSON shards in `messages/`.
+2. Read and filter messages.
+3. Group them by ISO-week (Sunday-labeled output from `group_by_week()`).
+4. For each week, it creates:
    - `{week}/messages.txt` (threaded transcript).
    - `{week}/podcast.md` (dialogue script).
    - `{week}/{line}.opus` files which are concatenated into...
@@ -37,9 +57,13 @@ This will:
 
 Files:
 
+├── split_whatsapp_messages.py   # Merge WhatsApp exports and write weekly JSON shards
 ├── podcast.py                   # Single-file application with pure functions and type hints
 ├── config.toml                  # Voice configurations, podcast prompts, and TTS voice settings
 ├── gen-ai-messages.json         # WhatsApp export input (not versioned)
+├── messages/                    # Weekly merged WhatsApp JSON shards
+│   ├── YYYY-MM-DD.json          # Sunday-labeled weekly JSON for one completed week
+│   └── unknown-time.json        # Rows with missing or malformed ISO timestamps
 ├── YYYY-MM-DD/                  # Per-week output directories
 │   ├── messages.txt             # Threaded transcript
 │   ├── podcast-YYYY-MM-DD.md    # Generated dialogue script
@@ -49,12 +73,14 @@ Files:
 
 How It Works:
 
-1. `load_messages()` filters out items with null `time`, `text`, or missing `author`.
-2. `group_by_week()` buckets by Sunday of each ISO week.
-3. `build_threads()` indexes by `messageId`, collects replies via `quoteMessageId`, sorts roots chronologically.
-4. `render_message()` writes indented `– Author: Text [reactions]` lines.
-5. `get_podcast_script()` POSTs system + user prompts to OpenAI API `gpt-4.1-mini` via `/v1/responses` endpoint, calculates cost.
-6. `generate_podcast_audio()` splits the script by speaker, sends TTS requests via `gpt-4o-mini-tts` with speaker-specific voices and instructions, writes `.opus`, and FFmpeg-concats into MP3 (via temporary `list.txt`)
+1. `split_whatsapp_messages.py` loads one or more scraper exports, repairs the common missing `[` wrapper if needed, merges duplicate `messageId` rows using WhatsApp-aware field rules, and writes weekly `messages/YYYY-MM-DD.json` files.
+2. `split_whatsapp_messages.py` uses the same Sunday labeling as `podcast.py`: Monday-Saturday messages go to the coming Sunday file, Sunday messages roll into the following Sunday file, and incomplete current weeks are skipped.
+3. `load_messages()` in `podcast.py` filters out items with null `time`, `text`, or missing `author`.
+4. `group_by_week()` buckets by Sunday of each ISO week.
+5. `build_threads()` indexes by `messageId`, collects replies via `quoteMessageId`, sorts roots chronologically.
+6. `render_message()` writes indented `– Author: Text [reactions]` lines.
+7. `get_podcast_script()` POSTs system + user prompts to OpenAI API `gpt-4.1-mini` via `/v1/responses` endpoint, calculates cost.
+8. `generate_podcast_audio()` splits the script by speaker, sends TTS requests via `gpt-4o-mini-tts` with speaker-specific voices and instructions, writes `.opus`, and FFmpeg-concats into MP3 (via temporary `list.txt`)
 
 ## Release
 

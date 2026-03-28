@@ -42,6 +42,37 @@ Maya: …
 
 '''
 
+podcast_style = "Podcast style: Warm, conversational, and enthusiastic."
+
+[gemini]
+ffmpeg_command = [
+  "ffmpeg",
+  "-y",
+  "-f",
+  "s16le",
+  "-ar",
+  "24000",
+  "-ac",
+  "1",
+  "-i",
+  "{pcm}",
+  "-safe",
+  "0",
+  "-c:a",
+  "libmp3lame",
+  "-qscale:a",
+  "5",
+  "-ar",
+  "44100",
+  "-ac",
+  "1",
+  "-id3v2_version",
+  "3",
+  "{output}",
+]
+generation_config = { responseModalities = ["audio"], speech_config = { multi_speaker_voice_config = { speaker_voice_configs = [{ speaker = "Alex", voice_config = { prebuilt_voice_config = { voice_name = "Algieba" } } }, { speaker = "Maya", voice_config = { prebuilt_voice_config = { voice_name = "Kore" } } }] } } }
+
+
 [Alex]
 voice = "ash"
 instructions = '''

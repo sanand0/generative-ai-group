@@ -7,21 +7,26 @@
 # ]
 # ///
 
+import datetime
+import argparse
+import base64
 import json
 import os
-import datetime
 import re
-import requests
+import subprocess
 import tomllib
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, List, Any, Tuple
-from tqdm import tqdm
+from typing import Any, Dict, List, Tuple
+
+MESSAGES_JSON_NAME = "messages.json"
+MESSAGES_TEXT_NAME = "messages.txt"
+WEEK_DIR_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
-def load_messages(filepath: str) -> List[Dict[str, Any]]:
+def load_messages(filepath: str | Path) -> List[Dict[str, Any]]:
     "Load and filter messages from JSON file"
-    with open(filepath) as f:
+    with open(filepath, encoding="utf-8") as f:
         return [m for m in json.load(f) if m.get("time") and m.get("text") and m.get("author")]
 
 
@@ -38,6 +43,51 @@ def group_by_week(messages: List[Dict[str, Any]]) -> Dict[datetime.date, List[Di
         message["dt"] = dt
         groups[week_end].append(message)
     return groups
+
+
+def with_message_datetimes(messages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    "Attach parsed UTC datetimes to already-filtered message rows."
+    return [
+        {
+            **message,
+            "dt": datetime.datetime.fromisoformat(message["time"].replace("Z", "+00:00")),
+        }
+        for message in messages
+    ]
+
+
+def serialize_week_items(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    "Serialize weekly messages for `$WEEK/messages.json`, dropping internal helper fields."
+    return [
+        {key: value for key, value in message.items() if key != "dt"}
+        for message in sorted(items, key=lambda message: message["dt"])
+    ]
+
+
+def load_grouped_messages(script_dir: Path) -> Dict[datetime.date, List[Dict[str, Any]]]:
+    """
+    Load grouped weekly messages from `$WEEK/messages.json` when available.
+
+    This lets `podcast.py` operate directly on the same per-week input structure written
+    by `split_whatsapp_messages.py`. If no such files exist yet, it falls back to
+    regrouping `gen-ai-messages.json`.
+    """
+
+    week_groups: Dict[datetime.date, List[Dict[str, Any]]] = {}
+    for child in sorted(script_dir.iterdir()):
+        if not child.is_dir() or not WEEK_DIR_PATTERN.match(child.name):
+            continue
+        messages_json = child / MESSAGES_JSON_NAME
+        if not messages_json.exists():
+            continue
+        week_groups[datetime.date.fromisoformat(child.name)] = with_message_datetimes(
+            load_messages(messages_json)
+        )
+
+    if week_groups:
+        return week_groups
+
+    return group_by_week(load_messages(script_dir / "gen-ai-messages.json"))
 
 
 def build_threads(
@@ -68,16 +118,31 @@ def render_message(
         render_message(r, replies_dict, file, lvl + 1)
 
 
+def write_messages_json_file(week: datetime.date, items: List[Dict[str, Any]], target_dir: Path) -> Path:
+    "Write the weekly JSON shard to `$WEEK/messages.json` if it doesn't exist yet."
+    target_dir.mkdir(exist_ok=True)
+    messages_json_file = target_dir / MESSAGES_JSON_NAME
+
+    if messages_json_file.exists():
+        return messages_json_file
+
+    messages_json_file.write_text(
+        json.dumps(serialize_week_items(items), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return messages_json_file
+
+
 def write_messages_file(week: datetime.date, items: List[Dict[str, Any]], target_dir: Path) -> Path:
     "Write messages to a file in the target directory"
     target_dir.mkdir(exist_ok=True)
-    messages_file = target_dir / "messages.txt"
+    messages_file = target_dir / MESSAGES_TEXT_NAME
 
     if messages_file.exists():
         return messages_file
 
     replies, roots = build_threads(items)
-    with open(messages_file, "w") as f:
+    with open(messages_file, "w", encoding="utf-8") as f:
         for r in roots:
             render_message(r, replies, f)
     return messages_file
@@ -87,10 +152,12 @@ def get_podcast_script(
     messages_text: str, config: Dict[str, Any], week: datetime.date
 ) -> Tuple[float, str]:
     "Generate a podcast script using OpenAI API"
+    import requests
+
     prompt = config["podcast"].replace("$WEEK", week.strftime("%d %B %Y"))
 
     payload = {
-        "model": "gpt-5-mini",
+        "model": "gpt-5.4-mini",
         "input": [
             {"role": "system", "content": prompt},
             {"role": "user", "content": messages_text},
@@ -112,6 +179,9 @@ def get_podcast_script(
 
 def generate_podcast_audio(script: str, target_dir: Path, config: Dict[str, Any]) -> None:
     "Generate speech files for each line in the podcast script"
+    import requests
+    from tqdm import tqdm
+
     speakers = {k: v for k, v in config.items() if isinstance(v, dict) and "voice" in v}
     headers = {
         "Authorization": f"Bearer {os.environ.get('OPENAI_API_KEY')}",
@@ -140,7 +210,7 @@ def generate_podcast_audio(script: str, target_dir: Path, config: Dict[str, Any]
             continue
         text = line[match.end():].strip()
         body = {
-            "model": "gpt-4o-mini-tts-2025-12-15",
+            "model": "gpt-audio-mini",
             "input": text,
             "voice": speakers[speaker]["voice"],
             "instructions": speakers[speaker]["instructions"],
@@ -159,16 +229,78 @@ def generate_podcast_audio(script: str, target_dir: Path, config: Dict[str, Any]
     list_file.unlink()
 
 
-def process_week(week: datetime.date, items: List[Dict[str, Any]], config: Dict[str, Any]) -> None:
+def get_podcast_gemini(script, target, config):
+    """Generate a podcast audio file using Gemini 2.5 Flash Preview TTS."""
+    import requests
+
+    output_path = target / f"podcast-{target.name}.mp3"
+    if output_path.exists():
+        return output_path
+
+    script_text = f"{config['podcast_style']}\n\n{script.strip()}"
+    payload = {
+        "contents": [{"role": "user", "parts": [{"text": script_text}]}],
+        "generationConfig": config["gemini"]["generation_config"],
+    }
+    headers = {
+        "x-goog-api-key": os.environ["GEMINI_API_KEY"],
+        "Content-Type": "application/json",
+    }
+    url = (
+        "https://generativelanguage.googleapis.com/v1beta/models/"
+        "gemini-2.5-flash-preview-tts:generateContent"
+    )
+    result = requests.post(url, headers=headers, json=payload).json()
+    json_path = target / "gemini-audio.json"
+    json_path.write_text(json.dumps(result, indent=2))
+
+    audio_b64 = result["candidates"][0]["content"]["parts"][0]["inlineData"]["data"]
+    pcm_path = target / "podcast.pcm"
+    audio_pcm = base64.b64decode(audio_b64)
+    pcm_path.write_bytes(audio_pcm)
+    ffmpeg_args = [
+        arg.format(pcm=pcm_path, output=output_path) for arg in config["gemini"]["ffmpeg_command"]
+    ]
+    subprocess.run(ffmpeg_args, check=True)
+    pcm_path.unlink()
+    json_path.unlink()
+
+    return output_path
+
+
+def describe_week_files(week: datetime.date, items: List[Dict[str, Any]], target_dir: Path) -> str:
+    "Describe what `process_week()` will verify or create for one week."
+    return (
+        f"Week {week}: {len(items)} messages, "
+        f"messages.json={'present' if (target_dir / MESSAGES_JSON_NAME).exists() else 'missing'}, "
+        f"messages.txt={'present' if (target_dir / MESSAGES_TEXT_NAME).exists() else 'missing'}, "
+        f"podcast.md={'present' if (target_dir / f'podcast-{week}.md').exists() else 'missing'}, "
+        f"podcast.mp3={'present' if (target_dir / f'podcast-{week}.mp3').exists() else 'missing'}"
+    )
+
+
+def process_week(
+    week: datetime.date,
+    items: List[Dict[str, Any]],
+    config: Dict[str, Any],
+    *,
+    script_dir: Path | None = None,
+    dry_run: bool = False,
+) -> None:
     "Process a week's worth of messages"
-    script_dir = Path(__file__).parent
+    script_dir = script_dir or Path(__file__).parent
     week_dir = script_dir / str(week)
+
+    if dry_run:
+        print(describe_week_files(week, items, week_dir))
+        return
+
     week_dir.mkdir(exist_ok=True)
 
     podcast_script_file = week_dir / f"podcast-{week}.md"
     podcast_audio_file = week_dir / f"podcast-{week}.mp3"
 
-    # Write messages file if it doesn't exist
+    write_messages_json_file(week, items, week_dir)
     messages_file = write_messages_file(week, items, week_dir)
 
     # Generate podcast script if it doesn't exist
@@ -182,7 +314,7 @@ def process_week(week: datetime.date, items: List[Dict[str, Any]], config: Dict[
     # Generate podcast audio if it doesn't exist
     if not podcast_audio_file.exists():
         podcast_script = podcast_script_file.read_text()
-        generate_podcast_audio(podcast_script, week_dir, config)
+        get_podcast_gemini(podcast_script, week_dir, config)
         print(f"Week {week}: Generated podcast audio at {podcast_audio_file}")
 
 
@@ -231,25 +363,46 @@ def generate_podcast(weeks: List[datetime.date], script_dir: Path) -> None:
     output_path.write_text(rss, encoding="utf-8")
 
 
-def main() -> None:
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Generate weekly podcast assets from WhatsApp exports. Week inputs are "
+            "stored in YYYY-MM-DD/messages.json, and --dry-run verifies the weekly "
+            "plan without writing files or making LLM/TTS API calls."
+        )
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Verify weekly grouping and file status without writing files or calling APIs",
+    )
+    return parser
+
+
+def main(argv: List[str] | None = None, *, script_dir: Path | None = None) -> int:
     "Main function to process messages and generate podcasts"
-    script_dir = Path(__file__).parent
+    args = build_parser().parse_args(argv)
+    script_dir = script_dir or Path(__file__).parent
 
     # Load config
     with open(script_dir / "config.toml", "rb") as f:
         config = tomllib.load(f)
 
     # Load and process messages
-    messages = load_messages("gen-ai-messages.json")
-    groups = group_by_week(messages)
+    groups = load_grouped_messages(script_dir)
 
     # Process each week
     for week, items in groups.items():
-        process_week(week, items, config)
+        process_week(week, items, config, script_dir=script_dir, dry_run=args.dry_run)
 
     # Generate RSS feed
+    if args.dry_run:
+        print(f"Dry run verified {len(groups)} completed week(s). No API calls were made.")
+        return 0
+
     generate_podcast(weeks=list(groups.keys()), script_dir=script_dir)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
