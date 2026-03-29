@@ -3,9 +3,11 @@ import sys
 import datetime as dt
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from split_whatsapp_messages import load_messages, merge_messages, split_messages
+from split_whatsapp_messages import load_messages, main, merge_messages, split_messages
 
 
 def test_merge_messages_uses_whatsapp_field_aware_rules():
@@ -230,3 +232,81 @@ def test_split_messages_skips_incomplete_current_week(tmp_path: Path):
     split_messages([input_path], output_root=tmp_path, today=dt.date(2025, 3, 22))
 
     assert not (tmp_path / "2025-03-23" / "messages.json").exists()
+
+
+def test_split_messages_raises_if_written_output_loses_messages(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    input_path = tmp_path / "weekly.json"
+    input_path.write_text(
+        json.dumps(
+            [
+                {
+                    "messageId": "mon",
+                    "userId": "group-1",
+                    "time": "2025-03-10T09:00:00.000Z",
+                    "text": "monday",
+                },
+                {
+                    "messageId": "sat",
+                    "userId": "group-1",
+                    "time": "2025-03-15T09:00:00.000Z",
+                    "text": "saturday",
+                },
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    original_write_text = Path.write_text
+    target_path = tmp_path / "2025-03-16" / "messages.json"
+
+    def broken_write_text(self: Path, data: str, *args, **kwargs) -> int:
+        if self == target_path:
+            rows = json.loads(data)
+            data = json.dumps(rows[:1], ensure_ascii=False, indent=2) + "\n"
+        return original_write_text(self, data, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "write_text", broken_write_text)
+
+    with pytest.raises(ValueError, match="Lost messages"):
+        split_messages([input_path], output_root=tmp_path, today=dt.date(2025, 3, 30))
+
+
+def test_main_prints_only_modified_files_one_per_line(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+):
+    output_root = tmp_path / "out"
+    input_path = tmp_path / "weekly.json"
+    input_path.write_text(
+        json.dumps(
+            [
+                {
+                    "messageId": "week-one",
+                    "userId": "group-1",
+                    "time": "2025-03-10T09:00:00.000Z",
+                    "text": "monday",
+                },
+                {
+                    "messageId": "week-two",
+                    "userId": "group-1",
+                    "time": "2025-03-16T09:00:00.000Z",
+                    "text": "sunday rolls forward",
+                },
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["split_whatsapp_messages.py", str(input_path), "--output-root", str(output_root)],
+    )
+
+    assert main() == 0
+    assert capsys.readouterr().out.splitlines() == [
+        "2025-03-16/messages.json",
+        "2025-03-23/messages.json",
+    ]
+
+    assert main() == 0
+    assert capsys.readouterr().out == ""

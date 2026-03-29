@@ -14,6 +14,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 import tomllib
 from collections import defaultdict
 from pathlib import Path
@@ -22,6 +23,18 @@ from typing import Any, Dict, List, Tuple
 MESSAGES_JSON_NAME = "messages.json"
 MESSAGES_TEXT_NAME = "messages.txt"
 WEEK_DIR_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def raise_for_status_with_body(response: Any) -> None:
+    "Raise for HTTP status, echoing the raw API body to stderr for debugging."
+
+    try:
+        response.raise_for_status()
+    except Exception:
+        body = getattr(response, "text", "").strip()
+        if body:
+            print(body, file=sys.stderr)
+        raise
 
 
 def load_messages(filepath: str | Path) -> List[Dict[str, Any]]:
@@ -170,7 +183,7 @@ def get_podcast_script(
     }
 
     response = requests.post("https://api.openai.com/v1/responses", headers=headers, json=payload)
-    response.raise_for_status()
+    raise_for_status_with_body(response)
     result = response.json()
     cost = result["usage"]["input_tokens"] * 0.4 + result["usage"]["output_tokens"] * 1.6
     # Use last .output entry - first few have reasoning
@@ -217,7 +230,7 @@ def generate_podcast_audio(script: str, target_dir: Path, config: Dict[str, Any]
             "response_format": "opus",
         }
         r = requests.post("https://api.openai.com/v1/audio/speech", headers=headers, json=body)
-        r.raise_for_status()
+        raise_for_status_with_body(r)
         with open(podcast_filename, "wb") as f:
             f.write(r.content)
 
@@ -250,7 +263,9 @@ def get_podcast_gemini(script, target, config):
         "https://generativelanguage.googleapis.com/v1beta/models/"
         "gemini-2.5-flash-preview-tts:generateContent"
     )
-    result = requests.post(url, headers=headers, json=payload).json()
+    response = requests.post(url, headers=headers, json=payload)
+    raise_for_status_with_body(response)
+    result = response.json()
     json_path = target / "gemini-audio.json"
     json_path.write_text(json.dumps(result, indent=2))
 

@@ -1,7 +1,10 @@
 import datetime as dt
 import json
 import sys
+import types
 from pathlib import Path
+
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -121,3 +124,29 @@ def test_main_dry_run_uses_existing_week_messages_json(tmp_path: Path, monkeypat
     assert podcast.main(["--dry-run"], script_dir=tmp_path) == 0
     assert not (week_dir / "messages.txt").exists()
     assert not (tmp_path / "podcast.xml").exists()
+
+
+def test_get_podcast_script_prints_api_error_body(monkeypatch, capsys: pytest.CaptureFixture[str]):
+    class FakeHTTPError(Exception):
+        pass
+
+    class FakeResponse:
+        text = '{"error":{"message":"Bad request"}}'
+
+        def raise_for_status(self) -> None:
+            raise FakeHTTPError("400 Client Error")
+
+    fake_requests = types.SimpleNamespace(
+        HTTPError=FakeHTTPError,
+        post=lambda *args, **kwargs: FakeResponse(),
+    )
+    monkeypatch.setitem(sys.modules, "requests", fake_requests)
+
+    with pytest.raises(FakeHTTPError):
+        podcast.get_podcast_script(
+            "Threaded messages",
+            {"podcast": "Prompt for $WEEK"},
+            dt.date(2025, 3, 16),
+        )
+
+    assert capsys.readouterr().err == '{"error":{"message":"Bad request"}}\n'

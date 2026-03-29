@@ -54,4 +54,13 @@ Make sure the new history is identical (dates, authorship, commit messages, etc.
 Verify against the remote to make sure that everything's identical.
 Don't push.
 
+---
+
+When running `uv run split_whatsapp_messages.py` verify that no messages are lost.
+When it prints the output, print one per line and only print modified files, not unchanged ones.
+
+---
+
+In case podcast.py gets an API error, print the API response body for debugging.
+
 <!-- codex resume 019d329e-c293-7e63-9b1a-76d647b62580 -->

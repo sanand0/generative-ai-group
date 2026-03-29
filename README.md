@@ -15,7 +15,7 @@ You need:
 - A [scraped WhatsApp JSON export](https://tools.s-anand.net/whatsappscraper/) of the Gen AI Group chat as [`gen-ai-messages.json`](gen-ai-messages.json)
 - Optional incremental WhatsApp exports such as `m1.json`, `m2.json`, etc.
 - [`uv`](https://docs.astral.sh/uv/)
-- Environment variable `OPENAI_API_KEY` with a valid OpenAI API key.
+- Environment variable `OPENAI_API_KEY` and `GEMINI_API_KEY` with valid API keys.
 - `ffmpeg` installed and in `PATH` for audio concatenation.
 
 ```bash
@@ -23,6 +23,7 @@ git clone https://github.com/sanand0/generative-ai-group.git
 cd generative-ai-group
 uv run split_whatsapp_messages.py gen-ai-messages.json
 export OPENAI_API_KEY="sk-..."
+export GEMINI_API_KEY="..."
 uv run podcast.py
 ```
 

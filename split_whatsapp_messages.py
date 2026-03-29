@@ -182,6 +182,67 @@ def existing_output_files(output_root: Path) -> list[Path]:
     return sorted(output_files)
 
 
+def output_path_for_bucket(output_root: Path, bucket: str) -> Path:
+    """Return the canonical messages.json path for a weekly output bucket."""
+
+    return output_root / bucket / MESSAGES_JSON_NAME
+
+
+def render_messages_json(rows: list[dict[str, Any]]) -> str:
+    """Serialize rows exactly as this tool persists weekly shard files."""
+
+    return json.dumps(rows, ensure_ascii=False, indent=2) + "\n"
+
+
+def verify_split_integrity(
+    output_root: Path,
+    expected_outputs: dict[Path, list[dict[str, Any]]],
+    deferred_messages: list[dict[str, Any]],
+    merged_messages: list[dict[str, Any]],
+) -> None:
+    """
+    Confirm every merged message is either written to disk or intentionally deferred.
+
+    Deferred messages are the current/future-week rows that `podcast.py` also skips
+    until their Sunday-labeled shard is complete.
+    """
+
+    actual_output_paths = set(existing_output_files(output_root))
+    expected_output_paths = set(expected_outputs)
+    if actual_output_paths != expected_output_paths:
+        raise ValueError(
+            "Output shard mismatch: "
+            f"expected {sorted(str(path.relative_to(output_root)) for path in expected_output_paths)}, "
+            f"found {sorted(str(path.relative_to(output_root)) for path in actual_output_paths)}"
+        )
+
+    mismatched_paths: list[str] = []
+    written_message_ids: set[str] = set()
+    for output_path, expected_rows in sorted(expected_outputs.items()):
+        actual_rows = load_messages(output_path)
+        if actual_rows != expected_rows:
+            mismatched_paths.append(str(output_path.relative_to(output_root)))
+        written_message_ids.update(message["messageId"] for message in actual_rows)
+
+    deferred_message_ids = {message["messageId"] for message in deferred_messages}
+    merged_message_ids = {message["messageId"] for message in merged_messages}
+
+    lost_message_ids = sorted(merged_message_ids - written_message_ids - deferred_message_ids)
+    unexpected_message_ids = sorted(written_message_ids - merged_message_ids)
+    duplicated_message_ids = sorted(written_message_ids & deferred_message_ids)
+    if mismatched_paths or lost_message_ids or unexpected_message_ids or duplicated_message_ids:
+        details = []
+        if mismatched_paths:
+            details.append(f"Output mismatch: {sorted(mismatched_paths)}")
+        if lost_message_ids:
+            details.append(f"Lost messages: {lost_message_ids}")
+        if unexpected_message_ids:
+            details.append(f"Unexpected messages: {unexpected_message_ids}")
+        if duplicated_message_ids:
+            details.append(f"Written and deferred: {duplicated_message_ids}")
+        raise ValueError("; ".join(details))
+
+
 def split_messages(
     input_paths: Iterable[Path],
     output_root: Path = Path("."),
@@ -203,6 +264,7 @@ def split_messages(
 
     If a target output file already exists, it is treated as the first input so fresh
     data can enrich older partial rows instead of replacing them wholesale.
+    Returns only the shard paths whose contents changed on disk.
     """
 
     normalized_inputs = [path.resolve() for path in input_paths]
@@ -220,28 +282,34 @@ def split_messages(
     )
 
     buckets: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    deferred_messages: list[dict[str, Any]] = []
     for message in merged_messages:
         bucket = week_bucket(message, today=today)
         if bucket is None:
+            deferred_messages.append(message)
             continue
         buckets[bucket].append(message)
 
     output_root.mkdir(parents=True, exist_ok=True)
-    written_paths: list[Path] = []
+    expected_outputs: dict[Path, list[dict[str, Any]]] = {}
+    modified_paths: list[Path] = []
     for bucket, rows in sorted(buckets.items()):
-        output_path = output_root / bucket / MESSAGES_JSON_NAME
+        output_path = output_path_for_bucket(output_root, bucket)
+        expected_outputs[output_path] = rows
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(
-            json.dumps(rows, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
-        written_paths.append(output_path)
+        rendered_rows = render_messages_json(rows)
+        if output_path.exists() and output_path.read_text(encoding="utf-8") == rendered_rows:
+            continue
+        output_path.write_text(rendered_rows, encoding="utf-8")
+        modified_paths.append(output_path)
 
     for prior_output in prior_outputs:
-        if prior_output not in written_paths:
+        if prior_output not in expected_outputs:
             prior_output.unlink()
+            modified_paths.append(prior_output)
 
-    return written_paths
+    verify_split_integrity(output_root, expected_outputs, deferred_messages, merged_messages)
+    return sorted(modified_paths)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -268,11 +336,9 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = build_parser().parse_args()
     output_root = args.output_root.resolve()
-    written_paths = split_messages(args.inputs, output_root=output_root)
-    print(
-        f"Wrote {len(written_paths)} weekly file(s) under {output_root}: "
-        + ", ".join(str(path.relative_to(output_root)) for path in written_paths)
-    )
+    modified_paths = split_messages(args.inputs, output_root=output_root)
+    for path in modified_paths:
+        print(path.relative_to(output_root))
     return 0
 
 
