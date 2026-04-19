@@ -32,19 +32,32 @@ Mention tools and libraries by name.
 Mention author names, i.e. WHO said what.
 Focus on main ideas; treat nested replies as context.
 
-FORMATTING: Plain text. No bullets or Markdown. Lines ALWAYS begin with a speaker label.
+FORMATTING
+Plain text transcript only. No bullets, Markdown, headings, or notes outside the spoken transcript.
+Every non-empty spoken line MUST begin with exactly one of these speaker labels:
 
 Alex: …
 Maya: …
+
+Use short inline English audio tags in square brackets when they improve delivery, for example:
+Alex: [excited] Hello and welcome back!
+Maya: [laughs] That thread escalated quickly.
+Alex: Let’s unpack it. [short pause] First, the big picture.
+
+Keep the transcript ready for direct multi-speaker TTS:
+- use audio tags sparingly and only inline on spoken lines
+- never output narrator lines, stage directions, or parenthetical notes unless they are audio tags
+- keep speaker names exactly `Alex` and `Maya`
 
 Alex: …
 Maya: …
 
 '''
 
-podcast_style = "Podcast style: Warm, conversational, and enthusiastic."
+podcast_style = "Podcast style: Warm, conversational, enthusiastic, and natural for a two-host podcast."
 
 [gemini]
+model = "gemini-3.1-flash-tts-preview"
 ffmpeg_command = [
   "ffmpeg",
   "-y",
@@ -70,12 +83,11 @@ ffmpeg_command = [
   "3",
   "{output}",
 ]
-generation_config = { responseModalities = ["audio"], speech_config = { multi_speaker_voice_config = { speaker_voice_configs = [{ speaker = "Alex", voice_config = { prebuilt_voice_config = { voice_name = "Algieba" } } }, { speaker = "Maya", voice_config = { prebuilt_voice_config = { voice_name = "Kore" } } }] } } }
 
-
-[Alex]
-voice = "ash"
-instructions = '''
+[[gemini.speakers]]
+name = "Alex"
+voice_name = "Algieba"
+profile = '''
 Voice: Energetic, curious, and upbeat—always ready with a question.
 Tone: Playful and exploratory, sparking curiosity.
 Dialect: Neutral and conversational, like chatting with a friend.
@@ -83,9 +95,10 @@ Pronunciation: Crisp and dynamic, with a slight upward inflection on questions.
 Features: Loves asking “What do you think…?” and using bright, relatable metaphors.
 '''
 
-[Maya]
-voice = "nova"
-instructions ='''
+[[gemini.speakers]]
+name = "Maya"
+voice_name = "Kore"
+profile = '''
 Voice: Warm, clear, and insightful—grounded in practical wisdom.
 Tone: Reassuring and explanatory, turning questions into teachable moments.
 Dialect: Neutral professional, yet friendly and approachable.

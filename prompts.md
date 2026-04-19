@@ -64,3 +64,44 @@ When it prints the output, print one per line and only print modified files, not
 In case podcast.py gets an API error, print the API response body for debugging.
 
 <!-- codex resume 019d329e-c293-7e63-9b1a-76d647b62580 -->
+
+## Upgrade for Gemini 3.1 Flash Preview, 19 Apr 2026
+
+<!--
+
+cd ~/code/generative-ai-group
+dev.sh
+codex --yolo --model gpt-5.4 --config model_reasoning_effort=xhigh
+
+--->
+
+The model `gemini-3.1-flash-tts-preview` is released. The usage is documented in `notes/gemini-tts-2026-04-19.md`.
+
+Modify `podcast.py` to use this new model, use multi-speaker TTS (without needing to split into line-level audio and concatenate them), and modify the script generation prompt to use audio tags when OpenAI generates the script.
+
+To help test this, make podcast.py an agent-friendly CLI that can generate the audio from a given script (without needing to generate the script from messages). Test with a few small sample scripts featuring multiple speakers and audio tags. Save the sample scripts and generated audio in a `.gitignored` `samples/` directory. Let me listen to them and share feedback.
+
+---
+
+This works fine. We will stick to the new model and approach. Clean up old redundant code, configurations, etc. to make podcast.py simpler, shorter, more maintainable. Test on samples to make sure it still works.
+
+<!-- codex resume 019da5a3-3768-7b71-ba99-7b0e657cba77 --yolo -->
+
+### Update sanand0 podcast
+
+<!--
+
+cd ~/code/generative-ai-group
+dev.sh -v /home/sanand/code/sanand0:/home/sanand/code/sanand0
+codex resume 019da5a3-3768-7b71-ba99-7b0e657cba77 --yolo
+
+--->
+
+In a similar way, update `/home/sanand/code/sanand0/week/summary.py` to use the new TTS model and approach.
+Test with a few sample scripts and await my feedback.
+
+---
+
+This works fine. We will stick to the new model and approach. Clean up old redundant code, configurations, etc. to make summary.py simpler, shorter, more maintainable.
+
+<!-- codex resume 019da5a3-3768-7b71-ba99-7b0e657cba77 --yolo -->

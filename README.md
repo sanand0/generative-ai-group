@@ -5,8 +5,8 @@ A CLI tool and Python library to transform threaded WhatsApp Gen AI group transc
 
 - **Merging and splitting** WhatsApp scraper JSON exports into weekly `messages/YYYY-MM-DD.json` shards.
 - **Parsing** weekly WhatsApp messages into threaded transcript files.
-- **Generating** a polished two-host dialogue script via OpenAI `gpt-4.1-mini`.
-- **Narrating** per-speaker TTS segments via OpenAI `gpt-4o-mini-tts` and concatenating into `podcast-$WEEK.mp3`.
+- **Generating** a polished two-host dialogue script via OpenAI `gpt-5.4-mini`.
+- **Narrating** the full multi-speaker transcript via Gemini `gemini-3.1-flash-tts-preview` into `podcast-$WEEK.mp3`.
 
 ## Setup
 
@@ -27,7 +27,20 @@ export GEMINI_API_KEY="..."
 uv run podcast.py
 ```
 
-Optionally, modify the voice style and podcast script prompts in [`config.toml`](config.toml)
+Optionally, modify the podcast prompt, overall TTS style, and the `[[gemini.speakers]]` voice profiles in [`config.toml`](config.toml).
+
+To synthesize audio directly from a script file without generating it from messages:
+
+```bash
+uv run podcast.py tts-script --script-file samples/example-dialogue.md
+```
+
+For agent callers, inspect the interface and prefer JSON output:
+
+```bash
+uv run podcast.py --describe
+uv run podcast.py tts-script --script-file samples/example-dialogue.md --format json
+```
 
 To merge multiple WhatsApp scraper exports into weekly JSON shards first:
 
@@ -53,7 +66,6 @@ This will:
 4. For each week, it creates:
    - `{week}/messages.txt` (threaded transcript).
    - `{week}/podcast.md` (dialogue script).
-   - `{week}/{line}.opus` files which are concatenated into...
    - `{week}/podcast.mp3`.
 
 Files:
@@ -68,8 +80,8 @@ Files:
 ├── YYYY-MM-DD/                  # Per-week output directories
 │   ├── messages.txt             # Threaded transcript
 │   ├── podcast-YYYY-MM-DD.md    # Generated dialogue script
-│   ├── NNN.opus                 # Individual TTS segments
 │   └── podcast-YYYY-MM-DD.mp3   # Final concatenated audio
+├── samples/                     # Local sample scripts and generated audio for quick listening tests
 └── podcast.xml                  # RSS feed
 
 How It Works:
@@ -80,8 +92,8 @@ How It Works:
 4. `group_by_week()` buckets by Sunday of each ISO week.
 5. `build_threads()` indexes by `messageId`, collects replies via `quoteMessageId`, sorts roots chronologically.
 6. `render_message()` writes indented `– Author: Text [reactions]` lines.
-7. `get_podcast_script()` POSTs system + user prompts to OpenAI API `gpt-4.1-mini` via `/v1/responses` endpoint, calculates cost.
-8. `generate_podcast_audio()` splits the script by speaker, sends TTS requests via `gpt-4o-mini-tts` with speaker-specific voices and instructions, writes `.opus`, and FFmpeg-concats into MP3 (via temporary `list.txt`)
+7. `get_podcast_script()` POSTs system + user prompts to the OpenAI `/v1/responses` endpoint and asks for direct-TTS-ready `Alex:` / `Maya:` lines with inline audio tags.
+8. `build_gemini_request()` validates the speaker transcript, builds a Gemini 3.1 multi-speaker TTS request, and FFmpeg converts the returned PCM into MP3.
 
 ## Release
 
