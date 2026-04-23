@@ -158,6 +158,7 @@ def test_get_podcast_script_prints_api_error_body(monkeypatch, capsys: pytest.Ca
             raise FakeHTTPError("400 Client Error")
 
     monkeypatch.setattr(podcast.requests, "post", lambda *args, **kwargs: FakeResponse())
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
 
     with pytest.raises(FakeHTTPError):
         podcast.get_podcast_script(
@@ -169,30 +170,24 @@ def test_get_podcast_script_prints_api_error_body(monkeypatch, capsys: pytest.Ca
     assert capsys.readouterr().err == '{"error":{"message":"Bad request"}}\n'
 
 
-def test_build_gemini_request_uses_new_model_and_multispeaker_payload():
+def test_build_gemini_request_uses_new_model_and_single_speaker_payload():
     config = make_gemini_config()
 
-    payload, normalized_script, speakers = podcast.build_gemini_request(
+    segments, normalized_script, speakers = podcast.split_script_segments(
         "Alex: [excited] Welcome back!\nMaya: Good to be here.\nAnd we have updates.",
         config,
     )
 
-    assert payload["model"] == "gemini-3.1-flash-tts-preview"
     assert normalized_script == (
         "Alex: [excited] Welcome back!\nMaya: Good to be here. And we have updates."
     )
     assert [speaker.name for speaker in speakers] == ["Alex", "Maya"]
-    assert payload["generationConfig"]["speechConfig"]["multiSpeakerVoiceConfig"] == {
-        "speakerVoiceConfigs": [
-            {
-                "speaker": "Alex",
-                "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": "Algieba"}},
-            },
-            {
-                "speaker": "Maya",
-                "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": "Kore"}},
-            },
-        ]
+
+    payload = podcast.build_gemini_request(segments[0][1], segments[0][0], config)
+
+    assert payload["model"] == "gemini-3.1-flash-tts-preview"
+    assert payload["generationConfig"]["speechConfig"]["voiceConfig"] == {
+        "prebuiltVoiceConfig": {"voiceName": "Algieba"}
     }
     prompt_text = payload["contents"][0]["parts"][0]["text"]
     assert "TRANSCRIPT" in prompt_text

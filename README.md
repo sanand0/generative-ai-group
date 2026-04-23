@@ -6,7 +6,7 @@ A CLI tool and Python library to transform threaded WhatsApp Gen AI group transc
 - **Merging and splitting** WhatsApp scraper JSON exports into weekly `messages/YYYY-MM-DD.json` shards.
 - **Parsing** weekly WhatsApp messages into threaded transcript files.
 - **Generating** a polished two-host dialogue script via OpenAI `gpt-5.4-mini`.
-- **Narrating** the full multi-speaker transcript via Gemini `gemini-3.1-flash-tts-preview` into `podcast-$WEEK.mp3`.
+- **Narrating** the script line by line via Gemini `gemini-3.1-flash-tts-preview`, then concatenating the clips into `podcast-$WEEK.mp3`.
 
 ## Setup
 
@@ -93,7 +93,7 @@ How It Works:
 5. `build_threads()` indexes by `messageId`, collects replies via `quoteMessageId`, sorts roots chronologically.
 6. `render_message()` writes indented `– Author: Text [reactions]` lines.
 7. `get_podcast_script()` POSTs system + user prompts to the OpenAI `/v1/responses` endpoint and asks for direct-TTS-ready `Alex:` / `Maya:` lines with inline audio tags.
-8. `build_gemini_request()` validates the speaker transcript, builds a Gemini 3.1 multi-speaker TTS request, and FFmpeg converts the returned PCM into MP3.
+8. `split_script_segments()` validates the speaker transcript, Gemini 3.1 renders one line per request, and FFmpeg concatenates the clips into the final MP3.
 
 ## Release
 

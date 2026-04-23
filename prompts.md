@@ -85,6 +85,8 @@ To help test this, make podcast.py an agent-friendly CLI that can generate the a
 
 This works fine. We will stick to the new model and approach. Clean up old redundant code, configurations, etc. to make podcast.py simpler, shorter, more maintainable. Test on samples to make sure it still works.
 
+---
+
 <!-- codex resume 019da5a3-3768-7b71-ba99-7b0e657cba77 --yolo -->
 
 ### Update sanand0 podcast
@@ -103,5 +105,27 @@ Test with a few sample scripts and await my feedback.
 ---
 
 This works fine. We will stick to the new model and approach. Clean up old redundant code, configurations, etc. to make summary.py simpler, shorter, more maintainable.
+
+<!-- codex resume 019da5a3-3768-7b71-ba99-7b0e657cba77 --yolo -->
+
+### Revert due to poor quality
+
+It turns out that the upgrade to a single-shot multi-speaker TTS with the new model has resulted in much worse quality than the previous approach of splitting into line-level audio and concatenating.
+
+So, reverse the changes to podcast.py and summary.py that implemented these changes (by copying the original files from the earlier commits). We can retain the original script, with only one change, i.e. the use of the new `gemini-3.1-flash-tts-preview` model, but we will keep the previous approach of splitting into line-level audio and concatenating them.
+
+Test. Then create this as a new commit on top of the previous commits, so that we can refer to the previous commits if needed.
+
+---
+
+Delete the latest podcast in both repositories (2026-04-19) and re-generate it. Just the audio - you can leave the script, etc. as-is.
+
+---
+
+Retry week regeneration - hopefully Gemini rate limits have reset by now.
+
+---
+
+I manually reverted the changes to podcast.py and summary.py.`/home/sanand/code/sanand0/week/{summary.py,config.toml}` to Gemini 2.5 Flash TTS Preview, regenerated and committed. No action required.
 
 <!-- codex resume 019da5a3-3768-7b71-ba99-7b0e657cba77 --yolo -->
