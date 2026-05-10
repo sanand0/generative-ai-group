@@ -3,6 +3,7 @@
 # requires-python = ">=3.13"
 # dependencies = [
 #     "requests",
+#     "python-dotenv",
 # ]
 # ///
 
@@ -19,6 +20,7 @@ import time
 import tomllib
 from collections import defaultdict
 from dataclasses import dataclass
+from dotenv import load_dotenv
 from pathlib import Path
 from typing import Any, Dict, List, Sequence, Tuple
 
@@ -188,10 +190,21 @@ def get_podcast_script(
     messages_text: str, config: Dict[str, Any], week: datetime.date
 ) -> Tuple[float, str]:
     "Generate a podcast script using the OpenAI Responses API."
-    if not os.environ.get("OPENAI_API_KEY"):
-        raise ValueError("OPENAI_API_KEY is not set")
+    for key in ["OPENAI_API_KEY", "JINA_API_KEY"]:
+        if not os.environ.get(key):
+            raise ValueError(f"{key} is not set")
 
     prompt = render_script_prompt(config, week)
+    urls = re.findall(r"https?://\S+", messages_text)[:10]
+    link_content = []
+    jina_headers = {"Authorization": f"Bearer {os.environ.get('JINA_API_KEY')}"}
+    for url in urls:
+        url = url.rstrip(").,]}>")
+        jina_url = f"https://r.jina.ai/{url}"
+        markdown = requests.get(jina_url, timeout=20, headers=jina_headers).text[:3000]
+        link_content.append(f"<content>\n{markdown}\n</content>\n")
+    if link_content:
+        messages_text += "\n\nLINK CONTENTS: Use if needed.\n\n" + "\n\n".join(link_content)
 
     payload = {
         "model": DEFAULT_OPENAI_MODEL,
@@ -441,6 +454,7 @@ def concatenate_audio_files(segment_paths: Sequence[Path], output_path: Path) ->
         subprocess.run(
             [
                 "ffmpeg",
+                "-hide_banner",
                 "-y",
                 "-f",
                 "concat",
@@ -898,4 +912,5 @@ def main(argv: List[str] | None = None, *, script_dir: Path | None = None) -> in
 
 
 if __name__ == "__main__":
+    load_dotenv()
     raise SystemExit(main())

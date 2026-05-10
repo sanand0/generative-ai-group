@@ -24,6 +24,7 @@ cd generative-ai-group
 uv run split_whatsapp_messages.py gen-ai-messages.json
 export OPENAI_API_KEY="sk-..."
 export GEMINI_API_KEY="..."
+export JINA_API_KEY="jina-..."
 uv run podcast.py
 ```
 
