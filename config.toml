@@ -60,6 +60,9 @@ podcast_style = "Podcast style: Warm, conversational, enthusiastic, and natural 
 model = "gemini-3.1-flash-tts-preview"
 ffmpeg_command = [
   "ffmpeg",
+  "-hide_banner",
+  "-v",
+  "error",
   "-y",
   "-f",
   "s16le",
