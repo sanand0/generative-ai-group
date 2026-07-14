@@ -186,8 +186,22 @@ def render_script_prompt(config: Dict[str, Any], week: datetime.date) -> str:
     return config["podcast"].replace("$WEEK", week.strftime("%d %B %Y"))
 
 
+def load_previous_scripts(script_dir: Path, week: datetime.date) -> str:
+    "Load the podcast scripts from the two immediately preceding weeks, when present."
+    scripts = []
+    for weeks_ago in (2, 1):
+        prior_week = week - datetime.timedelta(weeks=weeks_ago)
+        path = script_dir / str(prior_week) / f"podcast-{prior_week}.md"
+        if path.exists():
+            scripts.append(f"## {path.name}\n{path.read_text(encoding='utf-8').strip()}")
+    return "\n\n".join(scripts)
+
+
 def get_podcast_script(
-    messages_text: str, config: Dict[str, Any], week: datetime.date
+    messages_text: str,
+    config: Dict[str, Any],
+    week: datetime.date,
+    previous_scripts: str = "",
 ) -> Tuple[float, str]:
     "Generate a podcast script using the OpenAI Responses API."
     for key in ["OPENAI_API_KEY", "JINA_API_KEY"]:
@@ -206,11 +220,21 @@ def get_podcast_script(
     if link_content:
         messages_text += "\n\nLINK CONTENTS: Use if needed.\n\n" + "\n\n".join(link_content)
 
+    user_content = f"CURRENT WEEK TRANSCRIPT — PRIMARY SOURCE\n\n{messages_text}"
+    if previous_scripts:
+        user_content += (
+            "\n\nPREVIOUS EPISODES — CONTEXT ONLY\n\n"
+            "Use these only for reference and continuity. Do not repeat or recap their topics, "
+            "examples, takeaways, or phrasing. If the current-week transcript independently "
+            "revisits a topic, briefly orient the listener and focus on what is new this week.\n\n"
+            f"{previous_scripts}"
+        )
+
     payload = {
         "model": DEFAULT_OPENAI_MODEL,
         "input": [
             {"role": "system", "content": prompt},
-            {"role": "user", "content": messages_text},
+            {"role": "user", "content": user_content},
         ],
     }
 
@@ -580,7 +604,8 @@ def process_week(
 
     if not podcast_script_file.exists():
         messages_text = messages_file.read_text(encoding="utf-8")
-        cost, podcast_script = get_podcast_script(messages_text, config, week)
+        previous_scripts = load_previous_scripts(script_dir, week)
+        cost, podcast_script = get_podcast_script(messages_text, config, week, previous_scripts)
         podcast_script_file.write_text(podcast_script, encoding="utf-8")
         result["script_status"] = "created"
         result["script_cost_cents"] = round(cost / 1e4, 4)

@@ -1,5 +1,16 @@
 # Prompts
 
+## Add context of past podcasts, 14 Jul 2026
+
+<!--
+cd ~/code/generative-ai-group
+dev.sh -- codex --yolo --model gpt-5.6-sol --config model_reasoning_effort=medium
+-->
+
+Update podcast.py so that when writing the podcast script, it passes the context of the last 2 weeks' podcast-*.md. Ensure that these are only for context, reference, or continuity - not for repetition.
+
+<!-- codex resume 019f5e42-5805-7131-bc48-f1106a9dccba --yolo -->
+
 ## Merge script, 28 Mar 2026
 
 <!--

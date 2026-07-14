@@ -80,6 +80,77 @@ def test_process_week_writes_messages_json_next_to_messages_txt(tmp_path: Path, 
     assert (week_dir / "messages.txt").read_text(encoding="utf-8").strip() == "- Alice: Hello weekly structure"
 
 
+def test_process_week_passes_only_the_previous_two_weeks_as_context(tmp_path: Path, monkeypatch):
+    week = dt.date(2025, 3, 30)
+    for prior_week, script in [
+        (dt.date(2025, 3, 9), "Alex: Three weeks ago"),
+        (dt.date(2025, 3, 16), "Alex: Two weeks ago"),
+        (dt.date(2025, 3, 23), "Maya: Last week"),
+    ]:
+        prior_dir = tmp_path / str(prior_week)
+        prior_dir.mkdir()
+        (prior_dir / f"podcast-{prior_week}.md").write_text(script, encoding="utf-8")
+
+    captured = {}
+
+    def fake_get_podcast_script(messages_text, config, requested_week, previous_scripts):
+        captured["messages_text"] = messages_text
+        captured["week"] = requested_week
+        captured["previous_scripts"] = previous_scripts
+        return 0.0, "Alex: New episode"
+
+    monkeypatch.setattr(podcast, "get_podcast_script", fake_get_podcast_script)
+    monkeypatch.setattr(podcast, "get_podcast_gemini", lambda *args, **kwargs: None)
+
+    podcast.process_week(week, [make_item("abc")], {}, script_dir=tmp_path)
+
+    assert captured["week"] == week
+    assert "Hello world" in captured["messages_text"]
+    assert "podcast-2025-03-16.md" in captured["previous_scripts"]
+    assert "Two weeks ago" in captured["previous_scripts"]
+    assert "podcast-2025-03-23.md" in captured["previous_scripts"]
+    assert "Last week" in captured["previous_scripts"]
+    assert "Three weeks ago" not in captured["previous_scripts"]
+
+
+def test_get_podcast_script_labels_previous_scripts_as_continuity_only(monkeypatch):
+    class FakeResponse:
+        text = ""
+
+        def raise_for_status(self) -> None:
+            pass
+
+        def json(self) -> dict:
+            return {
+                "usage": {"input_tokens": 1, "output_tokens": 1},
+                "output": [{"content": [{"text": "Alex: Fresh episode"}]}],
+            }
+
+    captured = {}
+
+    def fake_post(*args, **kwargs):
+        captured["payload"] = kwargs["json"]
+        return FakeResponse()
+
+    monkeypatch.setattr(podcast.requests, "post", fake_post)
+    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    monkeypatch.setenv("JINA_API_KEY", "test-key")
+
+    podcast.get_podcast_script(
+        "- Alice: This week's new discussion",
+        {"podcast": "Prompt for $WEEK"},
+        dt.date(2025, 3, 30),
+        "## podcast-2025-03-23.md\nAlex: An earlier discussion",
+    )
+
+    user_content = captured["payload"]["input"][1]["content"]
+    assert "CURRENT WEEK TRANSCRIPT" in user_content
+    assert "PREVIOUS EPISODES — CONTEXT ONLY" in user_content
+    assert "This week's new discussion" in user_content
+    assert "An earlier discussion" in user_content
+    assert "Do not repeat or recap" in user_content
+
+
 def test_main_dry_run_verifies_without_writing_or_api_calls(tmp_path: Path, monkeypatch):
     (tmp_path / "config.toml").write_text('podcast = "Test prompt for $WEEK"\n', encoding="utf-8")
     (tmp_path / "gen-ai-messages.json").write_text(
@@ -159,6 +230,7 @@ def test_get_podcast_script_prints_api_error_body(monkeypatch, capsys: pytest.Ca
 
     monkeypatch.setattr(podcast.requests, "post", lambda *args, **kwargs: FakeResponse())
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    monkeypatch.setenv("JINA_API_KEY", "test-key")
 
     with pytest.raises(FakeHTTPError):
         podcast.get_podcast_script(

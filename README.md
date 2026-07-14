@@ -12,7 +12,7 @@ A CLI tool and Python library to transform threaded WhatsApp Gen AI group transc
 
 You need:
 
-- A [scraped WhatsApp JSON export](https://tools.s-anand.net/whatsappscraper/) of the Gen AI Group chat as [`gen-ai-messages.json`](gen-ai-messages.json)
+- A [scraped WhatsApp JSON export](https://tools.s-anand.net/whatsappscraper/) of the Gen AI Group chat as `messages.json`.
 - Optional incremental WhatsApp exports such as `m1.json`, `m2.json`, etc.
 - [`uv`](https://docs.astral.sh/uv/)
 - Environment variable `OPENAI_API_KEY` and `GEMINI_API_KEY` with valid API keys.
@@ -21,7 +21,7 @@ You need:
 ```bash
 git clone https://github.com/sanand0/generative-ai-group.git
 cd generative-ai-group
-uv run split_whatsapp_messages.py gen-ai-messages.json
+uv run split_whatsapp_messages.py messages.json
 export OPENAI_API_KEY="sk-..."
 export GEMINI_API_KEY="..."
 export JINA_API_KEY="jina-..."
@@ -46,7 +46,7 @@ uv run podcast.py tts-script --script-file samples/example-dialogue.md --format 
 To merge multiple WhatsApp scraper exports into weekly JSON shards first:
 
 ```bash
-uv run split_whatsapp_messages.py gen-ai-messages.json m1.json m2.json
+uv run split_whatsapp_messages.py messages.json m1.json m2.json
 ```
 
 This writes weekly files to `messages/` using the same week labeling as [`podcast.py`](podcast.py):
@@ -71,10 +71,11 @@ This will:
 
 Files:
 
+```
 ├── split_whatsapp_messages.py   # Merge WhatsApp exports and write weekly JSON shards
 ├── podcast.py                   # Single-file application with pure functions and type hints
 ├── config.toml                  # Voice configurations, podcast prompts, and TTS voice settings
-├── gen-ai-messages.json         # WhatsApp export input (not versioned)
+├── messages.json                # WhatsApp export input (not versioned)
 ├── messages/                    # Weekly merged WhatsApp JSON shards
 │   ├── YYYY-MM-DD.json          # Sunday-labeled weekly JSON for one completed week
 │   └── unknown-time.json        # Rows with missing or malformed ISO timestamps
@@ -84,6 +85,7 @@ Files:
 │   └── podcast-YYYY-MM-DD.mp3   # Final concatenated audio
 ├── samples/                     # Local sample scripts and generated audio for quick listening tests
 └── podcast.xml                  # RSS feed
+```
 
 How It Works:
 
