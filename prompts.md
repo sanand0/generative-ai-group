@@ -1,5 +1,67 @@
 # Prompts
 
+## Switch to Gemini 3.8 Flash Lite TTS and Luna 6, 26 Sep 2026
+
+<!-- Switch Podcasts to Gemini 3.8 Flash TTS: https://chatgpt.com/c/6ab73aa2-11f8-83ec-815c-c37f88ea80dc (2026-09-26T13:42:35+08:00) -->
+
+What are Gemini 3.8 Flash Lite TTS and Gemini 3.8 Flash TTS priced at? Would either of these be cheaper than the TTS models I use in ~/code/generative-ai-group/ or ~/code/sanand0/week/ on LocalMCP2 and what's the difference? List the current models and their prices and new models and prices comparably (e.g. to generate 1 or 10 or 60 min of audio).
+
+Let me know if they can be replaced by just swapping the model names or some other changes are required.
+
+Are there any new features that are worth leveraging - e.g. emotions from the text, model parameters, etc.? List, prioritized by impact x ease.
+
+---
+
+I'd like to make the following changes:
+
+* GPT 6 Luna (with auto thinking) as the model that generates the conversation
+* Gemini 3.8 Flash Lite (configurable) as the model that generates the audio
+* Ask for an appropriate return format - I don't need WAV / PCM if it can return a better format
+* Use multi-turn dialogue in chunks of 10 (configurable)
+* Use structured emotion / style metadata if it's really appropriate, not otherwise
+
+Think of this as a rewrite from scratch. How would you do this, writing compact, canonical, readable, elegant code, that achieves the same outcome by intent? Create a NEW script (or set of scripts) for this and I'll test and replace the earlier flow if I'm happy.
+
+Try this for any one week on both the repositories, save the resulting MP3 in ~/Downloads/ and I'll listen to them.
+
+---
+
+The output looks good.
+
+Currently, in both directories, I run just build deploy push. Modify the existing workflow to the revised workflow, doing what it does currently, functionally. That would mean porting the podcast_v2.py into the existing scripts and removing it, testing that it works, and documenting as required.
+
+---
+
+In generative-ai-group, this seems to have cut out the Jina intermediary to fetch pages. Did you replace it with a direct fetch or some other HTML to markdown mechanism? I don't mind if the mechanism changes - Jina was brittle - but I'd like to include page content as context for Luna.
+
+Similarly, is any other important functionality cut out in either repo? Just let me know and I'll decide whether to fix the rest.
+
+---
+
+On LocalMCP2 fix the two regressions you mentioned.
+
+---
+
+Let's run this for the latest week. You may delete the outputs for 20 Sep 2026 and generate the script as well as the audio for both in the same directories. This serves as a test to make sure that the implementation works.
+
+Compare the scripts generated and let me know what's better and worse in the revised version, and which script you'd prefer to listen to. I'll review the same and suggest changes to the script prompt if required.
+
+---
+
+It doesn't have to be old script vs new script. For example, can we retain the benefits of the new version, but incorporate the benefits of the old without losing the new?
+
+Here are my suggestions on how to improve the new script (which you may merge with yours):
+
+I like that the old script was broken into logical sections by paras (\n\n)
+I prefer SIMPLE, conversational language. Short words, short sentences. Like how UK Government notices are really simple and well thought through. Simplicity does not mean eliminating jargon. It means you use it when required and explain what it means in a way the audience will instantly get and never forget. Examples are always helpful, of course. Is there a standard for podcasts - sort of like the style Tim Harford uses - that's aimed at simplicity? If so, maybe we can just mention that. Or even mention a podcaster like Tim Harford or anyone who's an exemplar for their simplicity to nudge the model.
+
+Based on this, revise the prompts and just generate the revised text (no need for the audio) and compare the output. I'll do the same and share feedback.
+
+---
+
+Can we make this feel more natural? Think about what makes a conversation natural. Research this. It might be the personality, quirks, curiosity, etc of the host. Maybe other things. But I think that would be the main change I'd request further: make this feel more like a real conversation between two real, interesting people. Feel free to strengthen the prompt to retain technical hooks. Test it out, revise if required, and let's freeze on that (i.e. generate the MP3, stage the commits, don't commit yet because I'll review and commit.)
+
+
 ## Add context of past podcasts, 14 Jul 2026
 
 <!--

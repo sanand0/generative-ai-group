@@ -5,8 +5,8 @@ A CLI tool and Python library to transform threaded WhatsApp Gen AI group transc
 
 - **Merging and splitting** WhatsApp scraper JSON exports into weekly `messages/YYYY-MM-DD.json` shards.
 - **Parsing** weekly WhatsApp messages into threaded transcript files.
-- **Generating** a polished two-host dialogue script via OpenAI `gpt-5.4-mini`.
-- **Narrating** the script line by line via Gemini `gemini-3.1-flash-tts-preview`, then concatenating the clips into `podcast-$WEEK.mp3`.
+- **Generating** a structured two-host dialogue via configurable OpenAI `gpt-6-luna` (adaptive reasoning).
+- **Narrating** configurable 10-turn chunks via `gemini-3.8-flash-lite-tts` conversational TTS, then encoding one final MP3.
 
 ## Setup
 
@@ -24,23 +24,22 @@ cd generative-ai-group
 uv run split_whatsapp_messages.py messages.json
 export OPENAI_API_KEY="sk-..."
 export GEMINI_API_KEY="..."
-export JINA_API_KEY="jina-..."
 uv run podcast.py
 ```
 
-Optionally, modify the podcast prompt, overall TTS style, and the `[[gemini.speakers]]` voice profiles in [`config.toml`](config.toml).
+Models, linked-page enrichment limits, TTS chunk size, sample rate, and speaker voices are configurable in [`config.toml`](config.toml). Linked URLs are fetched directly and their main content is extracted with Trafilatura; no Jina API key is required. Style metadata is emitted only when the script model considers it useful.
 
 To synthesize audio directly from a script file without generating it from messages:
 
 ```bash
-uv run podcast.py tts-script --script-file samples/example-dialogue.md
+uv run podcast.py tts-script --script-file samples/quick-start.md
 ```
 
 For agent callers, inspect the interface and prefer JSON output:
 
 ```bash
 uv run podcast.py --describe
-uv run podcast.py tts-script --script-file samples/example-dialogue.md --format json
+uv run podcast.py tts-script --script-file samples/quick-start.md --format json
 ```
 
 To merge multiple WhatsApp scraper exports into weekly JSON shards first:
@@ -66,8 +65,8 @@ This will:
 3. Group them by ISO-week (Sunday-labeled output from `group_by_week()`).
 4. For each week, it creates:
    - `{week}/messages.txt` (threaded transcript).
-   - `{week}/podcast.md` (dialogue script).
-   - `{week}/podcast.mp3`.
+   - `{week}/podcast-{week}.md` (dialogue script).
+   - `{week}/podcast-{week}.mp3`.
 
 Files:
 
@@ -95,8 +94,18 @@ How It Works:
 4. `group_by_week()` buckets by Sunday of each ISO week.
 5. `build_threads()` indexes by `messageId`, collects replies via `quoteMessageId`, sorts roots chronologically.
 6. `render_message()` writes indented `– Author: Text [reactions]` lines.
-7. `get_podcast_script()` POSTs system + user prompts to the OpenAI `/v1/responses` endpoint and asks for direct-TTS-ready `Alex:` / `Maya:` lines with inline audio tags.
-8. `split_script_segments()` validates the speaker transcript, Gemini 3.1 renders one line per request, and FFmpeg concatenates the clips into the final MP3.
+7. `fetch_link_contents()` directly fetches up to 10 unique URLs from the current transcript, extracts main-page Markdown with Trafilatura, caps each page at 3,000 characters, skips failed pages, and caches successful extractions under `~/.cache/generative-ai-group-podcast/links/`.
+8. `load_previous_scripts()` supplies the immediately preceding two podcast scripts as continuity-only context, so Luna can orient recurring topics without repeating prior episodes.
+9. `get_podcast_script()` gives GPT-6 Luna the current transcript as primary evidence plus the linked-page and continuity context, asks for strict `{speaker, text, style, new_section}` JSON, then stores the readable `Alex:` / `Maya:` transcript. Optional style is preserved as `[style: ...]`.
+10. `generate_audio_from_script()` parses the transcript, translates legacy audio tags when needed, sends configurable 10-turn chunks to Gemini 3.8 Flash Lite in conversational mode, concatenates raw L16 audio, and performs one final MP3 encode. Chunk calls are content-addressed under `~/.cache/generative-ai-group-podcast/` so interrupted runs resume cheaply.
+
+## Normal workflow
+
+```bash
+just build deploy push
+```
+
+`build` generates only missing weekly assets and refreshes `podcast.xml`; `deploy` uploads the current MP3 and feed; `push` commits and pushes the repository.
 
 ## Release
 

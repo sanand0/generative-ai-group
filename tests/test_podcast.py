@@ -3,8 +3,6 @@ import json
 import sys
 from pathlib import Path
 
-import pytest
-
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import podcast
@@ -23,28 +21,6 @@ def make_item(
         "text": text,
         "author": author,
         "dt": dt.datetime.fromisoformat(time.replace("Z", "+00:00")),
-    }
-
-
-def make_gemini_config() -> dict:
-    return {
-        "podcast_style": "Podcast style: Warm and lively.",
-        "gemini": {
-            "model": "gemini-3.1-flash-tts-preview",
-            "ffmpeg_command": ["ffmpeg", "-i", "{pcm}", "{output}"],
-            "speakers": [
-                {
-                    "name": "Alex",
-                    "voice_name": "Algieba",
-                    "profile": "Energetic, curious, and upbeat.",
-                },
-                {
-                    "name": "Maya",
-                    "voice_name": "Kore",
-                    "profile": "Warm, clear, and grounded.",
-                },
-            ],
-        },
     }
 
 
@@ -80,215 +56,234 @@ def test_process_week_writes_messages_json_next_to_messages_txt(tmp_path: Path, 
     assert (week_dir / "messages.txt").read_text(encoding="utf-8").strip() == "- Alice: Hello weekly structure"
 
 
-def test_process_week_passes_only_the_previous_two_weeks_as_context(tmp_path: Path, monkeypatch):
+def test_process_week_generates_script_from_current_week_transcript(tmp_path: Path, monkeypatch):
     week = dt.date(2025, 3, 30)
-    for prior_week, script in [
-        (dt.date(2025, 3, 9), "Alex: Three weeks ago"),
-        (dt.date(2025, 3, 16), "Alex: Two weeks ago"),
-        (dt.date(2025, 3, 23), "Maya: Last week"),
-    ]:
-        prior_dir = tmp_path / str(prior_week)
-        prior_dir.mkdir()
-        (prior_dir / f"podcast-{prior_week}.md").write_text(script, encoding="utf-8")
-
     captured = {}
 
-    def fake_get_podcast_script(messages_text, config, requested_week, previous_scripts):
+    def fake_get_podcast_script(messages_text, config, requested_week, previous_scripts=""):
         captured["messages_text"] = messages_text
         captured["week"] = requested_week
         captured["previous_scripts"] = previous_scripts
-        return 0.0, "Alex: New episode"
+        return "Alex: New episode\n"
 
     monkeypatch.setattr(podcast, "get_podcast_script", fake_get_podcast_script)
     monkeypatch.setattr(podcast, "get_podcast_gemini", lambda *args, **kwargs: None)
 
+    prior = week - dt.timedelta(days=7)
+    prior_dir = tmp_path / str(prior)
+    prior_dir.mkdir()
+    (prior_dir / f"podcast-{prior}.md").write_text("Alex: Prior episode", encoding="utf-8")
+
     podcast.process_week(week, [make_item("abc")], {}, script_dir=tmp_path)
 
     assert captured["week"] == week
+    assert "Prior episode" in captured["previous_scripts"]
     assert "Hello world" in captured["messages_text"]
-    assert "podcast-2025-03-16.md" in captured["previous_scripts"]
-    assert "Two weeks ago" in captured["previous_scripts"]
-    assert "podcast-2025-03-23.md" in captured["previous_scripts"]
-    assert "Last week" in captured["previous_scripts"]
-    assert "Three weeks ago" not in captured["previous_scripts"]
+    assert (tmp_path / str(week) / f"podcast-{week}.md").read_text() == "Alex: New episode\n"
 
 
-def test_get_podcast_script_labels_previous_scripts_as_continuity_only(monkeypatch):
+def test_load_previous_scripts_uses_two_immediately_preceding_weeks(tmp_path: Path):
+    week = dt.date(2026, 9, 20)
+    for prior, text in [
+        (dt.date(2026, 9, 6), "Alex: Two weeks ago."),
+        (dt.date(2026, 9, 13), "Maya: Last week."),
+    ]:
+        d = tmp_path / str(prior)
+        d.mkdir()
+        (d / f"podcast-{prior}.md").write_text(text, encoding="utf-8")
+
+    result = podcast.load_previous_scripts(tmp_path, week)
+
+    assert "podcast-2026-09-06.md" in result
+    assert "Two weeks ago" in result
+    assert "podcast-2026-09-13.md" in result
+    assert "Last week" in result
+
+
+def test_fetch_link_contents_directly_extracts_and_caches_pages(tmp_path: Path, monkeypatch):
+    calls = []
+
     class FakeResponse:
-        text = ""
+        text = "<html><body><main><h1>Useful article</h1><p>Important context.</p></main></body></html>"
 
-        def raise_for_status(self) -> None:
-            pass
+        def raise_for_status(self):
+            return None
 
-        def json(self) -> dict:
-            return {
-                "usage": {"input_tokens": 1, "output_tokens": 1},
-                "output": [{"content": [{"text": "Alex: Fresh episode"}]}],
-            }
-
-    captured = {}
-
-    def fake_post(*args, **kwargs):
-        captured["payload"] = kwargs["json"]
+    def fake_get(url, **kwargs):
+        calls.append((url, kwargs))
         return FakeResponse()
 
-    monkeypatch.setattr(podcast.requests, "post", fake_post)
-    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
-    monkeypatch.setenv("JINA_API_KEY", "test-key")
-
-    podcast.get_podcast_script(
-        "- Alice: This week's new discussion",
-        {"podcast": "Prompt for $WEEK"},
-        dt.date(2025, 3, 30),
-        "## podcast-2025-03-23.md\nAlex: An earlier discussion",
-    )
-
-    user_content = captured["payload"]["input"][1]["content"]
-    assert "CURRENT WEEK TRANSCRIPT" in user_content
-    assert "PREVIOUS EPISODES — CONTEXT ONLY" in user_content
-    assert "This week's new discussion" in user_content
-    assert "An earlier discussion" in user_content
-    assert "Do not repeat or recap" in user_content
-
-
-def test_main_dry_run_verifies_without_writing_or_api_calls(tmp_path: Path, monkeypatch):
-    (tmp_path / "config.toml").write_text('podcast = "Test prompt for $WEEK"\n', encoding="utf-8")
-    (tmp_path / "gen-ai-messages.json").write_text(
-        json.dumps(
-            [
-                {
-                    "messageId": "abc",
-                    "time": "2025-03-10T09:00:00.000Z",
-                    "text": "Hello weekly structure",
-                    "author": "Alice",
-                }
-            ]
-        ),
-        encoding="utf-8",
-    )
-
+    monkeypatch.setattr(podcast.httpx, "get", fake_get)
     monkeypatch.setattr(
-        podcast,
-        "get_podcast_script",
-        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("LLM call not expected")),
+        podcast.trafilatura,
+        "extract",
+        lambda html, **kwargs: "# Useful article\n\nImportant context.",
     )
-    monkeypatch.setattr(
-        podcast,
-        "get_podcast_gemini",
-        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("TTS call not expected")),
+    monkeypatch.setattr(podcast, "podcast_cache_dir", lambda: tmp_path)
+
+    config = {"links": {"max_urls": 10, "max_chars": 3000, "timeout": 20}}
+    text = "See https://example.com/article. Again https://example.com/article."
+
+    first = podcast.fetch_link_contents(text, config)
+    second = podcast.fetch_link_contents(text, config)
+
+    assert first == second
+    assert first.count("https://example.com/article") == 1
+    assert "Important context" in first
+    assert len(calls) == 1
+    assert calls[0][1]["follow_redirects"] is True
+
+
+def test_fetch_link_contents_skips_failed_pages(tmp_path: Path, monkeypatch):
+    def fail(*args, **kwargs):
+        raise podcast.httpx.HTTPError("blocked")
+
+    monkeypatch.setattr(podcast.httpx, "get", fail)
+    monkeypatch.setattr(podcast, "podcast_cache_dir", lambda: tmp_path)
+
+    assert podcast.fetch_link_contents(
+        "See https://example.com/blocked", {"links": {"max_urls": 10}}
+    ) == ""
+
+
+def test_format_and_parse_dialogue_preserve_optional_style_and_legacy_tags():
+    turns = [
+        {"speaker": "Alex", "text": "Welcome back!", "style": "excited"},
+        {"speaker": "Maya", "text": "Normal delivery.", "style": ""},
+    ]
+
+    script = podcast.format_dialogue(turns)
+    assert script == "Alex: [style: excited] Welcome back!\nMaya: Normal delivery.\n"
+    assert podcast.parse_dialogue(script, ["Alex", "Maya"]) == turns
+
+    legacy = podcast.parse_dialogue(
+        "Alex: [excited] Welcome back!\nMaya: [laughs] Nice. [short pause] Next.",
+        ["Alex", "Maya"],
+    )
+    assert legacy == [
+        {"speaker": "Alex", "text": "Welcome back!", "style": "excited"},
+        {"speaker": "Maya", "text": "<laugh> Nice. <short pause> Next.", "style": ""},
+    ]
+
+
+def test_format_dialogue_adds_blank_line_at_section_boundary():
+    turns = [
+        {"speaker": "Alex", "text": "First.", "style": "", "new_section": False},
+        {"speaker": "Maya", "text": "Still first.", "style": "", "new_section": False},
+        {"speaker": "Alex", "text": "New topic.", "style": "", "new_section": True},
+    ]
+    assert podcast.format_dialogue(turns) == (
+        "Alex: First.\nMaya: Still first.\n\nAlex: New topic.\n"
     )
 
-    assert podcast.main(["--dry-run"], script_dir=tmp_path) == 0
-    assert not (tmp_path / "2025-03-16" / "messages.json").exists()
-    assert not (tmp_path / "2025-03-16" / "messages.txt").exists()
-    assert not (tmp_path / "podcast.xml").exists()
 
-
-def test_main_dry_run_uses_existing_week_messages_json(tmp_path: Path, monkeypatch):
-    week_dir = tmp_path / "2025-03-16"
-    week_dir.mkdir()
-    (tmp_path / "config.toml").write_text('podcast = "Test prompt for $WEEK"\n', encoding="utf-8")
-    (week_dir / "messages.json").write_text(
-        json.dumps(
-            [
-                {
-                    "messageId": "abc",
-                    "time": "2025-03-10T09:00:00.000Z",
-                    "text": "Hello weekly structure",
-                    "author": "Alice",
-                }
-            ]
-        ),
-        encoding="utf-8",
-    )
-
-    monkeypatch.setattr(
-        podcast,
-        "get_podcast_script",
-        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("LLM call not expected")),
-    )
-    monkeypatch.setattr(
-        podcast,
-        "get_podcast_gemini",
-        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("TTS call not expected")),
-    )
-
-    assert podcast.main(["--dry-run"], script_dir=tmp_path) == 0
-    assert not (week_dir / "messages.txt").exists()
-    assert not (tmp_path / "podcast.xml").exists()
-
-
-def test_get_podcast_script_prints_api_error_body(monkeypatch, capsys: pytest.CaptureFixture[str]):
-    class FakeHTTPError(Exception):
-        pass
+def test_get_podcast_script_uses_luna_structured_output(monkeypatch, tmp_path):
+    captured = {}
 
     class FakeResponse:
-        text = '{"error":{"message":"Bad request"}}'
-
-        def raise_for_status(self) -> None:
-            raise FakeHTTPError("400 Client Error")
-
-    monkeypatch.setattr(podcast.requests, "post", lambda *args, **kwargs: FakeResponse())
-    monkeypatch.setenv("OPENAI_API_KEY", "test-key")
-    monkeypatch.setenv("JINA_API_KEY", "test-key")
-
-    with pytest.raises(FakeHTTPError):
-        podcast.get_podcast_script(
-            "Threaded messages",
-            {"podcast": "Prompt for $WEEK"},
-            dt.date(2025, 3, 16),
+        output_text = json.dumps(
+            {
+                "turns": [
+                    {"speaker": "Alex", "text": "Hello.", "style": ""},
+                    {"speaker": "Maya", "text": "Hi.", "style": ""},
+                ]
+            }
         )
 
-    assert capsys.readouterr().err == '{"error":{"message":"Bad request"}}\n'
+    class FakeResponses:
+        def create(self, **kwargs):
+            captured.update(kwargs)
+            return FakeResponse()
 
+    class FakeOpenAI:
+        def __init__(self, **kwargs):
+            captured["client"] = kwargs
+            self.responses = FakeResponses()
 
-def test_build_gemini_request_uses_new_model_and_single_speaker_payload():
-    config = make_gemini_config()
-
-    segments, normalized_script, speakers = podcast.split_script_segments(
-        "Alex: [excited] Welcome back!\nMaya: Good to be here.\nAnd we have updates.",
-        config,
+    monkeypatch.setattr(podcast, "OpenAI", FakeOpenAI)
+    monkeypatch.setattr(podcast, "api_key", lambda *_: "test-key")
+    monkeypatch.setattr(podcast, "podcast_cache_dir", lambda: tmp_path)
+    monkeypatch.setattr(
+        podcast,
+        "fetch_link_contents",
+        lambda *_: "## https://example.com\nFetched page context.",
     )
 
-    assert normalized_script == (
-        "Alex: [excited] Welcome back!\nMaya: Good to be here. And we have updates."
-    )
-    assert [speaker.name for speaker in speakers] == ["Alex", "Maya"]
-
-    payload = podcast.build_gemini_request(segments[0][1], segments[0][0], config)
-
-    assert payload["model"] == "gemini-3.1-flash-tts-preview"
-    assert payload["generationConfig"]["speechConfig"]["voiceConfig"] == {
-        "prebuiltVoiceConfig": {"voiceName": "Algieba"}
+    config = {
+        "podcast": "Week $WEEK; target $TARGET_WORDS words.",
+        "openai": {"model": "gpt-6-luna"},
     }
-    prompt_text = payload["contents"][0]["parts"][0]["text"]
-    assert "TRANSCRIPT" in prompt_text
-    assert "[excited]" in prompt_text
+    script = podcast.get_podcast_script(
+        "one two three https://example.com",
+        config,
+        dt.date(2026, 9, 20),
+        "Alex: Previous episode.",
+    )
+
+    assert script == "Alex: Hello.\nMaya: Hi.\n"
+    assert captured["model"] == "gpt-6-luna"
+    assert "reasoning" not in captured
+    assert captured["text"]["format"] == podcast.DIALOGUE_FORMAT
+    assert "20 September 2026" in captured["input"][0]["content"]
+    user_content = captured["input"][1]["content"]
+    assert "CURRENT WEEK TRANSCRIPT — PRIMARY SOURCE" in user_content
+    assert "Fetched page context" in user_content
+    assert "PREVIOUS EPISODES — CONTEXT ONLY" in user_content
+    assert "Previous episode" in user_content
 
 
-def test_main_tts_script_dry_run_validates_script_and_derives_output(
-    tmp_path: Path, monkeypatch, capsys: pytest.CaptureFixture[str]
-):
+def test_build_speech_content_adds_style_only_when_present():
+    content = podcast.build_speech_content(
+        [
+            {"speaker": "Alex", "text": "One", "style": "quietly amused"},
+            {"speaker": "Maya", "text": "Two", "style": ""},
+        ]
+    )
+
+    assert content[0]["annotations"][0] == {
+        "type": "speech_metadata",
+        "speaker": "Alex",
+        "style": "quietly amused",
+    }
+    assert content[1]["annotations"][0] == {
+        "type": "speech_metadata",
+        "speaker": "Maya",
+    }
+
+
+def test_main_tts_script_dry_run_chunks_dialogue(tmp_path: Path, monkeypatch, capsys):
     script_path = tmp_path / "sample-dialogue.md"
     script_path.write_text(
-        "Alex: [excited] Welcome back.\nMaya: [laughs] We have two quick stories today.\n",
+        "Alex: [style: excited] Welcome back.\nMaya: <laugh> Two stories today.\n",
         encoding="utf-8",
     )
+    config = {
+        "gemini": {
+            "model": "gemini-3.8-flash-lite-tts",
+            "chunk_size": 10,
+            "sample_rate": 24000,
+            "speakers": [
+                {"name": "Alex", "voice_name": "Algieba"},
+                {"name": "Maya", "voice_name": "Kore"},
+            ],
+        }
+    }
+    monkeypatch.setattr(podcast, "load_config", lambda _script_dir: config)
 
-    monkeypatch.setattr(podcast, "load_config", lambda _script_dir: make_gemini_config())
-
-    assert podcast.main(["tts-script", "--script-file", str(script_path), "--dry-run"], script_dir=tmp_path) == 0
+    assert podcast.main(
+        ["tts-script", "--script-file", str(script_path), "--dry-run"],
+        script_dir=tmp_path,
+    ) == 0
 
     result = json.loads(capsys.readouterr().out)
-    assert result["command"] == "tts-script"
     assert result["status"] == "dry-run"
+    assert result["model"] == "gemini-3.8-flash-lite-tts"
+    assert result["turn_count"] == 2
+    assert result["chunk_count"] == 1
     assert result["speaker_names"] == ["Alex", "Maya"]
-    assert result["audio_path"].endswith("sample-dialogue.mp3")
 
 
-def test_main_describe_returns_machine_readable_schema(
-    tmp_path: Path, capsys: pytest.CaptureFixture[str]
-):
+def test_main_describe_returns_machine_readable_schema(tmp_path: Path, capsys):
     assert podcast.main(["--describe"], script_dir=tmp_path) == 0
     result = json.loads(capsys.readouterr().out)
     assert sorted(result["commands"]) == ["tts-script", "weekly"]

@@ -2,59 +2,40 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
-#     "requests",
+#     "google-genai>=2.25",
+#     "httpx>=0.28",
+#     "openai>=3",
 #     "python-dotenv",
+#     "trafilatura>=2.0",
 # ]
 # ///
 
 import argparse
 import base64
 import datetime
+import hashlib
 import json
 import os
 import re
 import subprocess
 import sys
 import tempfile
-import time
-import tomllib
 from collections import defaultdict
-from dataclasses import dataclass
-from dotenv import load_dotenv
 from pathlib import Path
 from typing import Any, Dict, List, Sequence, Tuple
 
-import requests
+import httpx
+import tomllib
+import trafilatura
+from dotenv import load_dotenv
+from google import genai
+from openai import OpenAI
 
 MESSAGES_JSON_NAME = "messages.json"
 MESSAGES_TEXT_NAME = "messages.txt"
 WEEK_DIR_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 COMMAND_WEEKLY = "weekly"
 COMMAND_TTS_SCRIPT = "tts-script"
-DEFAULT_OPENAI_MODEL = "gpt-5.4-mini"
-DEFAULT_GEMINI_MODEL = "gemini-3.1-flash-tts-preview"
-RETRYABLE_STATUS_CODES = {500, 502, 503, 504}
-
-
-@dataclass(frozen=True)
-class SpeakerConfig:
-    "Speaker metadata used to validate scripts and build Gemini voice settings."
-
-    name: str
-    voice_name: str
-    profile: str = ""
-
-
-def raise_for_status_with_body(response: Any) -> None:
-    "Raise for HTTP status, echoing the raw API body to stderr for debugging."
-
-    try:
-        response.raise_for_status()
-    except Exception:
-        body = getattr(response, "text", "").strip()
-        if body:
-            print(body, file=sys.stderr)
-        raise
 
 
 def load_messages(filepath: str | Path) -> List[Dict[str, Any]]:
@@ -181,13 +162,65 @@ def write_messages_file(week: datetime.date, items: List[Dict[str, Any]], target
     return messages_file
 
 
-def render_script_prompt(config: Dict[str, Any], week: datetime.date) -> str:
-    "Render the OpenAI script-writing prompt for the requested week."
-    return config["podcast"].replace("$WEEK", week.strftime("%d %B %Y"))
+DIALOGUE_FORMAT = {
+    "type": "json_schema",
+    "name": "podcast_dialogue",
+    "strict": True,
+    "schema": {
+        "type": "object",
+        "properties": {
+            "turns": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "speaker": {"type": "string", "enum": ["Alex", "Maya"]},
+                        "text": {"type": "string"},
+                        "style": {"type": "string"},
+                        "new_section": {"type": "boolean"},
+                    },
+                    "required": ["speaker", "text", "style", "new_section"],
+                    "additionalProperties": False,
+                },
+            }
+        },
+        "required": ["turns"],
+        "additionalProperties": False,
+    },
+}
+AUDIO_MIME = "audio/l16"
+LEGACY_EVENTS = {"[laughs]": "<laugh>", "[short pause]": "<short pause>", "[sighs]": "<sigh>"}
+LEGACY_STYLES = {"excited": "excited", "whispers": "whispering"}
+
+
+def api_key(env: str, _llm_key: str) -> str:
+    """Return a required API key loaded from the environment or .env."""
+    if value := os.getenv(env):
+        return value
+    raise ValueError(f"{env} is not set")
+
+
+def podcast_cache_dir():
+    """Return the restartable cache directory for podcast model calls."""
+    return Path.home() / ".cache" / "generative-ai-group-podcast"
+
+
+def digest(*parts: str) -> str:
+    "Return a short stable content hash for restartable model-call caches."
+    return hashlib.sha256("\0".join(parts).encode()).hexdigest()[:20]
+
+
+def render_script_prompt(config: Dict[str, Any], week: datetime.date, target_words: int) -> str:
+    "Render the podcast prompt for one week."
+    return (
+        config["podcast"]
+        .replace("$WEEK", week.strftime("%d %B %Y"))
+        .replace("$TARGET_WORDS", f"{target_words:,}")
+    )
 
 
 def load_previous_scripts(script_dir: Path, week: datetime.date) -> str:
-    "Load the podcast scripts from the two immediately preceding weeks, when present."
+    """Load the podcast scripts from the two immediately preceding weeks, when present."""
     scripts = []
     for weeks_ago in (2, 1):
         prior_week = week - datetime.timedelta(weeks=weeks_ago)
@@ -197,30 +230,129 @@ def load_previous_scripts(script_dir: Path, week: datetime.date) -> str:
     return "\n\n".join(scripts)
 
 
+def fetch_link_contents(messages_text: str, config: Dict[str, Any]) -> str:
+    """Fetch and extract linked pages directly; failures never block podcast generation."""
+    settings = config.get("links", {})
+    if settings.get("enabled", True) is False:
+        return ""
+
+    urls = []
+    for raw_url in re.findall(r"https?://\S+", messages_text):
+        url = raw_url.rstrip(").,]}>")
+        if url not in urls:
+            urls.append(url)
+
+    max_urls = int(settings.get("max_urls", 10))
+    max_chars = int(settings.get("max_chars", 3_000))
+    timeout = float(settings.get("timeout", 20))
+    cache_dir = podcast_cache_dir() / "links"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    sections = []
+
+    for url in urls[:max_urls]:
+        path = cache_dir / f"{digest(url)}.md"
+        if path.exists():
+            markdown = path.read_text(encoding="utf-8")
+        else:
+            try:
+                response = httpx.get(
+                    url,
+                    follow_redirects=True,
+                    timeout=timeout,
+                    headers={"User-Agent": "Mozilla/5.0 podcast-context-fetcher"},
+                )
+                response.raise_for_status()
+            except httpx.HTTPError as exc:
+                print(f"Skipping linked page {url}: {exc}", file=sys.stderr)
+                continue
+
+            markdown = (
+                trafilatura.extract(
+                    response.text,
+                    output_format="markdown",
+                    include_links=True,
+                    include_images=False,
+                )
+                or ""
+            ).strip()
+            if not markdown:
+                continue
+            path.write_text(markdown, encoding="utf-8")
+
+        sections.append(f"## {url}\n{markdown[:max_chars]}")
+
+    return "\n\n".join(sections)
+
+
+def format_dialogue(turns: Sequence[Dict[str, str]]) -> str:
+    "Serialize structured dialogue to the human-readable podcast Markdown file."
+    lines = []
+    for turn in turns:
+        if turn.get("new_section") and lines:
+            lines.append("")
+        style = f"[style: {turn['style'].strip()}] " if turn["style"].strip() else ""
+        lines.append(f"{turn['speaker']}: {style}{turn['text'].strip()}")
+    return "\n".join(lines) + "\n"
+
+
+def parse_dialogue(script: str, speakers: Sequence[str]) -> List[Dict[str, str]]:
+    "Parse generated or historical speaker-labelled scripts into structured turns."
+    if not script.strip():
+        raise ValueError("script is empty")
+
+    speaker_re = re.compile(
+        rf"^(?P<speaker>{'|'.join(re.escape(name) for name in speakers)}):\s*(?P<text>.*)$"
+    )
+    turns: List[Dict[str, str]] = []
+    for line_no, raw_line in enumerate(script.splitlines(), 1):
+        line = raw_line.strip()
+        if not line:
+            continue
+        match = speaker_re.match(line)
+        if not match:
+            if not turns:
+                raise ValueError(f"line {line_no} must begin with one of: {', '.join(speakers)}")
+            turns[-1]["text"] += " " + line
+            continue
+
+        text = match.group("text").strip()
+        for old, new in LEGACY_EVENTS.items():
+            text = text.replace(old, new)
+
+        style = ""
+        style_match = re.match(r"^\[style:\s*(.+?)\]\s*(.*)$", text)
+        if style_match:
+            style, text = style_match.groups()
+        else:
+            legacy_match = re.match(r"^\[([^\]]+)\]\s*(.*)$", text)
+            if legacy_match and legacy_match.group(1).lower() in LEGACY_STYLES:
+                style = LEGACY_STYLES[legacy_match.group(1).lower()]
+                text = legacy_match.group(2)
+
+        if not text:
+            raise ValueError(f"speaker {match.group('speaker')} has an empty turn")
+        turns.append({"speaker": match.group("speaker"), "text": text, "style": style})
+    return turns
+
+
 def get_podcast_script(
     messages_text: str,
     config: Dict[str, Any],
     week: datetime.date,
     previous_scripts: str = "",
-) -> Tuple[float, str]:
-    "Generate a podcast script using the OpenAI Responses API."
-    for key in ["OPENAI_API_KEY", "JINA_API_KEY"]:
-        if not os.environ.get(key):
-            raise ValueError(f"{key} is not set")
-
-    prompt = render_script_prompt(config, week)
-    urls = re.findall(r"https?://\S+", messages_text)[:10]
-    link_content = []
-    jina_headers = {"Authorization": f"Bearer {os.environ.get('JINA_API_KEY')}"}
-    for url in urls:
-        url = url.rstrip(").,]}>")
-        jina_url = f"https://r.jina.ai/{url}"
-        markdown = requests.get(jina_url, timeout=20, headers=jina_headers).text[:3000]
-        link_content.append(f"<content>\n{markdown}\n</content>\n")
-    if link_content:
-        messages_text += "\n\nLINK CONTENTS: Use if needed.\n\n" + "\n\n".join(link_content)
+) -> str:
+    """Generate a structured podcast using the transcript, linked pages, and continuity context."""
+    target_words = max(1_200, min(3_300, round(len(messages_text.split()) * 0.48)))
+    prompt = render_script_prompt(config, week, target_words)
 
     user_content = f"CURRENT WEEK TRANSCRIPT — PRIMARY SOURCE\n\n{messages_text}"
+    if link_content := fetch_link_contents(messages_text, config):
+        user_content += (
+            "\n\nLINKED PAGE CONTENT — CONTEXT ONLY\n\n"
+            "Use this only to understand links discussed in the transcript. "
+            "The current-week transcript remains the primary source.\n\n"
+            f"{link_content}"
+        )
     if previous_scripts:
         user_content += (
             "\n\nPREVIOUS EPISODES — CONTEXT ONLY\n\n"
@@ -230,281 +362,95 @@ def get_podcast_script(
             f"{previous_scripts}"
         )
 
-    payload = {
-        "model": DEFAULT_OPENAI_MODEL,
-        "input": [
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": user_content},
-        ],
-    }
-
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {os.environ.get('OPENAI_API_KEY')}",
-    }
-
-    response = requests.post(
-        "https://api.openai.com/v1/responses",
-        headers=headers,
-        json=payload,
-        timeout=180,
-    )
-    raise_for_status_with_body(response)
-    result = response.json()
-    cost = result["usage"]["input_tokens"] * 0.4 + result["usage"]["output_tokens"] * 1.6
-    return cost, result["output"][-1]["content"][0]["text"]
-
-
-def collapse_whitespace(text: str) -> str:
-    "Collapse internal whitespace to keep prompt scaffolding compact."
-    return re.sub(r"\s+", " ", text.strip())
-
-
-def load_gemini_speakers(config: Dict[str, Any]) -> List[SpeakerConfig]:
-    "Load Gemini speaker definitions from config.toml."
-    speaker_items = config.get("gemini", {}).get("speakers")
-    if not isinstance(speaker_items, list) or not speaker_items:
-        raise ValueError("config.toml must define `[[gemini.speakers]]` entries")
-
-    speakers = [
-        SpeakerConfig(
-            name=item["name"],
-            voice_name=item["voice_name"],
-            profile=str(item.get("profile", "")).strip(),
-        )
-        for item in speaker_items
-    ]
-    if len(speakers) > 2:
-        raise ValueError("Gemini multi-speaker TTS supports at most 2 speakers")
-
-    return speakers
-
-
-def normalize_script(script: str, allowed_speakers: Sequence[str]) -> Tuple[str, List[str]]:
-    """
-    Normalize a speaker-labeled transcript into one utterance per line.
-
-    Each non-empty line must either start with `Speaker:` or continue the previous speaker's text.
-    """
-
-    if not script.strip():
-        raise ValueError("script is empty")
-
-    speaker_pattern = re.compile(
-        rf"^(?P<speaker>{'|'.join(re.escape(name) for name in allowed_speakers)}):\s*(?P<text>.*)$"
-    )
-    generic_label_pattern = re.compile(r"^(?P<label>[^:\s][^:]{0,80}):\s*(?P<text>.*)$")
-
-    utterances: List[Dict[str, str]] = []
-    current: Dict[str, str] | None = None
-
-    for index, raw_line in enumerate(script.splitlines(), start=1):
-        line = raw_line.strip()
-        if not line:
-            continue
-
-        speaker_match = speaker_pattern.match(line)
-        if speaker_match:
-            current = {
-                "speaker": speaker_match.group("speaker"),
-                "text": speaker_match.group("text").strip(),
-            }
-            utterances.append(current)
-            continue
-
-        generic_match = generic_label_pattern.match(line)
-        if generic_match:
-            raise ValueError(
-                f"line {index} uses unsupported speaker {generic_match.group('label')!r}; "
-                f"expected one of {', '.join(allowed_speakers)}"
-            )
-
-        if current is None:
-            raise ValueError(
-                f"line {index} must begin with a speaker label like {allowed_speakers[0]}:"
-            )
-
-        if current["text"]:
-            current["text"] += " " + line
-        else:
-            current["text"] = line
-
-    if not utterances:
-        raise ValueError("script has no speaker lines")
-
-    used_speakers: List[str] = []
-    normalized_lines: List[str] = []
-    for utterance in utterances:
-        text = utterance["text"].strip()
-        if not text:
-            raise ValueError(f"speaker {utterance['speaker']} has an empty line in the script")
-        normalized_lines.append(f"{utterance['speaker']}: {text}")
-        if utterance["speaker"] not in used_speakers:
-            used_speakers.append(utterance["speaker"])
-
-    return "\n".join(normalized_lines), used_speakers
-
-
-def split_script_segments(
-    script: str, config: Dict[str, Any]
-) -> Tuple[List[Tuple[SpeakerConfig, str]], str, List[SpeakerConfig]]:
-    "Split a validated script into one normalized Gemini request per spoken line."
-    all_speakers = load_gemini_speakers(config)
-    speaker_by_name = {speaker.name: speaker for speaker in all_speakers}
-    normalized_script, used_speakers = normalize_script(script, list(speaker_by_name))
-    segments = []
-    for line in normalized_script.splitlines():
-        speaker_name, text = line.split(":", 1)
-        segments.append((speaker_by_name[speaker_name], text.strip()))
-    return segments, normalized_script, [speaker_by_name[name] for name in used_speakers]
-
-
-def build_tts_prompt(text: str, speaker: SpeakerConfig, config: Dict[str, Any]) -> str:
-    "Build a Gemini TTS prompt for one speaker line."
-    sections = [
-        "Synthesize speech for the following podcast line.",
-        "Do not read these instructions aloud.",
-        "Honor inline audio tags such as [excited], [laughs], [whispers], and [short pause].",
-        "Only speak the transcript under the TRANSCRIPT heading.",
-    ]
-
-    podcast_style = collapse_whitespace(str(config.get("podcast_style", "")))
-    if podcast_style:
-        sections.append(podcast_style)
-
-    if speaker.profile.strip():
-        sections.append(f"Speaker guidance: {collapse_whitespace(speaker.profile)}")
-
-    sections.append("TRANSCRIPT")
-    sections.append(text.strip())
-    return "\n".join(sections)
-
-
-def build_gemini_request(text: str, speaker: SpeakerConfig, config: Dict[str, Any]) -> Dict[str, Any]:
-    "Build a single-speaker Gemini TTS request payload for one line."
-    return {
-        "model": config.get("gemini", {}).get("model", DEFAULT_GEMINI_MODEL),
-        "contents": [
-            {
-                "role": "user",
-                "parts": [{"text": build_tts_prompt(text, speaker, config)}],
-            }
-        ],
-        "generationConfig": {
-            "responseModalities": ["AUDIO"],
-            "speechConfig": {
-                "voiceConfig": {
-                    "prebuiltVoiceConfig": {
-                        "voiceName": speaker.voice_name,
-                    }
-                }
-            },
-        },
-    }
-
-
-def request_gemini_audio(payload: Dict[str, Any]) -> bytes:
-    "Call the Gemini TTS endpoint and return raw PCM bytes."
-    if not os.environ.get("GEMINI_API_KEY"):
-        raise ValueError("GEMINI_API_KEY is not set")
-
-    headers = {
-        "x-goog-api-key": os.environ["GEMINI_API_KEY"],
-        "Content-Type": "application/json",
-    }
-    url = (
-        "https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{payload['model']}:generateContent"
+    model = config.get("openai", {}).get("model", "gpt-6-luna")
+    cache = podcast_cache_dir()
+    cache.mkdir(parents=True, exist_ok=True)
+    path = cache / (
+        "dialogue-"
+        + digest(model, prompt, user_content, json.dumps(DIALOGUE_FORMAT, sort_keys=True))
+        + ".json"
     )
 
-    response = None
-    for attempt in range(1, 4):
-        response = requests.post(url, headers=headers, json=payload, timeout=300)
-        try:
-            raise_for_status_with_body(response)
-            break
-        except requests.HTTPError:
-            if response.status_code not in RETRYABLE_STATUS_CODES or attempt == 3:
-                raise
-            time.sleep(attempt)
-
-    result = response.json()
-    audio_b64 = result["candidates"][0]["content"]["parts"][0]["inlineData"]["data"]
-    return base64.b64decode(audio_b64)
-
-
-def render_pcm_as_mp3(audio_pcm: bytes, output_path: Path, config: Dict[str, Any]) -> Path:
-    "Convert raw 24kHz mono PCM from Gemini into the configured audio format."
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    pcm_path: Path | None = None
-    try:
-        with tempfile.NamedTemporaryFile(
-            delete=False, suffix=".pcm", dir=output_path.parent
-        ) as temp_file:
-            temp_file.write(audio_pcm)
-            pcm_path = Path(temp_file.name)
-
-        ffmpeg_args = [
-            arg.format(pcm=pcm_path, output=output_path)
-            for arg in config["gemini"]["ffmpeg_command"]
-        ]
-        subprocess.run(ffmpeg_args, check=True)
-    finally:
-        if pcm_path and pcm_path.exists():
-            pcm_path.unlink()
-
-    return output_path
-
-
-def concatenate_audio_files(segment_paths: Sequence[Path], output_path: Path) -> Path:
-    "Concatenate per-line MP3 clips into the final podcast output."
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    list_path: Path | None = None
-    try:
-        with tempfile.NamedTemporaryFile(
-            "w",
-            delete=False,
-            suffix=".txt",
-            dir=output_path.parent,
-            encoding="utf-8",
-        ) as temp_file:
-            temp_file.write(
-                "\n".join(f"file '{segment_path.resolve()}'" for segment_path in segment_paths)
-            )
-            list_path = Path(temp_file.name)
-
-        subprocess.run(
-            [
-                "ffmpeg",
-                "-hide_banner",
-                "-y",
-                "-f",
-                "concat",
-                "-safe",
-                "0",
-                "-i",
-                str(list_path),
-                "-c:a",
-                "libmp3lame",
-                "-qscale:a",
-                "5",
-                "-ar",
-                "44100",
-                "-ac",
-                "1",
-                "-id3v2_version",
-                "3",
-                str(output_path),
+    if path.exists():
+        turns = json.loads(path.read_text(encoding="utf-8"))["turns"]
+    else:
+        print(f"Generating dialogue with {model}...", flush=True)
+        response = OpenAI(api_key=api_key("OPENAI_API_KEY", "openai")).responses.create(
+            model=model,
+            input=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": user_content},
             ],
-            check=True,
+            text={"format": DIALOGUE_FORMAT},
         )
-    finally:
-        if list_path and list_path.exists():
-            list_path.unlink()
+        result = json.loads(response.output_text)
+        path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        turns = result["turns"]
+    return format_dialogue(turns)
 
-    return output_path
+
+def speaker_voices(config: Dict[str, Any]) -> Dict[str, str]:
+    "Return configured Gemini voice names keyed by podcast speaker."
+    voices = {
+        item["name"]: item["voice_name"] for item in config.get("gemini", {}).get("speakers", [])
+    }
+    if not voices:
+        raise ValueError("config.toml must define [[gemini.speakers]] entries")
+    return voices
+
+
+def build_speech_content(turns: Sequence[Dict[str, str]]) -> List[Dict[str, Any]]:
+    "Build Gemini Interactions content, adding style only when explicitly useful."
+    content = []
+    for turn in turns:
+        metadata: Dict[str, str] = {"type": "speech_metadata", "speaker": turn["speaker"]}
+        if turn["style"].strip():
+            metadata["style"] = turn["style"].strip()
+        content.append({"type": "text", "text": turn["text"], "annotations": [metadata]})
+    return content
+
+
+def audio_plan(script: str, config: Dict[str, Any]) -> Dict[str, Any]:
+    "Validate a script and return the configured TTS execution plan."
+    gemini = config["gemini"]
+    voices = speaker_voices(config)
+    turns = parse_dialogue(script, list(voices))
+    chunk_size = int(gemini.get("chunk_size", 10))
+    if chunk_size < 1:
+        raise ValueError("gemini.chunk_size must be >= 1")
+    return {
+        "model": gemini.get("model", "gemini-3.8-flash-lite-tts"),
+        "sample_rate": int(gemini.get("sample_rate", 24_000)),
+        "chunk_size": chunk_size,
+        "turn_count": len(turns),
+        "chunk_count": (len(turns) + chunk_size - 1) // chunk_size,
+        "speaker_names": list(dict.fromkeys(turn["speaker"] for turn in turns)),
+        "voices": voices,
+        "turns": turns,
+    }
+
+
+def synthesize_chunk(client: genai.Client, turns: Sequence[Dict[str, str]], plan: Dict[str, Any]) -> bytes:
+    "Synthesize one multi-turn dialogue chunk as raw 16-bit PCM."
+    interaction = client.interactions.create(
+        model=plan["model"],
+        input=[{"type": "user_input", "content": build_speech_content(turns)}],
+        response_format={
+            "type": "audio",
+            "mime_type": AUDIO_MIME,
+            "sample_rate": plan["sample_rate"],
+        },
+        generation_config={
+            "speech_config": {
+                "mode": "conversational",
+                "speakers": [
+                    {"speaker": speaker, "voice": voice}
+                    for speaker, voice in plan["voices"].items()
+                ],
+            }
+        },
+    )
+    return base64.b64decode(interaction.output_audio.data)
 
 
 def generate_audio_from_script(
@@ -514,43 +460,77 @@ def generate_audio_from_script(
     *,
     dry_run: bool = False,
 ) -> Dict[str, Any]:
-    "Generate audio for a speaker-labeled podcast script."
-    segments, normalized_script, speakers = split_script_segments(script, config)
+    "Generate podcast audio in restartable multi-turn chunks, then encode MP3 once."
+    plan = audio_plan(script, config)
     result = {
         "command": COMMAND_TTS_SCRIPT,
         "audio_path": str(output_path.resolve()),
-        "speaker_names": [speaker.name for speaker in speakers],
-        "segment_count": len(segments),
-        "model": config.get("gemini", {}).get("model", DEFAULT_GEMINI_MODEL),
-        "normalized_script": normalized_script,
+        **{key: plan[key] for key in ("model", "turn_count", "chunk_count", "speaker_names")},
     }
-
     if dry_run:
-        result["status"] = "dry-run"
-        return result
+        return {**result, "status": "dry-run"}
+
+    cache = podcast_cache_dir()
+    cache.mkdir(parents=True, exist_ok=True)
+    client = None
+    pcm_paths = []
+    turns = plan["turns"]
+    for index, offset in enumerate(range(0, len(turns), plan["chunk_size"]), 1):
+        chunk = turns[offset : offset + plan["chunk_size"]]
+        chunk_json = json.dumps(chunk, sort_keys=True)
+        path = cache / (
+            "audio-"
+            + digest(
+                plan["model"],
+                json.dumps(plan["voices"], sort_keys=True),
+                AUDIO_MIME,
+                str(plan["sample_rate"]),
+                chunk_json,
+            )
+            + ".pcm"
+        )
+        if not path.exists():
+            print(f"Synthesizing chunk {index}/{plan['chunk_count']} with {plan['model']}...", flush=True)
+            client = client or genai.Client(api_key=api_key("GEMINI_API_KEY", "gemini"))
+            path.write_bytes(synthesize_chunk(client, chunk, plan))
+        pcm_paths.append(path)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(dir=output_path.parent) as temp_dir_name:
-        temp_dir = Path(temp_dir_name)
-        segment_paths = []
-        for index, (speaker, text) in enumerate(segments, start=1):
-            segment_path = temp_dir / f"{index:03d}.mp3"
-            audio_pcm = request_gemini_audio(build_gemini_request(text, speaker, config))
-            render_pcm_as_mp3(audio_pcm, segment_path, config)
-            segment_paths.append(segment_path)
-        concatenate_audio_files(segment_paths, output_path)
-
-    result["status"] = "ok"
-    return result
+    with tempfile.NamedTemporaryFile(suffix=".pcm") as pcm:
+        for path in pcm_paths:
+            pcm.write(path.read_bytes())
+        pcm.flush()
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-y",
+                "-f",
+                "s16le",
+                "-ar",
+                str(plan["sample_rate"]),
+                "-ac",
+                "1",
+                "-i",
+                pcm.name,
+                "-c:a",
+                "libmp3lame",
+                "-q:a",
+                "4",
+                str(output_path),
+            ],
+            check=True,
+        )
+    return {**result, "status": "ok"}
 
 
 def get_podcast_gemini(script: str, target: Path, config: Dict[str, Any]) -> Path:
-    "Generate the weekly podcast audio file using per-line Gemini TTS plus concatenation."
+    "Generate the weekly podcast MP3 with configurable Gemini 3.8 TTS."
     output_path = target / f"podcast-{target.name}.mp3"
-    if output_path.exists():
-        return output_path
-
-    generate_audio_from_script(script, output_path, config)
+    if not output_path.exists():
+        generate_audio_from_script(script, output_path, config)
     return output_path
 
 
@@ -605,10 +585,9 @@ def process_week(
     if not podcast_script_file.exists():
         messages_text = messages_file.read_text(encoding="utf-8")
         previous_scripts = load_previous_scripts(script_dir, week)
-        cost, podcast_script = get_podcast_script(messages_text, config, week, previous_scripts)
+        podcast_script = get_podcast_script(messages_text, config, week, previous_scripts)
         podcast_script_file.write_text(podcast_script, encoding="utf-8")
         result["script_status"] = "created"
-        result["script_cost_cents"] = round(cost / 1e4, 4)
     else:
         result["script_status"] = "existing"
 
@@ -704,7 +683,7 @@ def describe_cli() -> Dict[str, Any]:
     "Return a machine-readable description of the CLI interface."
     return {
         "name": "podcast.py",
-        "description": "Generate weekly WhatsApp podcast scripts and segmented Gemini TTS audio.",
+        "description": "Generate weekly WhatsApp podcast scripts and chunked Gemini TTS audio.",
         "env": ["OPENAI_API_KEY", "GEMINI_API_KEY"],
         "commands": {
             COMMAND_WEEKLY: {
@@ -716,7 +695,7 @@ def describe_cli() -> Dict[str, Any]:
                 },
             },
             COMMAND_TTS_SCRIPT: {
-                "description": "Generate audio from a speaker-labeled script using per-line Gemini synthesis and concatenation.",
+                "description": "Generate audio from a speaker-labeled script using multi-turn Gemini synthesis.",
                 "params": {
                     "script_file": {"type": "string", "optional": True},
                     "script": {"type": "string", "optional": True},
@@ -735,15 +714,11 @@ def summarize_week_result(result: Dict[str, Any]) -> str:
     if result["status"] == "dry-run":
         return result["summary"]
 
-    cost_text = ""
-    if "script_cost_cents" in result:
-        cost_text = f", script_cost={result['script_cost_cents']}c"
-
     return (
         f"Week {result['week']}: messages.json={result.get('messages_json_status', 'n/a')}, "
         f"messages.txt={result.get('messages_text_status', 'n/a')}, "
         f"script={result.get('script_status', 'n/a')}, "
-        f"audio={result.get('audio_status', 'n/a')}{cost_text}"
+        f"audio={result.get('audio_status', 'n/a')}"
     )
 
 
@@ -844,7 +819,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
             "Generate weekly podcast assets from WhatsApp exports or synthesize audio "
-            "from a speaker-labeled script using line-by-line Gemini TTS."
+            "from a speaker-labeled script using multi-turn Gemini TTS."
         )
     )
     parser.add_argument(
@@ -852,7 +827,7 @@ def build_parser() -> argparse.ArgumentParser:
         nargs="?",
         choices=[COMMAND_WEEKLY, COMMAND_TTS_SCRIPT],
         default=COMMAND_WEEKLY,
-        help="`weekly` processes grouped WhatsApp weeks; `tts-script` renders a script line by line",
+        help="`weekly` processes grouped WhatsApp weeks; `tts-script` renders a script in conversational chunks",
     )
     parser.add_argument(
         "--dry-run",
