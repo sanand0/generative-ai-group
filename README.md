@@ -13,6 +13,7 @@ A CLI tool and Python library to transform threaded WhatsApp Gen AI group transc
 You need:
 
 - A [scraped WhatsApp JSON export](https://tools.s-anand.net/whatsappscraper/) of the Gen AI Group chat as `messages.json`.
+  OR`wacli` with a synced local archive of the Gen AI Group chat. `just build` extracts it to `messages.json` before splitting and generating the podcast.
 - Optional incremental WhatsApp exports such as `m1.json`, `m2.json`, etc.
 - [`uv`](https://docs.astral.sh/uv/)
 - Environment variable `OPENAI_API_KEY` and `GEMINI_API_KEY` with valid API keys.
@@ -21,10 +22,9 @@ You need:
 ```bash
 git clone https://github.com/sanand0/generative-ai-group.git
 cd generative-ai-group
-uv run split_whatsapp_messages.py messages.json
 export OPENAI_API_KEY="sk-..."
 export GEMINI_API_KEY="..."
-uv run podcast.py
+just build
 ```
 
 Models, linked-page enrichment limits, TTS chunk size, sample rate, and speaker voices are configurable in [`config.toml`](config.toml). Linked URLs are fetched directly and their main content is extracted with Trafilatura; no Jina API key is required. Style metadata is emitted only when the script model considers it useful.

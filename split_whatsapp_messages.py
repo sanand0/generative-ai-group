@@ -46,6 +46,8 @@ def merge_value(previous: Any, next_value: Any, key: str) -> Any:
         return next_value if next_value > previous else previous
 
     if isinstance(previous, str) and isinstance(next_value, str):
+        if key == "author" and previous.isdigit() != next_value.isdigit():
+            return next_value if previous.isdigit() else previous
         if key == "reactions" and next_value != previous:
             return next_value
         if len(next_value) > len(previous):

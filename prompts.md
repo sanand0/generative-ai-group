@@ -1,5 +1,22 @@
 # Prompts
 
+## Use wacli, 01 Nov 2026
+
+<!--
+cd ~/code/generative-ai-group
+codex --model gpt-6.1-terra --config model_reasoning_effort=medium
+-->
+
+Use `wacli messages list --json --chat 120363049558306142@g.us` (or similar) to extract messages from the Gen AI group to create `messages.json` in the same structure that it exists today. Write minimal code for this. `just build` should include the creation of `messages.json` as its first step. Run and test.
+
+Keep a backup copy of messages.json as reference. The code used to create it is the bookmarklet in ~/code/tools/whatsappscraper/
+
+--- <!-- steering -->
+
+We don't need to create messages.json exactly - just what's needed for the rest of this workflow.
+
+<!-- codex resume 01a19719-27fa-74c2-9193-f2518ba1dc2c -->
+
 ## Switch to Gemini 3.8 Flash Lite TTS and Luna 6, 26 Sep 2026
 
 <!-- Switch Podcasts to Gemini 3.8 Flash TTS: https://chatgpt.com/c/6ab73aa2-11f8-83ec-815c-c37f88ea80dc (2026-09-26T13:42:35+08:00) -->

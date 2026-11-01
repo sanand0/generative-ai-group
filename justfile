@@ -1,4 +1,5 @@
 build:
+  uv run extract_messages.py
   uv run split_whatsapp_messages.py messages.json
   PYTHON_UNBUFFERED=1 uv run podcast.py
 

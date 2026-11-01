@@ -4,6 +4,7 @@ __pycache__
 
 # Skip data
 messages.json
+messages.reference.json
 
 # Skip generated files
 *.opus

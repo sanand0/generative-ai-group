@@ -310,3 +310,10 @@ def test_main_prints_only_modified_files_one_per_line(
 
     assert main() == 0
     assert capsys.readouterr().out == ""
+
+
+def test_merge_keeps_display_name_over_numeric_sender_id():
+    assert merge_messages([
+        {"messageId": "one", "author": "Ashish"},
+        {"messageId": "one", "author": "919450416056"},
+    ])[0]["author"] == "Ashish"
