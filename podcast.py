@@ -442,7 +442,6 @@ def synthesize_chunk(client: genai.Client, turns: Sequence[Dict[str, str]], plan
         },
         generation_config={
             "speech_config": {
-                "mode": "conversational",
                 "speakers": [
                     {"speaker": speaker, "voice": voice}
                     for speaker, voice in plan["voices"].items()
@@ -491,7 +490,9 @@ def generate_audio_from_script(
         )
         if not path.exists():
             print(f"Synthesizing chunk {index}/{plan['chunk_count']} with {plan['model']}...", flush=True)
-            client = client or genai.Client(api_key=api_key("GEMINI_API_KEY", "gemini"))
+            client = client or genai.Client(
+                api_key=api_key("GEMINI_API_KEY", "gemini"), http_options={"api_version": "v1beta"}
+            )
             path.write_bytes(synthesize_chunk(client, chunk, plan))
         pcm_paths.append(path)
 

@@ -1,5 +1,25 @@
 # Prompts
 
+## Fix Gemini model, 08 Nov 2026
+
+<!--
+cd ~/code/generative-ai-group
+codex --model gpt-6.1-terra --config model_reasoning_effort=medium
+-->
+
+When I run `just build` I get:
+google.genai._gaos.lib.compat_errors.NotFoundError: Error code: 404 - {'error': {'message': "Model 'gemini-3.8-flash-lite-tts' not found. Please verify the model name against the supported list: https://ai.google.dev/gemini-api/docs/models", 'code': 'not_found'}}
+
+Same when I run `just build` in ~/code/sanand0/week.
+
+But the model seems to be available on AI Studio. What's the issue? See if you can fix it for both repos.
+
+---
+
+Run the `just build` for both and test.
+
+<!-- codex resume 01a1b950-6516-7381-83d4-77150cef629a -->
+
 ## Use wacli, 01 Nov 2026
 
 <!--
